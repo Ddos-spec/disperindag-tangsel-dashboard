@@ -65,7 +65,7 @@ module.exports = async function handler(req, res) {
         'X-Title': 'Disperindag Tangsel Strategic Dashboard'
       },
       body: JSON.stringify({
-        model,
+        model: `${model}:online`,
         temperature: 0.2,
         max_tokens: 900,
         plugins: [{ id: 'web', max_results: 3 }],
