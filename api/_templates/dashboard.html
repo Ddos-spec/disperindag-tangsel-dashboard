@@ -719,6 +719,9 @@ body.auth-locked .login-screen {
   }
 }
 </style>
+<link rel="icon" type="image/png" href="/assets/favicon.png">
+<link rel="apple-touch-icon" href="/assets/tangsel-logo.png">
+<meta name="theme-color" content="#0898b8">
 </head>
 <body class="auth-locked">
 <section class="login-screen" id="login-screen" aria-label="Login dashboard">
@@ -1769,6 +1772,853 @@ initDraggableNav();
     event.stopPropagation();
     moved = false;
   }, true);
+})();
+</script>
+<style id="tangsel-palette-and-floating-ai">
+:root {
+  --tangsel-cyan: #0898b8;
+  --tangsel-sky: #e8fbff;
+  --tangsel-gold: #f5bd26;
+  --tangsel-green: #12834b;
+  --tangsel-red: #c9252d;
+  --tangsel-brown: #7b4a2b;
+  --tangsel-ink: #123047;
+  --tangsel-line: rgba(8, 152, 184, .18);
+  --tangsel-shadow: 0 24px 70px rgba(8, 152, 184, .14);
+}
+body {
+  background:
+    radial-gradient(circle at 12% 4%, rgba(245, 189, 38, .18), transparent 28%),
+    radial-gradient(circle at 88% 8%, rgba(18, 131, 75, .12), transparent 30%),
+    linear-gradient(180deg, #f4fdff 0%, #ffffff 44%, #f8fff9 100%) !important;
+  color: var(--tangsel-ink);
+}
+.topnav {
+  background: rgba(255, 255, 255, .93) !important;
+  border-bottom: 1px solid var(--tangsel-line) !important;
+  box-shadow: 0 16px 48px rgba(8, 152, 184, .08) !important;
+}
+.nav-emblem {
+  width: 52px !important;
+  height: 52px !important;
+  min-width: 52px !important;
+  color: transparent !important;
+  background: #fff url('/assets/tangsel-logo.png') center / 86% no-repeat !important;
+  border: 1px solid rgba(8, 152, 184, .24) !important;
+  box-shadow: 0 10px 32px rgba(8, 152, 184, .14) !important;
+}
+.nav-name, .phdr h1, .card-title, .ai-title, .copilot-title h2 {
+  color: #092f46 !important;
+}
+.nav-sub, .muted, .card-sub, .phdr p {
+  color: rgba(18, 48, 71, .64) !important;
+}
+.month-pill, .status.good, .pill.good {
+  background: rgba(18, 131, 75, .12) !important;
+  color: var(--tangsel-green) !important;
+  border-color: rgba(18, 131, 75, .24) !important;
+}
+.nav-avatar {
+  background: linear-gradient(135deg, var(--tangsel-cyan), var(--tangsel-green)) !important;
+  box-shadow: 0 12px 32px rgba(8, 152, 184, .22) !important;
+}
+.logout-btn, button.primary, .send-btn, .fab-send {
+  background: linear-gradient(135deg, var(--tangsel-cyan), var(--tangsel-green)) !important;
+  color: #fff !important;
+  border: 1px solid rgba(255, 255, 255, .38) !important;
+  box-shadow: 0 14px 34px rgba(8, 152, 184, .22) !important;
+}
+.logout-btn:hover, button.primary:hover, .send-btn:hover, .fab-send:hover {
+  transform: translateY(-1px);
+  filter: saturate(1.08);
+}
+.ntab {
+  border: 1px solid transparent !important;
+  color: rgba(18, 48, 71, .7) !important;
+}
+.ntab:hover {
+  background: rgba(8, 152, 184, .08) !important;
+  color: var(--tangsel-cyan) !important;
+}
+.ntab.active {
+  background: linear-gradient(135deg, rgba(8, 152, 184, .14), rgba(245, 189, 38, .18)) !important;
+  color: #08344d !important;
+  border-color: rgba(245, 189, 38, .54) !important;
+  box-shadow: inset 0 -2px 0 var(--tangsel-gold), 0 12px 28px rgba(8, 152, 184, .1) !important;
+}
+.card, .kpi, .decision-card, .pdrb-card, .ai-box, .answer-card, .evidence-card {
+  border-color: var(--tangsel-line) !important;
+  box-shadow: var(--tangsel-shadow) !important;
+}
+.kpi::before, .card::before {
+  background: linear-gradient(90deg, var(--tangsel-cyan), var(--tangsel-gold), var(--tangsel-green)) !important;
+}
+.badge, .pill, .tag {
+  border-color: rgba(8, 152, 184, .22) !important;
+}
+a, .link, .accent {
+  color: var(--tangsel-cyan) !important;
+}
+::selection {
+  background: rgba(245, 189, 38, .36);
+  color: #092f46;
+}
+@media (min-width: 1040px) {
+  .topnav {
+    position: sticky !important;
+    min-height: 96px !important;
+    padding: 0 28px !important;
+    display: grid !important;
+    grid-template-columns: 320px 1fr auto !important;
+    align-items: center !important;
+    gap: 18px !important;
+    background:
+      linear-gradient(90deg, #ffffff 0, #ffffff 320px, #44aee0 320px, #2b9bd0 100%) !important;
+    border-bottom: 1px solid rgba(8, 152, 184, .22) !important;
+    box-shadow: 0 16px 42px rgba(18, 48, 71, .12) !important;
+  }
+  .topnav::after {
+    content: "DASHBOARD STRATEGIS DISPERINDAG KOTA TANGSEL";
+    position: absolute;
+    left: 364px;
+    right: 430px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #fff;
+    font-size: clamp(18px, 1.65vw, 24px);
+    line-height: 1.08;
+    font-weight: 950;
+    letter-spacing: -.03em;
+    text-transform: uppercase;
+    text-shadow: 0 2px 12px rgba(9, 47, 70, .18);
+  }
+  .nav-brand {
+    grid-column: 1 !important;
+    align-items: center !important;
+    gap: 14px !important;
+  }
+  .nav-emblem {
+    width: 72px !important;
+    height: 72px !important;
+    min-width: 72px !important;
+    border-radius: 22px !important;
+  }
+  .nav-name {
+    max-width: 190px !important;
+    white-space: normal !important;
+    font-size: 17px !important;
+    line-height: 1.05 !important;
+    text-transform: uppercase !important;
+    color: #111827 !important;
+  }
+  .nav-sub {
+    margin-top: 4px !important;
+    font-size: 12px !important;
+    color: rgba(18, 48, 71, .62) !important;
+  }
+  .nav-r {
+    grid-column: 3 !important;
+    color: #fff !important;
+  }
+  .nav-r .time-pill,
+  .nav-r .month-pill {
+    background: rgba(255, 255, 255, .2) !important;
+    border-color: rgba(255, 255, 255, .28) !important;
+    color: #fff !important;
+  }
+  .nav-tabs {
+    position: fixed !important;
+    left: 0 !important;
+    top: 96px !important;
+    bottom: 0 !important;
+    z-index: 900 !important;
+    width: 260px !important;
+    height: auto !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: stretch !important;
+    gap: 8px !important;
+    padding: 24px 12px !important;
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+    background: rgba(255, 255, 255, .94) !important;
+    border-right: 1px solid rgba(8, 152, 184, .16) !important;
+    box-shadow: 16px 0 38px rgba(18, 48, 71, .08) !important;
+    backdrop-filter: blur(16px);
+    -webkit-mask-image: none !important;
+    mask-image: none !important;
+  }
+  .nav-tabs::before {
+    content: "Menu Layanan";
+    padding: 0 14px 8px;
+    color: rgba(18, 48, 71, .48);
+    font-size: 12px;
+    font-weight: 950;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+  }
+  .ntab {
+    width: 100% !important;
+    justify-content: flex-start !important;
+    min-height: 48px !important;
+    padding: 0 14px !important;
+    border-radius: 12px !important;
+    font-size: 15px !important;
+  }
+  .ntab.active {
+    background: linear-gradient(135deg, rgba(8, 152, 184, .15), rgba(8, 152, 184, .08)) !important;
+    border-color: rgba(8, 152, 184, .22) !important;
+    box-shadow: inset 4px 0 0 var(--tangsel-cyan), 0 10px 26px rgba(8, 152, 184, .08) !important;
+  }
+  .content {
+    margin-left: 260px !important;
+    padding: 32px 28px 56px !important;
+    background:
+      radial-gradient(circle at 10% 0%, rgba(8, 152, 184, .08), transparent 28%),
+      linear-gradient(180deg, #f6fbfd 0%, #ffffff 100%) !important;
+  }
+}
+.nav-tabs.drag-scroll-ready {
+  cursor: grab;
+  touch-action: pan-x;
+}
+.nav-tabs.drag-scroll-ready.dragging {
+  cursor: grabbing;
+}
+.floating-ai {
+  position: fixed;
+  right: max(18px, env(safe-area-inset-right));
+  bottom: max(18px, env(safe-area-inset-bottom));
+  z-index: 1200;
+  font-family: inherit;
+}
+.fab-toggle {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 56px;
+  padding: 10px 16px 10px 10px;
+  border: 1px solid rgba(245, 189, 38, .58);
+  border-radius: 999px;
+  background: linear-gradient(135deg, var(--tangsel-cyan), var(--tangsel-green));
+  color: #fff;
+  font-weight: 900;
+  letter-spacing: -.01em;
+  box-shadow: 0 18px 46px rgba(8, 152, 184, .28);
+  cursor: pointer;
+  transition: transform .18s ease, box-shadow .18s ease;
+}
+.fab-toggle:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 24px 58px rgba(8, 152, 184, .34);
+}
+.fab-logo, .fab-panel-logo {
+  width: 38px;
+  height: 38px;
+  border-radius: 14px;
+  background: #fff;
+  object-fit: contain;
+  padding: 3px;
+  box-shadow: inset 0 0 0 1px rgba(8, 152, 184, .18);
+}
+.fab-panel {
+  position: absolute;
+  right: 0;
+  bottom: 72px;
+  width: min(390px, calc(100vw - 28px));
+  max-height: min(680px, calc(100vh - 112px));
+  display: none;
+  flex-direction: column;
+  overflow: hidden;
+  border: 1px solid rgba(8, 152, 184, .2);
+  border-radius: 28px;
+  background: rgba(255, 255, 255, .96);
+  box-shadow: 0 28px 90px rgba(8, 152, 184, .22);
+  backdrop-filter: blur(18px);
+}
+.floating-ai.open .fab-panel {
+  display: flex;
+}
+.fab-panel-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 16px;
+  background:
+    radial-gradient(circle at 10% 0%, rgba(245, 189, 38, .32), transparent 34%),
+    linear-gradient(135deg, rgba(8, 152, 184, .12), rgba(18, 131, 75, .1));
+  border-bottom: 1px solid rgba(8, 152, 184, .14);
+}
+.fab-panel-brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.fab-panel-title {
+  margin: 0;
+  color: #092f46;
+  font-weight: 950;
+  line-height: 1.05;
+}
+.fab-panel-sub {
+  margin: 4px 0 0;
+  color: rgba(18, 48, 71, .64);
+  font-size: 12px;
+  font-weight: 700;
+}
+.fab-close {
+  width: 36px;
+  height: 36px;
+  border: 1px solid rgba(8, 152, 184, .16);
+  border-radius: 999px;
+  background: #fff;
+  color: #123047;
+  cursor: pointer;
+}
+.fab-messages {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  min-height: 180px;
+  max-height: 360px;
+  overflow: auto;
+  padding: 16px;
+  background: linear-gradient(180deg, #fff, #f5fdff);
+}
+.fab-msg {
+  width: fit-content;
+  max-width: 88%;
+  padding: 12px 14px;
+  border-radius: 18px;
+  font-size: 14px;
+  line-height: 1.5;
+}
+.fab-msg.bot {
+  align-self: flex-start;
+  background: #fff;
+  border: 1px solid rgba(8, 152, 184, .16);
+  color: #123047;
+}
+.fab-msg.user {
+  align-self: flex-end;
+  background: linear-gradient(135deg, var(--tangsel-cyan), var(--tangsel-green));
+  color: #fff;
+}
+.fab-form {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 10px;
+  padding: 14px;
+  border-top: 1px solid rgba(8, 152, 184, .14);
+  background: #fff;
+}
+.fab-input {
+  min-width: 0;
+  border: 1px solid rgba(8, 152, 184, .22);
+  border-radius: 16px;
+  padding: 12px 14px;
+  outline: none;
+  color: #123047;
+  background: #fbfeff;
+}
+.fab-input:focus {
+  border-color: var(--tangsel-cyan);
+  box-shadow: 0 0 0 4px rgba(8, 152, 184, .12);
+}
+.fab-send {
+  min-width: 48px;
+  border-radius: 16px;
+  padding: 0 16px;
+  cursor: pointer;
+  font-weight: 900;
+}
+@media (max-width: 560px) {
+  .floating-ai {
+    right: 12px;
+    bottom: 12px;
+  }
+  .fab-toggle span {
+    display: none;
+  }
+  .fab-toggle {
+    width: 58px;
+    min-width: 58px;
+    padding: 10px;
+    justify-content: center;
+  }
+  .fab-panel {
+    right: -4px;
+    bottom: 70px;
+    width: calc(100vw - 24px);
+    border-radius: 24px;
+  }
+}
+</style>
+<script id="robust-page-navigation-and-floating-ai">
+(function () {
+  const pageMap = [
+    ['overview', 'page-overview', /overview/i],
+    ['keputusan', 'page-keputusan', /keputusan/i],
+    ['kinerja', 'page-kinerja', /matriks|kkr/i],
+    ['industri', 'page-industri', /industri|ikm/i],
+    ['perdagangan', 'page-perdagangan', /perdagangan/i],
+    ['rpik', 'page-rpik', /rpik/i],
+    ['abt', 'page-abt', /abt/i],
+    ['risiko', 'page-risiko', /risiko/i],
+    ['pdrb', 'page-pdrb', /pdrb|target/i],
+    ['copilot', 'page-copilot', /copilot|ai/i]
+  ];
+  const keyToId = Object.fromEntries(pageMap.map(([key, id]) => [key, id]));
+  let recentDragAt = 0;
+
+  function inferKey(tab) {
+    if (!tab) return '';
+    if (tab.dataset.page) return tab.dataset.page;
+    const text = (tab.textContent || '').trim();
+    const found = pageMap.find(([, , re]) => re.test(text));
+    return found ? found[0] : '';
+  }
+
+  function activatePage(key, options = {}) {
+    const id = keyToId[key] || keyToId[String(key || '').replace(/^page-/, '')] || key;
+    const target = document.getElementById(id);
+    if (!target) return false;
+    document.querySelectorAll('.page').forEach(page => {
+      const active = page === target;
+      page.classList.toggle('active', active);
+      page.hidden = !active;
+      page.style.display = active ? '' : 'none';
+      page.setAttribute('aria-hidden', active ? 'false' : 'true');
+    });
+    document.querySelectorAll('.ntab').forEach(tab => {
+      const tabKey = inferKey(tab);
+      const active = tabKey === key || keyToId[tabKey] === id;
+      tab.classList.toggle('active', active);
+      tab.setAttribute('aria-selected', active ? 'true' : 'false');
+      tab.setAttribute('role', 'tab');
+      if (active) tab.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+    });
+    if (options.hash !== false) {
+      history.replaceState(null, '', '#' + (Object.entries(keyToId).find(([, pageId]) => pageId === id)?.[0] || key));
+    }
+    if (options.scroll !== false) window.scrollTo({ top: 0, behavior: 'smooth' });
+    return true;
+  }
+
+  document.querySelectorAll('.ntab').forEach(tab => {
+    const key = inferKey(tab);
+    if (key) {
+      tab.dataset.page = key;
+      tab.type = 'button';
+      tab.setAttribute('role', 'tab');
+      tab.setAttribute('aria-controls', keyToId[key]);
+    }
+  });
+
+  const tabsWrap = document.querySelector('.nav-tabs');
+  if (tabsWrap) {
+    let startX = 0;
+    tabsWrap.addEventListener('pointerdown', event => { startX = event.clientX; }, { passive: true });
+    tabsWrap.addEventListener('pointermove', event => {
+      if (Math.abs(event.clientX - startX) > 8) recentDragAt = Date.now();
+    }, { passive: true });
+  }
+
+  document.addEventListener('click', function (event) {
+    const tab = event.target.closest && event.target.closest('.ntab');
+    if (!tab) return;
+    if (Date.now() - recentDragAt < 420) return;
+    const key = inferKey(tab);
+    if (!key) return;
+    event.preventDefault();
+    event.stopPropagation();
+    activatePage(key);
+  }, true);
+
+  window.showPage = function (key) {
+    return activatePage(key);
+  };
+  window.addEventListener('hashchange', () => {
+    const key = decodeURIComponent(location.hash.replace('#', ''));
+    if (keyToId[key]) activatePage(key, { hash: false });
+  });
+  const initialKey = decodeURIComponent(location.hash.replace('#', ''));
+  if (keyToId[initialKey]) activatePage(initialKey, { hash: false, scroll: false });
+})();
+
+(function () {
+  if (document.getElementById('floating-ai')) return;
+  const shell = document.createElement('div');
+  shell.id = 'floating-ai';
+  shell.className = 'floating-ai';
+  shell.innerHTML = `
+    <section class="fab-panel" role="dialog" aria-label="AI Chat Disperindag">
+      <header class="fab-panel-head">
+        <div class="fab-panel-brand">
+          <img class="fab-panel-logo" src="/assets/tangsel-logo.png" alt="Logo Disperindag Tangsel">
+          <div>
+            <h2 class="fab-panel-title">AI Disperindag</h2>
+            <p class="fab-panel-sub">Tanya KKR, RPIK, ABT, risiko, dan program</p>
+          </div>
+        </div>
+        <button class="fab-close" type="button" aria-label="Tutup AI chat">×</button>
+      </header>
+      <div class="fab-messages">
+        <div class="fab-msg bot"><b>AI Disperindag siap.</b><br>Tanyakan prioritas, risiko, atau rekomendasi program. Jawaban memakai data dashboard dan backend OpenRouter.</div>
+      </div>
+      <form class="fab-form">
+        <input class="fab-input" name="question" autocomplete="off" placeholder="Tanya AI Disperindag..." aria-label="Tanya AI Disperindag">
+        <button class="fab-send" type="submit" aria-label="Kirim pertanyaan">➜</button>
+      </form>
+    </section>
+    <button class="fab-toggle" type="button" aria-expanded="false" aria-controls="floating-ai">
+      <img class="fab-logo" src="/assets/tangsel-logo.png" alt="">
+      <span>AI Chat</span>
+    </button>`;
+  document.body.appendChild(shell);
+
+  const toggle = shell.querySelector('.fab-toggle');
+  const close = shell.querySelector('.fab-close');
+  const form = shell.querySelector('.fab-form');
+  const input = shell.querySelector('.fab-input');
+  const messages = shell.querySelector('.fab-messages');
+
+  function openPanel(open) {
+    shell.classList.toggle('open', open);
+    toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+    if (open) setTimeout(() => input.focus(), 80);
+  }
+  function escapeHtml(value) {
+    return String(value || '').replace(/[&<>'"]/g, char => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' }[char]));
+  }
+  function addMessage(type, html) {
+    const node = document.createElement('div');
+    node.className = 'fab-msg ' + type;
+    node.innerHTML = html;
+    messages.appendChild(node);
+    messages.scrollTop = messages.scrollHeight;
+    return node;
+  }
+
+  toggle.addEventListener('click', () => openPanel(!shell.classList.contains('open')));
+  close.addEventListener('click', () => openPanel(false));
+  form.addEventListener('submit', async event => {
+    event.preventDefault();
+    const question = input.value.trim();
+    if (!question) return;
+    input.value = '';
+    addMessage('user', escapeHtml(question));
+    const loading = addMessage('bot', '<b>Menganalisis...</b><br>Menghubungi AI backend aman.');
+    try {
+      const response = await fetch('/api/copilot', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ question, mode: 'floating' })
+      });
+      if (response.status === 401) {
+        location.href = '/login.html?next=/';
+        return;
+      }
+      const data = await response.json();
+      loading.innerHTML = data.answer || 'AI belum memberi jawaban.';
+    } catch (error) {
+      loading.innerHTML = '<b>Gagal menghubungi AI.</b><br>' + escapeHtml(error.message || 'Coba lagi.');
+    }
+  });
+})();
+</script>
+<style id="tangsel-government-dashboard-complete-redesign">
+:root {
+  --gov-blue: #2f9fd3;
+  --gov-blue-dark: #087da5;
+  --gov-cyan: #0898b8;
+  --gov-gold: #f5bd26;
+  --gov-green: #12834b;
+  --gov-red: #c9252d;
+  --gov-brown: #7b4a2b;
+  --gov-ink: #111827;
+  --gov-muted: #64748b;
+  --gov-page: #f4f8fb;
+  --gov-card: #ffffff;
+  --gov-border: rgba(15, 23, 42, .10);
+  --gov-shadow: 0 10px 28px rgba(15, 23, 42, .08);
+}
+html {
+  scroll-behavior: smooth;
+}
+body {
+  min-height: 100vh;
+  background: var(--gov-page) !important;
+  color: var(--gov-ink) !important;
+}
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at 18% 4%, rgba(8, 152, 184, .12), transparent 30%),
+    radial-gradient(circle at 88% 8%, rgba(245, 189, 38, .13), transparent 26%),
+    linear-gradient(180deg, #f5fbfe 0%, #f8fafc 100%);
+}
+.content {
+  transition: margin .2s ease, padding .2s ease;
+}
+.page {
+  animation: tangselPageIn .24s ease both;
+}
+@keyframes tangselPageIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.phdr {
+  position: relative;
+  overflow: hidden;
+  padding: 24px !important;
+  border: 1px solid rgba(8, 152, 184, .16) !important;
+  border-radius: 24px !important;
+  background:
+    linear-gradient(135deg, rgba(255,255,255,.94), rgba(232,251,255,.9)),
+    radial-gradient(circle at 96% 0%, rgba(245, 189, 38, .26), transparent 34%) !important;
+  box-shadow: var(--gov-shadow) !important;
+  margin-bottom: 20px !important;
+}
+.phdr::before {
+  content: "";
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 6px;
+  background: linear-gradient(180deg, var(--gov-cyan), var(--gov-gold), var(--gov-green));
+}
+.phdr::after {
+  content: "DISPERINDAG TANGSEL";
+  position: absolute;
+  right: 20px;
+  top: 18px;
+  padding: 7px 10px;
+  border-radius: 999px;
+  background: rgba(8, 152, 184, .09);
+  color: var(--gov-blue-dark);
+  font-size: 11px;
+  font-weight: 950;
+  letter-spacing: .08em;
+}
+.phdr h1 {
+  margin: 0 0 8px !important;
+  max-width: 760px;
+  color: #0f2d44 !important;
+  font-size: clamp(26px, 3vw, 42px) !important;
+  line-height: 1.05 !important;
+  letter-spacing: -.045em !important;
+}
+.phdr p {
+  max-width: 800px;
+  color: #52677a !important;
+  font-weight: 650 !important;
+}
+.grid, .kpi-grid, .row2, .pdrb-row, .cards, .summary-grid {
+  gap: 20px !important;
+}
+.card, .kpi, .metric, .panel, .dec-item, .risk-card, .pdrb-card, .ai-card, .answer-card, .evidence-card {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid var(--gov-border) !important;
+  border-radius: 18px !important;
+  background: var(--gov-card) !important;
+  box-shadow: var(--gov-shadow) !important;
+}
+.card:hover, .kpi:hover, .dec-item:hover, .pdrb-card:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 16px 42px rgba(15, 23, 42, .10) !important;
+}
+.card-head, .card-header, .kpi-top {
+  border-bottom-color: rgba(15, 23, 42, .08) !important;
+}
+.card-title, .dec-title, .tracker-title, .pdrb-label {
+  color: #111827 !important;
+  font-weight: 950 !important;
+  letter-spacing: -.02em !important;
+}
+.card-sub, .kpi-lbl, .tracker-desc, .pdrb-note, small {
+  color: #64748b !important;
+}
+.kpi-val, .big-number, .pdrb-value {
+  color: #0f2d44 !important;
+  letter-spacing: -.05em !important;
+}
+.kpi:nth-child(5n + 1)::after,
+.card:nth-child(5n + 1)::after {
+  background: rgba(8, 152, 184, .12);
+}
+.kpi:nth-child(5n + 2)::after,
+.card:nth-child(5n + 2)::after {
+  background: rgba(245, 189, 38, .14);
+}
+.kpi:nth-child(5n + 3)::after,
+.card:nth-child(5n + 3)::after {
+  background: rgba(18, 131, 75, .12);
+}
+.kpi:nth-child(5n + 4)::after,
+.card:nth-child(5n + 4)::after {
+  background: rgba(201, 37, 45, .10);
+}
+.kpi:nth-child(5n + 5)::after,
+.card:nth-child(5n + 5)::after {
+  background: rgba(123, 74, 43, .10);
+}
+.kpi::after, .card::after {
+  content: "";
+  position: absolute;
+  right: -26px;
+  top: -26px;
+  width: 90px;
+  height: 90px;
+  border-radius: 999px;
+  pointer-events: none;
+}
+table {
+  width: 100%;
+  border-collapse: separate !important;
+  border-spacing: 0 !important;
+  overflow: hidden;
+  border-radius: 14px;
+}
+thead th, th {
+  background: #eef4f8 !important;
+  color: #15293b !important;
+  font-size: 13px !important;
+  text-transform: none !important;
+  letter-spacing: -.01em !important;
+}
+td, th {
+  border-bottom: 1px solid rgba(15, 23, 42, .08) !important;
+  padding: 12px 14px !important;
+}
+tbody tr:hover {
+  background: rgba(8, 152, 184, .045) !important;
+}
+.table-wrap, .overflow-table, .table-scroll {
+  border-radius: 16px !important;
+  border: 1px solid rgba(15, 23, 42, .08) !important;
+  background: #fff !important;
+}
+.pill, .badge, .status, .tag, .chip {
+  border-radius: 999px !important;
+  font-weight: 850 !important;
+}
+.pill.good, .status.good, .badge.good, .tag.good {
+  background: rgba(18, 131, 75, .12) !important;
+  color: #0f7a45 !important;
+}
+.pill.warn, .status.warn, .badge.warn, .tag.warn {
+  background: rgba(245, 189, 38, .18) !important;
+  color: #8a5b03 !important;
+}
+.pill.bad, .status.bad, .badge.bad, .tag.bad {
+  background: rgba(201, 37, 45, .12) !important;
+  color: #b31f27 !important;
+}
+.progress, .bar, .meter {
+  background: #e8eef3 !important;
+  border-radius: 999px !important;
+}
+.progress span, .bar span, .meter span {
+  background: linear-gradient(90deg, var(--gov-cyan), var(--gov-green)) !important;
+  border-radius: inherit !important;
+}
+input, textarea, select {
+  border-color: rgba(8, 152, 184, .22) !important;
+  border-radius: 14px !important;
+}
+input:focus, textarea:focus, select:focus {
+  outline: none !important;
+  border-color: var(--gov-cyan) !important;
+  box-shadow: 0 0 0 4px rgba(8, 152, 184, .12) !important;
+}
+button, .btn, .ntab, a {
+  transition: transform .16s ease, box-shadow .16s ease, background .16s ease, color .16s ease !important;
+}
+button:active, .btn:active, .ntab:active {
+  transform: translateY(1px) scale(.99);
+}
+.fab-panel {
+  border-radius: 18px !important;
+}
+.fab-toggle {
+  border-radius: 18px !important;
+}
+@media (min-width: 1040px) {
+  .page .phdr + .kpi-grid,
+  .page .phdr + .grid,
+  .page .phdr + .row2,
+  .page .phdr + .card {
+    margin-top: 4px !important;
+  }
+  .content {
+    min-height: calc(100vh - 96px);
+  }
+  .nav-tabs .ntab svg,
+  .nav-tabs .ntab i {
+    color: var(--gov-blue-dark) !important;
+  }
+}
+@media (max-width: 760px) {
+  .phdr {
+    padding: 22px 18px !important;
+    border-radius: 22px !important;
+  }
+  .phdr::after {
+    position: static;
+    display: inline-flex;
+    margin-top: 14px;
+  }
+  .card, .kpi, .dec-item, .pdrb-card {
+    border-radius: 20px !important;
+  }
+  td, th {
+    padding: 11px 12px !important;
+  }
+}
+</style>
+<script id="tangsel-all-pages-redesign-enhancer">
+(function () {
+  const meta = {
+    'page-overview': ['Beranda Eksekutif', 'Ringkasan lintas program, status KKR, dan keputusan cepat.'],
+    'page-keputusan': ['Agenda Pimpinan', 'Daftar keputusan strategis yang perlu dikunci lintas bidang.'],
+    'page-kinerja': ['Matriks KKR', 'Reviu keselarasan RPJMD, RKPD, Renstra, dan Renja.'],
+    'page-industri': ['Industri & IKM', 'Capaian perindustrian, SIINas, JPH, dan peta baseline IKM.'],
+    'page-perdagangan': ['Perdagangan', 'Program distribusi, stabilisasi harga, perlindungan konsumen, dan ekspor.'],
+    'page-rpik': ['RPIK 2027', 'Kesiapan fondasi Rencana Pembangunan Industri Kota.'],
+    'page-abt': ['ABT 2026', 'Usulan kegiatan prioritas untuk mengunci fondasi RPIK.'],
+    'page-risiko': ['Risiko & Tindak Lanjut', 'Penyebab tidak selaras, mitigasi regulasi, dan pemilik aksi.'],
+    'page-pdrb': ['Target PDRB', 'Kontribusi industri dan perdagangan terhadap ekonomi kota.'],
+    'page-copilot': ['AI Copilot', 'Asisten analisis berbasis dashboard dan dokumen perencanaan.']
+  };
+  document.body.classList.add('tangsel-redesign-v2');
+  document.querySelectorAll('.page').forEach(page => {
+    page.classList.add('gov-page');
+    const info = meta[page.id];
+    const header = page.querySelector('.phdr');
+    if (header && info && !header.querySelector('.gov-page-kicker')) {
+      const kicker = document.createElement('div');
+      kicker.className = 'gov-page-kicker';
+      kicker.textContent = info[0];
+      kicker.style.cssText = 'display:inline-flex;margin:0 0 12px;padding:7px 10px;border-radius:999px;background:rgba(8,152,184,.1);color:#087da5;font-size:12px;font-weight:950;letter-spacing:.08em;text-transform:uppercase;';
+      header.prepend(kicker);
+      const p = header.querySelector('p');
+      if (p && (!p.textContent || p.textContent.trim().length < 12)) p.textContent = info[1];
+    }
+  });
+  document.querySelectorAll('table').forEach(table => {
+    if (table.parentElement && table.parentElement.classList.contains('gov-table-wrap')) return;
+    const wrap = document.createElement('div');
+    wrap.className = 'gov-table-wrap';
+    wrap.style.cssText = 'overflow:auto;border:1px solid rgba(15,23,42,.08);border-radius:16px;background:#fff;';
+    table.parentNode.insertBefore(wrap, table);
+    wrap.appendChild(table);
+  });
 })();
 </script>
 </body>
