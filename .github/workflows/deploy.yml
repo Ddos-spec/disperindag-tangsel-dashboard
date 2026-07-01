@@ -27,32 +27,30 @@ jobs:
       - name: Setup Pages
         uses: actions/configure-pages@v5
 
-      - name: Generate runtime auth config
+      - name: Generate GitHub Pages redirect
         shell: bash
-        env:
-          DASHBOARD_ACCESS_HASH: ${{ secrets.DASHBOARD_ACCESS_HASH }}
-          DASHBOARD_ACCESS_SALT: ${{ secrets.DASHBOARD_ACCESS_SALT }}
-          OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
         run: |
-          if [ -z "$DASHBOARD_ACCESS_HASH" ] || [ -z "$DASHBOARD_ACCESS_SALT" ]; then
-            echo "Missing dashboard auth secrets" >&2
-            exit 1
-          fi
-          if [ -z "$OPENROUTER_API_KEY" ]; then
-            echo "Missing OpenRouter API secret" >&2
-            exit 1
-          fi
-          cat > auth-config.js <<EOF
-          window.DASHBOARD_AUTH_CONFIG = {
-            hash: "$DASHBOARD_ACCESS_HASH",
-            salt: "$DASHBOARD_ACCESS_SALT"
-          };
+          mkdir -p pages-redirect
+          cat > pages-redirect/index.html <<'EOF'
+          <!doctype html>
+          <html lang="id">
+          <head>
+            <meta charset="utf-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1">
+            <meta http-equiv="refresh" content="0; url=https://exec-dashboard-ashen.vercel.app/">
+            <title>Redirecting...</title>
+            <script>location.replace('https://exec-dashboard-ashen.vercel.app/');</script>
+          </head>
+          <body>
+            <a href="https://exec-dashboard-ashen.vercel.app/">Buka dashboard production</a>
+          </body>
+          </html>
           EOF
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: '.'
+          path: 'pages-redirect'
 
       - name: Deploy to GitHub Pages
         id: deployment

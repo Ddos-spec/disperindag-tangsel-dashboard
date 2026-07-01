@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Login Dashboard Strategis Disperindag Tangsel</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    *{box-sizing:border-box}body{margin:0;min-height:100vh;font-family:Inter,system-ui,-apple-system,Segoe UI,sans-serif;color:#111827;background:radial-gradient(circle at 18% 18%,rgba(124,58,237,.20),transparent 30%),radial-gradient(circle at 82% 8%,rgba(16,185,129,.16),transparent 28%),linear-gradient(135deg,#F7F3FF 0%,#FFFFFF 48%,#EEF2FF 100%);display:grid;place-items:center;padding:22px}.card{width:min(460px,100%);padding:30px;border:1px solid rgba(124,58,237,.18);border-radius:28px;background:rgba(255,255,255,.90);box-shadow:0 24px 70px rgba(49,46,129,.18);backdrop-filter:blur(18px)}.badge{display:inline-flex;margin-bottom:16px;padding:7px 12px;border-radius:999px;background:#EDE9FE;color:#6D28D9;font-size:12px;font-weight:900;letter-spacing:.04em;text-transform:uppercase}h1{margin:0 0 10px;font-size:clamp(30px,9vw,42px);line-height:1.05;letter-spacing:-.05em}p{margin:0 0 22px;color:#4B5563;line-height:1.55}.form{display:grid;gap:10px}label{color:#374151;font-size:12px;font-weight:900;letter-spacing:.05em;text-transform:uppercase}input{width:100%;min-height:50px;padding:0 14px;border:1px solid #DDD6FE;border-radius:14px;color:#111827;background:#fff;font:inherit;outline:none}input:focus{border-color:#7C3AED;box-shadow:0 0 0 4px rgba(124,58,237,.12)}button{min-height:50px;margin-top:6px;border:0;border-radius:14px;background:linear-gradient(135deg,#7C3AED,#4F46E5);color:#fff;font-weight:900;cursor:pointer;box-shadow:0 14px 30px rgba(124,58,237,.24)}button:disabled{opacity:.65;cursor:wait}.error{min-height:20px;color:#DC2626;font-size:13px;font-weight:800}.secure{margin-top:14px;color:#64748B;font-size:12px;line-height:1.45}@media(max-width:420px){.card{padding:26px;border-radius:26px}}
+  </style>
+</head>
+<body>
+  <main class="card">
+    <div class="badge">Disperindag Tangsel</div>
+    <h1>Login Dashboard Strategis</h1>
+    <p>Masukkan access code operator untuk membuka dashboard. Autentikasi dan AI berjalan lewat backend server-side.</p>
+    <form id="login-form" class="form">
+      <label for="login-code">Access Code</label>
+      <input id="login-code" name="accessCode" type="password" autocomplete="current-password" placeholder="Masukkan access code" required autofocus />
+      <button id="login-button" type="submit">Masuk Dashboard</button>
+      <div class="error" id="login-error" role="alert"></div>
+    </form>
+    <div class="secure">Secret API tidak dikirim ke browser. Session memakai cookie HttpOnly.</div>
+  </main>
+  <script>
+    const form = document.getElementById('login-form');
+    const input = document.getElementById('login-code');
+    const button = document.getElementById('login-button');
+    const errorBox = document.getElementById('login-error');
+    form.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      errorBox.textContent = '';
+      button.disabled = true;
+      button.textContent = 'Memeriksa...';
+      try {
+        const res = await fetch('/api/login', {
+          method: 'POST',
+          credentials: 'same-origin',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ accessCode: input.value.trim() })
+        });
+        const data = await res.json().catch(() => ({}));
+        if (!res.ok || !data.ok) throw new Error(data.error || 'Login gagal.');
+        const next = new URLSearchParams(location.search).get('next') || '/';
+        location.href = next.startsWith('/') ? next : '/';
+      } catch (error) {
+        errorBox.textContent = error.message || 'Login gagal.';
+        input.select();
+      } finally {
+        button.disabled = false;
+        button.textContent = 'Masuk Dashboard';
+      }
+    });
+  </script>
+</body>
+</html>

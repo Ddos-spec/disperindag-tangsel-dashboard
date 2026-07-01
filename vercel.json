@@ -1,0 +1,13 @@
+{
+  "version": 2,
+  "cleanUrls": true,
+  "routes": [
+    { "src": "/", "dest": "/api/dashboard.js" },
+    { "src": "/index.html", "dest": "/api/dashboard.js" },
+    { "handle": "filesystem" }
+  ],
+  "functions": {
+    "api/dashboard.js": { "includeFiles": "api/_templates/dashboard.html" },
+    "api/copilot.js": { "maxDuration": 30 }
+  }
+}

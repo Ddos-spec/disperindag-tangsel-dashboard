@@ -1,0 +1,1 @@
+window.DASHBOARD_AUTH_CONFIG = {};
