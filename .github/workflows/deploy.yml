@@ -27,6 +27,28 @@ jobs:
       - name: Setup Pages
         uses: actions/configure-pages@v5
 
+      - name: Generate runtime auth config
+        shell: bash
+        env:
+          DASHBOARD_ACCESS_HASH: ${{ secrets.DASHBOARD_ACCESS_HASH }}
+          DASHBOARD_ACCESS_SALT: ${{ secrets.DASHBOARD_ACCESS_SALT }}
+          OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
+        run: |
+          if [ -z "$DASHBOARD_ACCESS_HASH" ] || [ -z "$DASHBOARD_ACCESS_SALT" ]; then
+            echo "Missing dashboard auth secrets" >&2
+            exit 1
+          fi
+          if [ -z "$OPENROUTER_API_KEY" ]; then
+            echo "Missing OpenRouter API secret" >&2
+            exit 1
+          fi
+          cat > auth-config.js <<EOF
+          window.DASHBOARD_AUTH_CONFIG = {
+            hash: "$DASHBOARD_ACCESS_HASH",
+            salt: "$DASHBOARD_ACCESS_SALT"
+          };
+          EOF
+
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:

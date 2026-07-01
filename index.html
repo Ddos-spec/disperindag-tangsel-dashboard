@@ -222,12 +222,139 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--t1);min-hei
 </style>
 
 <style id="mobile-overflow-guard">
+body.auth-locked {
+  min-height: 100vh;
+  overflow: hidden;
+}
+body.auth-locked .topnav,
+body.auth-locked .content {
+  display: none !important;
+}
+.login-screen {
+  display: none;
+  min-height: 100vh;
+  padding: 28px;
+  place-items: center;
+  background:
+    radial-gradient(circle at 18% 18%, rgba(124, 58, 237, .20), transparent 30%),
+    radial-gradient(circle at 82% 8%, rgba(16, 185, 129, .16), transparent 28%),
+    linear-gradient(135deg, #F7F3FF 0%, #FFFFFF 48%, #EEF2FF 100%);
+}
+body.auth-locked .login-screen {
+  display: grid;
+}
+.login-card {
+  width: min(460px, 100%);
+  padding: 30px;
+  border: 1px solid rgba(124, 58, 237, .18);
+  border-radius: 28px;
+  background: rgba(255, 255, 255, .88);
+  box-shadow: 0 24px 70px rgba(49, 46, 129, .18);
+  backdrop-filter: blur(18px);
+}
+.login-badge {
+  display: inline-flex;
+  margin-bottom: 16px;
+  padding: 7px 12px;
+  border-radius: 999px;
+  background: #EDE9FE;
+  color: #6D28D9;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+}
+.login-card h1 {
+  margin: 0 0 10px;
+  color: #111827;
+  font-size: clamp(28px, 6vw, 40px);
+  line-height: 1.05;
+}
+.login-card p {
+  margin: 0 0 22px;
+  color: #4B5563;
+  line-height: 1.55;
+}
+.login-form {
+  display: grid;
+  gap: 10px;
+}
+.login-form label {
+  color: #374151;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: .05em;
+  text-transform: uppercase;
+}
+.login-form input {
+  width: 100%;
+  min-height: 48px;
+  padding: 0 14px;
+  border: 1px solid #DDD6FE;
+  border-radius: 14px;
+  color: #111827;
+  background: #FFFFFF;
+  font: inherit;
+  outline: none;
+}
+.login-form input:focus {
+  border-color: #7C3AED;
+  box-shadow: 0 0 0 4px rgba(124, 58, 237, .12);
+}
+.login-form button,
+.logout-btn {
+  border: 0;
+  border-radius: 14px;
+  background: linear-gradient(135deg, #7C3AED, #4F46E5);
+  color: #FFFFFF;
+  font-weight: 800;
+  cursor: pointer;
+}
+.login-form button {
+  min-height: 48px;
+  margin-top: 6px;
+}
+.logout-btn {
+  padding: 9px 12px;
+  white-space: nowrap;
+}
+.login-error {
+  min-height: 20px;
+  color: #DC2626;
+  font-size: 13px;
+  font-weight: 700;
+}
+.nav-tabs {
+  cursor: grab;
+  scroll-behavior: smooth;
+  scrollbar-width: thin;
+  user-select: none;
+  -webkit-overflow-scrolling: touch;
+}
+.nav-tabs.dragging {
+  cursor: grabbing;
+  scroll-behavior: auto;
+}
+.nav-tabs.dragging .ntab {
+  pointer-events: none;
+}
+.topnav {
+  z-index: 1000;
+}
+.topnav .nav-tabs {
+  position: relative;
+  z-index: 2;
+}
 @media (max-width: 760px) {
   .topnav {
     flex-wrap: wrap;
     align-items: flex-start;
     overflow-x: hidden;
+    overflow-y: visible;
     gap: 10px;
+    height: auto !important;
+    min-height: 60px;
+    padding-bottom: 10px;
   }
   .topnav .nav-brand {
     flex: 1 1 100%;
@@ -301,8 +428,312 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--t1);min-hei
 }
 </style>
 
+<script src="auth-config.js"></script>
+<style id="mobile-polish-v2">
+@media (max-width: 760px) {
+  :root {
+    --mobile-gutter: 20px;
+  }
+
+  body {
+    background: linear-gradient(180deg, #F4F0FF 0%, #FAFAFF 45%, #FFFFFF 100%);
+  }
+
+  .topnav {
+    padding: 10px var(--mobile-gutter) 12px !important;
+    border-bottom: 1px solid rgba(124, 58, 237, .10);
+    box-shadow: 0 12px 34px rgba(76, 29, 149, .10);
+  }
+
+  .nav-brand {
+    gap: 10px !important;
+  }
+
+  .nav-brand img,
+  .nav-logo {
+    width: 34px !important;
+    height: 34px !important;
+  }
+
+  .nav-brand strong {
+    font-size: 13px !important;
+    line-height: 1.15;
+  }
+
+  .nav-brand small {
+    font-size: 10px !important;
+  }
+
+  .nav-r {
+    gap: 8px !important;
+  }
+
+  #clock {
+    max-width: 164px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .logout-btn {
+    min-height: 34px;
+    padding: 8px 12px;
+    border-radius: 999px;
+  }
+
+  .nav-tabs {
+    margin-top: 2px;
+    padding: 2px 0 6px;
+    mask-image: linear-gradient(90deg, transparent 0, #000 18px, #000 calc(100% - 18px), transparent 100%);
+  }
+
+  .ntab {
+    min-height: 32px;
+    padding: 7px 10px !important;
+    border-radius: 10px !important;
+    font-size: 12px !important;
+  }
+
+  .content {
+    padding: 22px var(--mobile-gutter) 40px !important;
+  }
+
+  .phdr {
+    margin-bottom: 18px !important;
+  }
+
+  .phdr h1 {
+    font-size: 24px !important;
+    letter-spacing: -.03em;
+  }
+
+  .phdr p {
+    font-size: 13px !important;
+    line-height: 1.45;
+  }
+
+  .kpi-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 12px !important;
+  }
+
+  .kpi {
+    min-width: 0;
+    min-height: 172px !important;
+    padding: 16px !important;
+    border-radius: 18px !important;
+    overflow: hidden;
+  }
+
+  .kpi-top {
+    width: 100% !important;
+    min-width: 0;
+  }
+
+  .kpi-top > * {
+    min-width: 0;
+  }
+
+  .kpi h2,
+  .kpi-top strong,
+  .kpi-top b {
+    max-width: 100%;
+    font-size: clamp(28px, 9vw, 34px) !important;
+    line-height: .96 !important;
+    letter-spacing: -.05em;
+    overflow-wrap: anywhere;
+  }
+
+  .kpi .kpi-num {
+    max-width: 100%;
+    font-size: clamp(26px, 7.4vw, 30px) !important;
+    line-height: 1 !important;
+    letter-spacing: -.055em;
+    white-space: nowrap;
+    overflow: visible;
+  }
+
+  .kpi-ico {
+    width: 34px !important;
+    height: 34px !important;
+    flex: 0 0 34px;
+  }
+
+  .kpi p,
+  .kpi-label,
+  .kpi-tgt,
+  .kpi-dl {
+    font-size: 11px !important;
+    line-height: 1.22 !important;
+  }
+
+  .kpi-bar {
+    width: 100% !important;
+  }
+
+  .row2,
+  .grid2,
+  .grid3,
+  .split,
+  .cop-layout {
+    grid-template-columns: 1fr !important;
+  }
+
+  .row2 {
+    gap: 14px !important;
+  }
+
+  .card,
+  .cop-panel {
+    width: 100% !important;
+    min-width: 0;
+    border-radius: 18px !important;
+  }
+
+  .card-head,
+  .cop-head {
+    padding: 16px !important;
+  }
+
+  .card-body,
+  .cop-history,
+  .cop-answer-body,
+  .ev-list {
+    padding: 16px !important;
+  }
+
+  .card h2,
+  .card h3,
+  .cop-head-title {
+    font-size: 15px !important;
+    line-height: 1.2 !important;
+  }
+
+  .chart-wrap {
+    min-height: 240px;
+    width: 100% !important;
+  }
+
+  .table-wrap,
+  table {
+    max-width: 100%;
+  }
+
+  .table-wrap {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .cop-sug {
+    padding: 16px !important;
+  }
+
+  .cop-input-area {
+    position: relative;
+    z-index: 5;
+    padding: 12px 16px 16px !important;
+    border-top: 1px solid rgba(124, 58, 237, .12);
+    background: rgba(255, 255, 255, .96);
+    backdrop-filter: blur(14px);
+  }
+
+  .cop-input {
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+    gap: 10px !important;
+    width: 100% !important;
+  }
+
+  .cop-textarea {
+    width: 100% !important;
+    min-width: 0;
+    min-height: 46px !important;
+    max-height: 110px;
+    border-radius: 14px !important;
+  }
+
+  .cop-send {
+    width: 100% !important;
+    min-height: 42px;
+    border-radius: 14px !important;
+  }
+
+  .cop-sug-btn {
+    min-height: 36px;
+    padding: 9px 12px !important;
+    border-radius: 10px !important;
+    text-align: left;
+  }
+
+  .chat-msg {
+    max-width: 92% !important;
+    font-size: 12px !important;
+    line-height: 1.45 !important;
+  }
+
+  .cop-modes {
+    display: flex;
+    gap: 8px;
+    overflow-x: auto;
+    padding-bottom: 2px;
+  }
+
+  .cop-mode {
+    flex: 0 0 auto;
+    min-height: 34px;
+    padding: 7px 12px !important;
+    border-radius: 10px !important;
+  }
+
+  .ans-card {
+    font-size: 15px !important;
+    line-height: 1.5 !important;
+  }
+
+  .login-screen {
+    padding: 22px;
+    align-items: center;
+  }
+
+  .login-card {
+    padding: 26px;
+    border-radius: 26px;
+  }
+
+  .login-card h1 {
+    font-size: clamp(30px, 9vw, 38px);
+  }
+}
+
+@media (max-width: 360px) {
+  :root {
+    --mobile-gutter: 16px;
+  }
+
+  .kpi-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  #clock {
+    max-width: 138px;
+  }
+}
+</style>
 </head>
-<body>
+<body class="auth-locked">
+<section class="login-screen" id="login-screen" aria-label="Login dashboard">
+  <div class="login-card">
+    <div class="login-badge">Disperindag Tangsel</div>
+    <h1>Login Dashboard Strategis</h1>
+    <p>Masukkan access code operator untuk membuka dashboard. Secret API tetap disimpan di server/GitHub Secrets, bukan di browser.</p>
+    <form id="login-form" class="login-form">
+      <label for="login-code">Access Code</label>
+      <input id="login-code" name="accessCode" type="password" autocomplete="current-password" placeholder="Masukkan access code" required />
+      <button type="submit">Masuk Dashboard</button>
+      <div class="login-error" id="login-error" role="alert"></div>
+    </form>
+  </div>
+</section>
 
 <!-- ════════════ TOP NAV ════════════ -->
 <nav class="topnav">
@@ -958,6 +1389,191 @@ function setMode(mode, button) {
 window.sendQuery = sendQuery;
 window.askSuggestion = askSuggestion;
 window.setMode = setMode;
+
+const dashboardAuth = {
+  storageKey: 'disperindag-dashboard-auth:v1'
+};
+
+function setLoginError(message) {
+  const errorBox = document.getElementById('login-error');
+  if (errorBox) errorBox.textContent = message || '';
+}
+
+async function sha256Hex(value) {
+  if (!window.crypto?.subtle) {
+    throw new Error('Browser tidak mendukung Web Crypto.');
+  }
+  const bytes = new TextEncoder().encode(value);
+  const digest = await crypto.subtle.digest('SHA-256', bytes);
+  return Array.from(new Uint8Array(digest)).map(byte => byte.toString(16).padStart(2, '0')).join('');
+}
+
+function getAuthConfig() {
+  return window.DASHBOARD_AUTH_CONFIG || {};
+}
+
+function unlockDashboard() {
+  document.body.classList.remove('auth-locked');
+  document.getElementById('login-screen')?.setAttribute('aria-hidden', 'true');
+}
+
+function lockDashboard() {
+  sessionStorage.removeItem(dashboardAuth.storageKey);
+  document.body.classList.add('auth-locked');
+  document.getElementById('login-screen')?.removeAttribute('aria-hidden');
+  window.setTimeout(() => document.getElementById('login-code')?.focus(), 50);
+}
+
+function initLogoutButton() {
+  const navRight = document.querySelector('.nav-r');
+  if (!navRight || document.getElementById('logout-dashboard')) return;
+  const button = document.createElement('button');
+  button.id = 'logout-dashboard';
+  button.className = 'logout-btn';
+  button.type = 'button';
+  button.textContent = 'Logout';
+  button.addEventListener('click', lockDashboard);
+  navRight.appendChild(button);
+}
+
+function initLoginGate() {
+  const form = document.getElementById('login-form');
+  const input = document.getElementById('login-code');
+  initLogoutButton();
+  if (sessionStorage.getItem(dashboardAuth.storageKey) === 'ok') {
+    unlockDashboard();
+    return;
+  }
+  lockDashboard();
+  form?.addEventListener('submit', async event => {
+    event.preventDefault();
+    setLoginError('');
+    const config = getAuthConfig();
+    const code = input?.value.trim() || '';
+    if (!config.hash || !config.salt) {
+      setLoginError('Konfigurasi login belum tersedia. Pastikan GitHub Secrets sudah terpasang dan deploy selesai.');
+      return;
+    }
+    try {
+      const digest = await sha256Hex(`${config.salt}:${code}`);
+      if (digest !== config.hash) {
+        setLoginError('Access code salah.');
+        input?.select();
+        return;
+      }
+      sessionStorage.setItem(dashboardAuth.storageKey, 'ok');
+      input.value = '';
+      unlockDashboard();
+    } catch (error) {
+      setLoginError(error.message || 'Login gagal.');
+    }
+  });
+}
+
+initLoginGate();
+
+function initDraggableNav() {
+  const navTabs = document.querySelector('.nav-tabs');
+  if (!navTabs) return;
+  let isDown = false;
+  let startX = 0;
+  let scrollLeft = 0;
+  let moved = false;
+  let suppressClick = false;
+  let suppressUntil = 0;
+  let dragSource = '';
+
+  navTabs.addEventListener('pointerdown', event => {
+    if (event.pointerType === 'mouse') return;
+    isDown = true;
+    moved = false;
+    dragSource = 'pointer';
+    startX = event.clientX;
+    scrollLeft = navTabs.scrollLeft;
+  });
+
+  navTabs.addEventListener('pointermove', event => {
+    if (!isDown || dragSource !== 'pointer') return;
+    const deltaX = event.clientX - startX;
+    if (Math.abs(deltaX) > 4) {
+      moved = true;
+      navTabs.classList.add('dragging');
+    }
+    navTabs.scrollLeft = scrollLeft - deltaX;
+    if (moved) event.preventDefault();
+  });
+
+  const stopDrag = event => {
+    if (!isDown || dragSource !== 'pointer') return;
+    isDown = false;
+    suppressClick = moved;
+    suppressUntil = moved ? performance.now() + 180 : 0;
+    dragSource = '';
+    navTabs.classList.remove('dragging');
+    window.setTimeout(() => {
+      suppressClick = false;
+      moved = false;
+    }, 120);
+  };
+
+  navTabs.addEventListener('pointerup', stopDrag);
+  navTabs.addEventListener('pointercancel', stopDrag);
+  navTabs.addEventListener('pointerleave', stopDrag);
+
+  navTabs.addEventListener('mousedown', event => {
+    if (event.button !== 0 || isDown) return;
+    isDown = true;
+    moved = false;
+    dragSource = 'mouse';
+    startX = event.clientX;
+    scrollLeft = navTabs.scrollLeft;
+  });
+
+  window.addEventListener('mousemove', event => {
+    if (!isDown || dragSource !== 'mouse') return;
+    const deltaX = event.clientX - startX;
+    if (Math.abs(deltaX) > 4) {
+      moved = true;
+      navTabs.classList.add('dragging');
+    }
+    navTabs.scrollLeft = scrollLeft - deltaX;
+    if (moved) event.preventDefault();
+  });
+
+  window.addEventListener('mouseup', () => {
+    if (!isDown || dragSource !== 'mouse') return;
+    isDown = false;
+    suppressClick = moved;
+    suppressUntil = moved ? performance.now() + 180 : 0;
+    dragSource = '';
+    navTabs.classList.remove('dragging');
+    window.setTimeout(() => {
+      suppressClick = false;
+      moved = false;
+    }, 120);
+  });
+
+  navTabs.addEventListener('click', event => {
+    const shouldSuppress = suppressClick && performance.now() < suppressUntil;
+    if (shouldSuppress) {
+      event.preventDefault();
+      event.stopPropagation();
+      event.stopImmediatePropagation?.();
+      suppressClick = false;
+      suppressUntil = 0;
+      return;
+    }
+    suppressClick = false;
+    suppressUntil = 0;
+    const tab = event.target.closest?.('.ntab');
+    const match = tab?.getAttribute('onclick')?.match(/nav\('([^']+)'/);
+    if (tab && match?.[1]) {
+      nav(match[1], tab);
+    }
+  }, true);
+}
+
+initDraggableNav();
 
 </script>
 </body>
