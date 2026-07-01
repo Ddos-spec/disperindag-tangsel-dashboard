@@ -1,0 +1,1201 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dashboard Strategis Disperindag Tangsel 2027</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --sb:#0B1426;--sb2:#111827;--sbline:#1E293B;--sbtext:#94A3B8;
+  --bg:#F0F4F8;--card:#fff;--border:#E2E8F0;
+  --t1:#0F172A;--t2:#475569;--t3:#94A3B8;
+  --blue:#1D4ED8;--indigo:#4F46E5;
+  --green:#059669;--green-bg:#D1FAE5;--green-text:#065F46;
+  --yellow:#D97706;--yellow-bg:#FEF3C7;--yellow-text:#92400E;
+  --red:#DC2626;--red-bg:#FEE2E2;--red-text:#991B1B;
+  --violet:#7C3AED;--sky:#0EA5E9;
+  --sh:0 1px 3px rgba(0,0,0,.06),0 4px 16px rgba(0,0,0,.06);
+  --sh2:0 8px 32px rgba(0,0,0,.12);
+}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--t1);display:flex;min-height:100vh;overflow:hidden}
+
+/* SIDEBAR */
+.sb{width:232px;min-width:232px;background:var(--sb);height:100vh;position:fixed;left:0;top:0;display:flex;flex-direction:column;z-index:100;border-right:1px solid var(--sbline)}
+.sb-logo{padding:18px 16px;display:flex;align-items:center;gap:10px;border-bottom:1px solid var(--sbline)}
+.sb-emblem{width:34px;height:34px;background:linear-gradient(135deg,#1D4ED8,#4F46E5);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0}
+.sb-name{color:#F1F5F9;font-size:12px;font-weight:700;line-height:1.3}
+.sb-sub{color:#64748B;font-size:9px;font-weight:500;margin-top:1px}
+.sb-nav{flex:1;padding:10px 8px;display:flex;flex-direction:column;gap:1px;overflow-y:auto}
+.sb-label{color:#475569;font-size:9px;font-weight:700;letter-spacing:1px;padding:10px 10px 4px;text-transform:uppercase}
+.nav{display:flex;align-items:center;gap:9px;padding:8px 10px;border-radius:7px;color:var(--sbtext);font-size:12px;font-weight:500;cursor:pointer;transition:all .15s;border:none;background:none;width:100%;text-align:left}
+.nav:hover{background:#1E293B;color:#E2E8F0}
+.nav.active{background:#1D4ED8;color:#fff}
+.nav svg{width:15px;height:15px;flex-shrink:0;opacity:.8}
+.nav.active svg{opacity:1}
+.sb-foot{padding:12px 14px;border-top:1px solid var(--sbline)}
+.sb-ft{color:#374151;font-size:9px;font-weight:600}
+.sb-fd{color:#4B5563;font-size:9px;margin-top:2px}
+
+/* MAIN */
+.main{margin-left:232px;flex:1;display:flex;flex-direction:column;height:100vh;overflow:hidden}
+.topbar{height:56px;background:rgba(255,255,255,.92);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;padding:0 24px;flex-shrink:0;position:sticky;top:0;z-index:50}
+.tb-left{display:flex;align-items:center;gap:10px}
+.tb-badge{background:#EEF2FF;color:#4338CA;font-size:9px;font-weight:700;padding:3px 7px;border-radius:999px;text-transform:uppercase;letter-spacing:.5px}
+#page-title{font-size:14px;font-weight:700;color:var(--t1)}
+.tb-right{display:flex;align-items:center;gap:10px}
+#clock{font-size:11px;font-weight:600;color:var(--t2);background:#F8FAFC;padding:5px 10px;border-radius:6px;border:1px solid var(--border);font-variant-numeric:tabular-nums}
+.status-badge{background:#D1FAE5;color:#065F46;font-size:10px;font-weight:700;padding:5px 10px;border-radius:6px;display:flex;align-items:center;gap:4px}
+.dot-green{width:6px;height:6px;background:#059669;border-radius:50%;display:inline-block}
+
+/* CONTENT */
+.content{flex:1;overflow-y:auto;padding:20px 24px 40px}
+.page{display:none;animation:fi .2s ease}
+.page.active{display:block}
+@keyframes fi{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+
+/* SECTION TITLE */
+.sec-title{font-size:16px;font-weight:700;color:var(--t1);margin-bottom:3px}
+.sec-sub{font-size:12px;color:var(--t2);margin-bottom:18px}
+
+/* KPI GRID */
+.kpi-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:18px}
+.kpi{background:var(--card);border-radius:12px;padding:18px;border:1px solid var(--border);box-shadow:var(--sh);position:relative;overflow:hidden;transition:transform .2s,box-shadow .2s}
+.kpi:hover{transform:translateY(-2px);box-shadow:var(--sh2)}
+.kpi::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--bar)}
+.kpi.c1{--bar:linear-gradient(90deg,#1D4ED8,#60A5FA)}
+.kpi.c2{--bar:linear-gradient(90deg,#DC2626,#F87171)}
+.kpi.c3{--bar:linear-gradient(90deg,#059669,#34D399)}
+.kpi.c4{--bar:linear-gradient(90deg,#7C3AED,#C4B5FD)}
+.kpi.c5{--bar:linear-gradient(90deg,#D97706,#FCD34D)}
+.kpi.c6{--bar:linear-gradient(90deg,#0EA5E9,#7DD3FC)}
+.kpi-top{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:8px}
+.kpi-num{font-size:28px;font-weight:800;color:var(--t1);line-height:1;font-variant-numeric:tabular-nums}
+.kpi-icon{font-size:22px;opacity:.8}
+.kpi-label{font-size:11px;color:var(--t2);font-weight:600}
+.kpi-delta{margin-top:6px;font-size:10px;font-weight:600;display:flex;align-items:center;gap:4px}
+.delta-up{color:var(--green)}
+.delta-warn{color:var(--yellow)}
+.delta-down{color:var(--red)}
+.kpi-target{font-size:9px;color:var(--t3);margin-top:3px}
+.kpi-bar{height:4px;background:#F1F5F9;border-radius:99px;margin-top:10px;overflow:hidden}
+.kpi-bar-fill{height:100%;border-radius:99px;background:currentColor;transition:width .8s ease}
+
+/* CARD */
+.card{background:var(--card);border-radius:12px;border:1px solid var(--border);box-shadow:var(--sh);margin-bottom:16px}
+.card-head{padding:14px 18px 0;display:flex;align-items:center;justify-content:space-between}
+.card-title{font-size:13px;font-weight:700;color:var(--t1)}
+.card-sub{font-size:10px;color:var(--t3);margin-top:1px}
+.card-body{padding:14px 18px}
+
+/* ROW GRID */
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:16px}
+.row3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin-bottom:16px}
+
+/* CHART */
+.chart-wrap{position:relative;height:220px}
+
+/* DONUT CENTER */
+.donut-wrap{position:relative;height:220px;display:flex;align-items:center;justify-content:center}
+.donut-center{position:absolute;text-align:center;pointer-events:none}
+.donut-num{font-size:28px;font-weight:800;color:var(--t1)}
+.donut-lab{font-size:10px;color:var(--t3);font-weight:600;margin-top:1px}
+
+/* TRAFFIC LIGHT MATRIX */
+.matrix{width:100%;border-collapse:collapse;font-size:11px}
+.matrix th{background:#F8FAFC;padding:8px 12px;text-align:left;font-size:9px;font-weight:700;color:var(--t3);text-transform:uppercase;letter-spacing:.5px;border-bottom:1px solid var(--border);white-space:nowrap}
+.matrix td{padding:10px 12px;border-bottom:1px solid #F8FAFC;vertical-align:top}
+.matrix tr:last-child td{border-bottom:none}
+.matrix tr:hover td{background:#FAFAFA}
+.tl{display:inline-flex;align-items:center;gap:5px;font-weight:700;font-size:10px;padding:3px 8px;border-radius:999px;white-space:nowrap}
+.tl-green{background:var(--green-bg);color:var(--green-text)}
+.tl-yellow{background:var(--yellow-bg);color:var(--yellow-text)}
+.tl-red{background:var(--red-bg);color:var(--red-text)}
+.tl-dot{width:6px;height:6px;border-radius:50%;display:inline-block;flex-shrink:0}
+.tl-dot-green{background:var(--green)}
+.tl-dot-yellow{background:var(--yellow)}
+.tl-dot-red{background:var(--red)}
+.isu-title{font-size:11px;font-weight:700;color:var(--t1)}
+.isu-cat{font-size:9px;color:var(--t3);font-weight:600;text-transform:uppercase;letter-spacing:.3px;margin-top:1px}
+
+/* PROGRAM CARDS */
+.prog-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:16px}
+.prog-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:16px;box-shadow:var(--sh);transition:all .2s;border-left:4px solid var(--border)}
+.prog-card:hover{transform:translateY(-2px);box-shadow:var(--sh2)}
+.prog-card.selaras{border-left-color:var(--green)}
+.prog-card.perlu{border-left-color:var(--red)}
+.prog-code{font-size:9px;font-weight:700;color:var(--t3);text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px}
+.prog-name{font-size:12px;font-weight:700;color:var(--t1);margin-bottom:8px;line-height:1.4}
+.prog-status{display:inline-flex;align-items:center;gap:4px;font-size:9px;font-weight:700;padding:2px 7px;border-radius:999px;margin-bottom:8px}
+.prog-isu{font-size:10px;color:var(--t2);line-height:1.5;border-top:1px solid var(--border);padding-top:8px;margin-top:4px}
+.prog-next{font-size:10px;color:var(--blue);font-weight:600;margin-top:6px}
+
+/* RPIK TRACKER */
+.tracker{display:flex;flex-direction:column;gap:10px}
+.tracker-item{display:flex;align-items:center;gap:12px;padding:12px 16px;background:#FAFAFA;border:1px solid var(--border);border-radius:10px}
+.tracker-icon{font-size:20px;flex-shrink:0}
+.tracker-text{flex:1}
+.tracker-title{font-size:12px;font-weight:700;color:var(--t1)}
+.tracker-desc{font-size:10px;color:var(--t2);margin-top:2px}
+.tracker-badge{flex-shrink:0;font-size:9px;font-weight:700;padding:4px 10px;border-radius:999px;text-transform:uppercase;letter-spacing:.3px}
+.badge-siap{background:var(--green-bg);color:var(--green-text)}
+.badge-proses{background:var(--yellow-bg);color:var(--yellow-text)}
+.badge-belum{background:var(--red-bg);color:var(--red-text)}
+
+/* KEPUTUSAN */
+.dec-list{display:flex;flex-direction:column;gap:8px}
+.dec-item{display:flex;align-items:flex-start;gap:12px;padding:12px 14px;background:linear-gradient(135deg,#0F172A,#1E1B4B);border-radius:10px;border:1px solid #3B1C8C}
+.dec-num{width:24px;height:24px;background:linear-gradient(135deg,#7C3AED,#4F46E5);color:#fff;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;flex-shrink:0}
+.dec-body .dec-title{font-size:12px;font-weight:700;color:#E0D9FF}
+.dec-body .dec-desc{font-size:10px;color:#A78BFA;margin-top:3px;line-height:1.5}
+
+/* ABT TABLE */
+.abt-table{width:100%;border-collapse:collapse;font-size:11px}
+.abt-table th{background:#F8FAFC;padding:9px 12px;text-align:left;font-size:9px;font-weight:700;color:var(--t3);text-transform:uppercase;letter-spacing:.5px;border-bottom:1px solid var(--border)}
+.abt-table td{padding:10px 12px;border-bottom:1px solid #F8FAFC;vertical-align:top}
+.abt-table tr:hover td{background:#FAFAFA}
+.abt-table tr:last-child td{border-bottom:none}
+.kode-badge{display:inline-block;background:#EEF2FF;color:#4338CA;font-size:9px;font-weight:700;padding:2px 6px;border-radius:4px;margin-right:3px;margin-bottom:2px}
+
+/* PDRB GAUGE */
+.pdrb-row{display:flex;gap:16px;margin-bottom:16px}
+.pdrb-card{flex:1;background:var(--card);border-radius:12px;padding:18px;border:1px solid var(--border);box-shadow:var(--sh)}
+.pdrb-label{font-size:10px;font-weight:700;color:var(--t3);text-transform:uppercase;letter-spacing:.5px;margin-bottom:10px}
+.pdrb-track{background:#F1F5F9;border-radius:99px;height:10px;overflow:hidden;margin:8px 0}
+.pdrb-fill{height:100%;border-radius:99px;background:linear-gradient(90deg,var(--c1),var(--c2));transition:width 1s ease}
+.pdrb-nums{display:flex;justify-content:space-between;font-size:10px;color:var(--t2);font-weight:500}
+.pdrb-current{font-size:24px;font-weight:800;color:var(--t1)}
+.pdrb-target{font-size:11px;color:var(--t3);font-weight:500}
+.arrow{color:var(--green);font-weight:800;margin:0 4px}
+
+/* BADGE */
+.badge{display:inline-flex;align-items:center;padding:2px 7px;border-radius:999px;font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.3px}
+.badge-green{background:var(--green-bg);color:var(--green-text)}
+.badge-red{background:var(--red-bg);color:var(--red-text)}
+.badge-yellow{background:var(--yellow-bg);color:var(--yellow-text)}
+.badge-blue{background:#DBEAFE;color:#1E40AF}
+.badge-gray{background:#F1F5F9;color:var(--t2)}
+.badge-violet{background:#EDE9FE;color:#5B21B6}
+
+/* ISU CARDS */
+.isu-cards{display:flex;flex-direction:column;gap:8px}
+.isu-card{display:flex;align-items:flex-start;gap:10px;padding:10px 12px;border-radius:9px;border:1px solid var(--border)}
+.isu-card.red{background:#FFF5F5;border-color:#FECACA}
+.isu-card.yellow{background:#FFFBEB;border-color:#FDE68A}
+.isu-card.green{background:#F0FDF4;border-color:#BBF7D0}
+.isu-lv{flex-shrink:0;font-size:9px;font-weight:700;padding:3px 7px;border-radius:999px;margin-top:2px;text-transform:uppercase}
+.isu-content .title{font-size:11px;font-weight:700;color:var(--t1)}
+.isu-content .cat{font-size:9px;color:var(--t3);font-weight:600;margin-top:1px;text-transform:uppercase}
+.isu-content .desc{font-size:10px;color:var(--t2);margin-top:4px;line-height:1.5}
+
+/* SPINNER */
+.spinner{width:16px;height:16px;border:2px solid #E2E8F0;border-top-color:var(--indigo);border-radius:50%;animation:spin .6s linear infinite;display:inline-block}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* PRINT HINT */
+@media print{.sb,.topbar{display:none!important}.main{margin-left:0!important}.content{height:auto!important;overflow:visible!important}.page{display:block!important}}
+</style>
+</head>
+<body>
+
+<!-- ════════════ SIDEBAR ════════════ -->
+<aside class="sb">
+  <div class="sb-logo">
+    <div class="sb-emblem">⚖️</div>
+    <div>
+      <div class="sb-name">Disperindag Tangsel</div>
+      <div class="sb-sub">Dashboard Strategis 2027</div>
+    </div>
+  </div>
+  <nav class="sb-nav">
+    <div class="sb-label">Ringkasan</div>
+    <button class="nav active" onclick="nav('overview',this,'Executive Summary')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+      Executive Summary
+    </button>
+    <button class="nav" onclick="nav('keputusan',this,'Agenda Keputusan Pimpinan')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>
+      Keputusan Pimpinan
+    </button>
+    <div class="sb-label">Program</div>
+    <button class="nav" onclick="nav('kinerja',this,'Matriks Kinerja Program')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+      Matriks KKR
+    </button>
+    <button class="nav" onclick="nav('industri',this,'Industri & IKM')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v2"/></svg>
+      Industri &amp; IKM
+    </button>
+    <button class="nav" onclick="nav('perdagangan',this,'Perdagangan')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+      Perdagangan
+    </button>
+    <div class="sb-label">Perencanaan</div>
+    <button class="nav" onclick="nav('rpik',this,'Kesiapan RPIK 2027')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+      RPIK 2027
+    </button>
+    <button class="nav" onclick="nav('abt',this,'ABT 2026 — Usulan Kegiatan')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+      ABT 2026
+    </button>
+    <div class="sb-label">Analitik</div>
+    <button class="nav" onclick="nav('risiko',this,'Risiko & Tindak Lanjut')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+      Risiko &amp; Tindak Lanjut
+    </button>
+    <button class="nav" onclick="nav('pdrb',this,'Target PDRB Tangsel')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+      Target PDRB
+    </button>
+  </nav>
+  <div class="sb-foot">
+    <div class="sb-ft">Disperindag Tangsel</div>
+    <div class="sb-fd">Data s.d. Juli 2026</div>
+  </div>
+</aside>
+
+<!-- ════════════ MAIN ════════════ -->
+<div class="main">
+  <header class="topbar">
+    <div class="tb-left">
+      <span class="tb-badge">Strategis</span>
+      <span id="page-title">Executive Summary</span>
+    </div>
+    <div class="tb-right">
+      <div id="clock">—</div>
+      <div class="status-badge"><span class="dot-green"></span> Live · Juli 2026</div>
+    </div>
+  </header>
+
+  <div class="content">
+
+  <!-- ══ OVERVIEW ══ -->
+  <div id="page-overview" class="page active">
+    <div class="kpi-grid">
+      <div class="kpi c1">
+        <div class="kpi-top"><div><div class="kpi-num">67%</div><div class="kpi-label">Program Selaras</div></div><div class="kpi-icon">✅</div></div>
+        <div class="kpi-delta delta-up">▲ 6 dari 9 program</div>
+        <div class="kpi-target">3 program perlu penyesuaian</div>
+        <div class="kpi-bar"><div class="kpi-bar-fill" style="width:67%;color:var(--blue)"></div></div>
+      </div>
+      <div class="kpi c2">
+        <div class="kpi-top"><div><div class="kpi-num">5</div><div class="kpi-label">Isu Prioritas Kritis</div></div><div class="kpi-icon">⚠️</div></div>
+        <div class="kpi-delta delta-down">1 Tinggi · 3 Sedang · 1 Rendah</div>
+        <div class="kpi-target">Perlu keputusan pimpinan</div>
+      </div>
+      <div class="kpi c3">
+        <div class="kpi-top"><div><div class="kpi-num">98.9%</div><div class="kpi-label">Izin Usaha Industri Terbit</div></div><div class="kpi-icon">🏭</div></div>
+        <div class="kpi-delta delta-up">▲ Target terpenuhi</div>
+        <div class="kpi-target">Prog. 3.31.03 · Pengendalian IUI</div>
+        <div class="kpi-bar"><div class="kpi-bar-fill" style="width:98.9%;color:var(--green)"></div></div>
+      </div>
+      <div class="kpi c4">
+        <div class="kpi-top"><div><div class="kpi-num">94.4%</div><div class="kpi-label">Ketersediaan Data Industri</div></div><div class="kpi-icon">📊</div></div>
+        <div class="kpi-delta delta-up">▲ SIINas — on track</div>
+        <div class="kpi-target">Prog. 3.31.04 · Target 94.44%</div>
+        <div class="kpi-bar"><div class="kpi-bar-fill" style="width:94.4%;color:var(--violet)"></div></div>
+      </div>
+      <div class="kpi c5">
+        <div class="kpi-top"><div><div class="kpi-num">58</div><div class="kpi-label">Proporsi IKM Kota (Target)</div></div><div class="kpi-icon">🏗️</div></div>
+        <div class="kpi-delta delta-warn">⚡ Butuh pemetaan klaster</div>
+        <div class="kpi-target">Prog. 3.31.02 · Baseline ABT 2026</div>
+      </div>
+      <div class="kpi c6">
+        <div class="kpi-top"><div><div class="kpi-num">25%</div><div class="kpi-label">Kesiapan RPIK 2027</div></div><div class="kpi-icon">📋</div></div>
+        <div class="kpi-delta delta-warn">⚡ 2 dari 6 komponen proses</div>
+        <div class="kpi-target">Baseline data & klaster belum ada</div>
+        <div class="kpi-bar"><div class="kpi-bar-fill" style="width:25%;color:var(--sky)"></div></div>
+      </div>
+    </div>
+
+    <div class="row2">
+      <!-- Donut Status -->
+      <div class="card">
+        <div class="card-head"><div class="card-title">Status Program RPJMD–RKPD 2027</div><div class="card-sub">9 program Disperindag (Perdagangan + Perindustrian)</div></div>
+        <div class="card-body">
+          <div class="donut-wrap">
+            <canvas id="donut-main"></canvas>
+            <div class="donut-center"><div class="donut-num">9</div><div class="donut-lab">Program</div></div>
+          </div>
+        </div>
+      </div>
+      <!-- Isu Utama -->
+      <div class="card">
+        <div class="card-head"><div class="card-title">Isu Strategis Utama</div><div class="card-sub">Perlu perhatian & keputusan pimpinan</div></div>
+        <div class="card-body">
+          <div class="isu-cards">
+            <div class="isu-card red">
+              <span class="isu-lv badge badge-red">Tinggi</span>
+              <div class="isu-content"><div class="title">Penyesuaian OSS/NIB</div><div class="cat">Regulasi · 3.30.02</div><div class="desc">Subkegiatan perizinan perlu redesign sesuai PP 28/2025 & Permen Investasi 5/2025. Pagu Rp 0.</div></div>
+            </div>
+            <div class="isu-card yellow">
+              <span class="isu-lv badge badge-yellow">Sedang</span>
+              <div class="isu-content"><div class="title">Keterbatasan Kewenangan SKA</div><div class="cat">Mandat · 3.30.02</div><div class="desc">Belum ditunjuk penerbit SKA sesuai Permendag 933/2021. Perlu koordinasi Kemendag.</div></div>
+            </div>
+            <div class="isu-card yellow">
+              <span class="isu-lv badge badge-yellow">Sedang</span>
+              <div class="isu-content"><div class="title">Kekosongan Perwal Miras B-C</div><div class="cat">Hukum · 3.30.02</div><div class="desc">Izin minuman beralkohol B-C belum bisa diterbitkan — belum ada Perwal pengatur.</div></div>
+            </div>
+            <div class="isu-card yellow">
+              <span class="isu-lv badge badge-yellow">Sedang</span>
+              <div class="isu-content"><div class="title">Irrelevansi SRG & Pupuk Subsidi</div><div class="cat">Konteks Wilayah · 3.30.03</div><div class="desc">Tangsel kota jasa/perdagangan — SRG agraris dan pupuk subsidi tidak sesuai konteks.</div></div>
+            </div>
+            <div class="isu-card green">
+              <span class="isu-lv badge badge-green">Rendah</span>
+              <div class="isu-content"><div class="title">Data Bahan Berbahaya (B2)</div><div class="cat">Data · 3.30.02</div><div class="desc">Butuh koordinasi Disperindag Provinsi & BPOM untuk basis data pengawasan B2.</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Program Snapshot -->
+    <div class="card">
+      <div class="card-head"><div class="card-title">Snapshot Program Prioritas</div><div class="card-sub">Status selaras per program Disperindag</div></div>
+      <div class="card-body"><div class="chart-wrap"><canvas id="bar-prog"></canvas></div></div>
+    </div>
+  </div>
+
+  <!-- ══ KEPUTUSAN ══ -->
+  <div id="page-keputusan" class="page">
+    <div class="sec-title">Agenda Keputusan Pimpinan</div>
+    <div class="sec-sub">Top 5 keputusan strategis yang perlu diambil Kepala Dinas — Juli 2026</div>
+
+    <div class="dec-list" style="margin-bottom:20px">
+      <div class="dec-item">
+        <div class="dec-num">1</div>
+        <div class="dec-body">
+          <div class="dec-title">Tetapkan 3 Subsektor Industri Unggulan Prioritas</div>
+          <div class="dec-desc">Dasar penetapan perlu disepakati pimpinan sebelum penyusunan RPIK 2027. Kandidat: industri makanan/minuman halal, kerajinan/fashion, dan jasa industri kreatif berbasis kota jasa. Tanpa keputusan ini, program 3.31.02 tidak bisa ditetapkan target klaster yang spesifik.</div>
+        </div>
+      </div>
+      <div class="dec-item">
+        <div class="dec-num">2</div>
+        <div class="dec-body">
+          <div class="dec-title">Putuskan Arah Integrasi Data Industri–OSS–SIINas</div>
+          <div class="dec-desc">Data industri (SIINas 94.44%) sudah cukup baik, namun belum terhubung dengan OSS/NIB sebagai sumber data perizinan. Perlu keputusan: apakah data SIINas menjadi backbone tunggal atau diintegrasikan dengan platform DPMPTSP? Mempengaruhi desain ABT 2026.</div>
+        </div>
+      </div>
+      <div class="dec-item">
+        <div class="dec-num">3</div>
+        <div class="dec-body">
+          <div class="dec-title">Percepat Baseline Data IKM/Industri untuk RPIK 2027</div>
+          <div class="dec-desc">Kesiapan RPIK 2027 baru 25%. Baseline data industri/IKM per kecamatan (klaster, kapasitas, rantai pasok) adalah fondasi utama yang belum ada. Perlu keputusan: anggarkan ABT 2026 untuk kegiatan ini atau tunggu RPIK reguler 2027?</div>
+        </div>
+      </div>
+      <div class="dec-item">
+        <div class="dec-num">4</div>
+        <div class="dec-body">
+          <div class="dec-title">Penyesuaian Subkegiatan Perizinan OSS/NIB (3.30.02)</div>
+          <div class="dec-desc">7+ subkegiatan perizinan berstatus Tidak Selaras dengan pagu Rp 0 karena belum menyesuaikan PP 28/2025 dan Permen Investasi 5/2025. Perlu keputusan redesign: ubah fungsi dari penerbit izin menjadi verifikator teknis & pendampingan, dan selaraskan pagu dengan peran baru.</div>
+        </div>
+      </div>
+      <div class="dec-item">
+        <div class="dec-num">5</div>
+        <div class="dec-body">
+          <div class="dec-title">Sinkronisasi Awal RPIK 2027 dengan Revisi RTRW Tangsel</div>
+          <div class="dec-desc">Renstra menegaskan RPIK 2027 harus selaras dengan RTRW/RDTR untuk zonasi kawasan industri/IKM/logistik. Perlu koordinasi awal dengan Dinas Tata Ruang: mana zona yang bisa dialokasikan untuk IKM, rumah kemasan, dan pergudangan ringan (urban, bukan kawasan industri berat).</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-head"><div class="card-title">Matriks Urgensi Keputusan</div><div class="card-sub">Dampak vs kemendesakan</div></div>
+      <div class="card-body">
+        <table class="matrix" style="font-size:11px">
+          <thead><tr><th>Keputusan</th><th>Urgensi</th><th>Dampak</th><th>Deadline Ideal</th><th>Konsekuensi jika ditunda</th></tr></thead>
+          <tbody>
+            <tr><td><b>Subsektor unggulan</b></td><td><span class="tl tl-red"><span class="tl-dot tl-dot-red"></span>Tinggi</span></td><td><span class="tl tl-red"><span class="tl-dot tl-dot-red"></span>Besar</span></td><td>Agustus 2026</td><td>RPIK 2027 tanpa arah subsektor → program 3.31.02 tidak terukur</td></tr>
+            <tr><td><b>Integrasi data OSS–SIINas</b></td><td><span class="tl tl-red"><span class="tl-dot tl-dot-red"></span>Tinggi</span></td><td><span class="tl tl-red"><span class="tl-dot tl-dot-red"></span>Besar</span></td><td>Agustus 2026</td><td>Baseline data ABT 2026 tidak bisa disusun → RPIK 2027 lemah</td></tr>
+            <tr><td><b>Percepat baseline IKM</b></td><td><span class="tl tl-red"><span class="tl-dot tl-dot-red"></span>Tinggi</span></td><td><span class="tl tl-red"><span class="tl-dot tl-dot-red"></span>Besar</span></td><td>September 2026</td><td>RPIK 2027 disusun tanpa data → program tidak berbasis bukti</td></tr>
+            <tr><td><b>Redesign perizinan 3.30.02</b></td><td><span class="tl tl-yellow"><span class="tl-dot tl-dot-yellow"></span>Sedang</span></td><td><span class="tl tl-yellow"><span class="tl-dot tl-dot-yellow"></span>Sedang</span></td><td>Oktober 2026</td><td>Pagu Rp 0 di banyak subkegiatan → laporan kinerja jelek</td></tr>
+            <tr><td><b>Sinkronisasi RTRW</b></td><td><span class="tl tl-yellow"><span class="tl-dot tl-dot-yellow"></span>Sedang</span></td><td><span class="tl tl-red"><span class="tl-dot tl-dot-red"></span>Besar</span></td><td>Desember 2026</td><td>RPIK 2027 tidak memiliki pijakan spasial → sulit diimplementasikan</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ MATRIKS KKR ══ -->
+  <div id="page-kinerja" class="page">
+    <div class="sec-title">Matriks Kesesuaian KKR RPJMD–RKPD 2027</div>
+    <div class="sec-sub">9 program Disperindag — Hasil Reviu APIP</div>
+
+    <div class="kpi-grid" style="grid-template-columns:repeat(3,1fr)">
+      <div class="kpi c1"><div class="kpi-top"><div><div class="kpi-num">9</div><div class="kpi-label">Total Program</div></div><div class="kpi-icon">📋</div></div><div class="kpi-delta">3.30 Perdagangan (6) + 3.31 Perindustrian (3)</div></div>
+      <div class="kpi c3"><div class="kpi-top"><div><div class="kpi-num">6</div><div class="kpi-label">Program Selaras</div></div><div class="kpi-icon">✅</div></div><div class="kpi-delta delta-up">▲ 67% dari total program</div></div>
+      <div class="kpi c2"><div class="kpi-top"><div><div class="kpi-num">3</div><div class="kpi-label">Perlu Penyesuaian</div></div><div class="kpi-icon">⚠️</div></div><div class="kpi-delta delta-down">▼ 33% — butuh tindak lanjut</div></div>
+    </div>
+
+    <!-- Traffic Light Matrix -->
+    <div class="card">
+      <div class="card-head"><div class="card-title">Traffic Light Matrix — Isu Strategis vs Program</div><div class="card-sub">Merah = blocked/tidak selaras · Kuning = perlu penguatan · Hijau = selaras & berjalan</div></div>
+      <div class="card-body" style="padding:0 18px 14px">
+        <div style="overflow-x:auto">
+        <table class="matrix">
+          <thead><tr><th>Isu Strategis</th><th>Program Terkait</th><th>Status</th><th>Dampak ke Renstra</th><th>Aksi yang Dibutuhkan</th></tr></thead>
+          <tbody>
+            <tr>
+              <td><div class="isu-title">Data Industri/IKM</div><div class="isu-cat">Integrasi & akurasi</div></td>
+              <td><span class="kode-badge">3.31.04</span></td>
+              <td><span class="tl tl-yellow"><span class="tl-dot tl-dot-yellow"></span>Perlu Penguatan</span></td>
+              <td style="font-size:10px;color:var(--t2)">SIINas 94.44% — perlu integrasi OSS/NIB untuk baseline RPIK</td>
+              <td style="font-size:10px"><b>ABT 2026:</b> Penyusunan baseline terintegrasi</td>
+            </tr>
+            <tr>
+              <td><div class="isu-title">Subsektor Unggulan</div><div class="isu-cat">Penetapan prioritas</div></td>
+              <td><span class="kode-badge">3.31.02</span></td>
+              <td><span class="tl tl-yellow"><span class="tl-dot tl-dot-yellow"></span>Perlu Penguatan</span></td>
+              <td style="font-size:10px;color:var(--t2)">Proporsi subsektor unggulan baru 3.75% — target naik signifikan</td>
+              <td style="font-size:10px"><b>ABT 2026:</b> Kajian subsektor prospektif per kecamatan</td>
+            </tr>
+            <tr>
+              <td><div class="isu-title">Rantai Pasok Industri</div><div class="isu-cat">Bahan baku–produksi–distribusi</div></td>
+              <td><span class="kode-badge">3.30.03</span><span class="kode-badge">3.30.04</span></td>
+              <td><span class="tl tl-yellow"><span class="tl-dot tl-dot-yellow"></span>Perlu Penguatan</span></td>
+              <td style="font-size:10px;color:var(--t2)">Distribusi & stabilisasi harga selaras — tapi rantai pasok per subsektor belum dipetakan</td>
+              <td style="font-size:10px"><b>ABT 2026:</b> Kajian rantai pasok subsektor unggulan</td>
+            </tr>
+            <tr>
+              <td><div class="isu-title">Sarana & Logistik Urban</div><div class="isu-cat">Kawasan IKM, gudang, kemasan</div></td>
+              <td><span class="kode-badge">3.31.02</span><span class="kode-badge">3.30.03</span></td>
+              <td><span class="tl tl-yellow"><span class="tl-dot tl-dot-yellow"></span>Perlu Penguatan</span></td>
+              <td style="font-size:10px;color:var(--t2)">SRG tidak relevan (agraris) — perlu sarana distribusi urban yang sesuai konteks kota jasa</td>
+              <td style="font-size:10px"><b>ABT 2026:</b> Kajian sarana-prasarana kawasan IKM urban berbasis RTRW</td>
+            </tr>
+            <tr>
+              <td><div class="isu-title">Perizinan & OSS/NIB</div><div class="isu-cat">Transformasi digital</div></td>
+              <td><span class="kode-badge">3.30.02</span><span class="kode-badge">3.31.03</span></td>
+              <td><span class="tl tl-red"><span class="tl-dot tl-dot-red"></span>Tidak Selaras</span></td>
+              <td style="font-size:10px;color:var(--t2)">Banyak subkegiatan pagu Rp 0 — desain subkegiatan lama belum sesuai PP 28/2025</td>
+              <td style="font-size:10px"><b>Segera:</b> Redesign subkegiatan → fungsi verifikasi teknis & pendampingan OSS</td>
+            </tr>
+            <tr>
+              <td><div class="isu-title">Pemasaran & Ekspor</div><div class="isu-cat">Produk lokal & UMKM</div></td>
+              <td><span class="kode-badge">3.30.05</span><span class="kode-badge">3.30.07</span></td>
+              <td><span class="tl tl-green"><span class="tl-dot tl-dot-green"></span>Selaras</span></td>
+              <td style="font-size:10px;color:var(--t2)">Pameran dagang, misi dagang, fasilitasi UMKM ke retail/marketplace berjalan sesuai target</td>
+              <td style="font-size:10px"><b>Lanjutkan:</b> Tambah komponen branding digital & e-commerce IKM</td>
+            </tr>
+            <tr>
+              <td><div class="isu-title">Perlindungan Konsumen</div><div class="isu-cat">Metrologi, standarisasi</div></td>
+              <td><span class="kode-badge">3.30.06</span></td>
+              <td><span class="tl tl-green"><span class="tl-dot tl-dot-green"></span>Selaras</span></td>
+              <td style="font-size:10px;color:var(--t2)">UPTD Metrologi Legal berjalan — tera/tera ulang alat ukur sesuai target</td>
+              <td style="font-size:10px"><b>Tingkatkan:</b> Integrasi data tera dengan sistem informasi perdagangan</td>
+            </tr>
+            <tr>
+              <td><div class="isu-title">Sinkronisasi RPIK–RTRW</div><div class="isu-cat">Tata ruang industri/IKM</div></td>
+              <td><span class="kode-badge">3.31.02</span><span class="kode-badge">3.30.03</span></td>
+              <td><span class="tl tl-red"><span class="tl-dot tl-dot-red"></span>Belum Ada</span></td>
+              <td style="font-size:10px;color:var(--t2)">RPIK 2027 belum ada pijakan spasial — klaster IKM belum punya lokasi resmi di RTRW</td>
+              <td style="font-size:10px"><b>Segera:</b> Koordinasi dengan Dinas Tata Ruang untuk zona IKM/logistik urban</td>
+            </tr>
+          </tbody>
+        </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- Program Cards -->
+    <div class="sec-title" style="margin-bottom:12px">Kartu Status Per Program</div>
+    <div class="prog-grid">
+      <div class="prog-card selaras">
+        <div class="prog-code">3.30.03</div>
+        <div class="prog-name">Peningkatan Sarana Distribusi Perdagangan</div>
+        <span class="prog-status badge badge-green">✓ Selaras</span>
+        <div class="prog-isu">Penyediaan & fasilitasi sarana distribusi (UPTD pasar) berjalan. Pagu ±Rp 1.4 M. SRG Tidak Selaras — perlu eliminasi dari program.</div>
+        <div class="prog-next">→ Fokus ke pasar rakyat urban, eliminasi SRG agraris</div>
+      </div>
+      <div class="prog-card selaras">
+        <div class="prog-code">3.30.04</div>
+        <div class="prog-name">Stabilisasi Harga Barang Kebutuhan Pokok</div>
+        <span class="prog-status badge badge-green">✓ Selaras</span>
+        <div class="prog-isu">Pemantauan harga, stok, operasi pasar reguler & khusus berjalan sesuai target. Pagu operasi pasar Rp 250 jt.</div>
+        <div class="prog-next">→ Tingkatkan frekuensi operasi pasar musiman</div>
+      </div>
+      <div class="prog-card selaras">
+        <div class="prog-code">3.30.05</div>
+        <div class="prog-name">Pengembangan Ekspor</div>
+        <span class="prog-status badge badge-green">✓ Selaras</span>
+        <div class="prog-isu">Pameran TEI, misi dagang, peningkatan citra produk ekspor — semuanya selaras. Total pagu ±Rp 304 jt.</div>
+        <div class="prog-next">→ Tambah komponen digital branding produk ekspor IKM</div>
+      </div>
+      <div class="prog-card selaras">
+        <div class="prog-code">3.31.02</div>
+        <div class="prog-name">Perencanaan & Pembangunan Industri</div>
+        <span class="prog-status badge badge-green">✓ Selaras</span>
+        <div class="prog-isu">Target proporsi IKM 58 unit. JPH sudah ada. Namun klaster IKM per kecamatan dan subsektor unggulan belum terdefinisi.</div>
+        <div class="prog-next">→ ABT 2026: pemetaan klaster & baseline data IKM</div>
+      </div>
+      <div class="prog-card selaras">
+        <div class="prog-code">3.31.03</div>
+        <div class="prog-name">Pengendalian Izin Usaha Industri</div>
+        <span class="prog-status badge badge-green">✓ Selaras</span>
+        <div class="prog-isu">Izin terbit 98.9%. Verifikasi OSS RBA–SIINas berjalan. Koordinasi & sinkronisasi pengawasan perizinan sesuai mandat kab/kota.</div>
+        <div class="prog-next">→ Integrasikan output verifikasi ke peta klaster RPIK 2027</div>
+      </div>
+      <div class="prog-card perlu">
+        <div class="prog-code">3.30.02</div>
+        <div class="prog-name">Perizinan & Pendaftaran Perusahaan</div>
+        <span class="prog-status badge badge-red">⚠ Perlu Penyesuaian</span>
+        <div class="prog-isu">7+ subkegiatan Tidak Selaras (NIB, STPW, B2, SKA, miras B-C) — pagu Rp 0. Belum menyesuaikan PP 28/2025 & Permen Investasi 5/2025.</div>
+        <div class="prog-next">→ Redesign: ubah fungsi ke verifikasi teknis & pendampingan OSS</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ INDUSTRI ══ -->
+  <div id="page-industri" class="page">
+    <div class="sec-title">Industri & IKM</div>
+    <div class="sec-sub">Program urusan Perindustrian (3.31) — Detail subkegiatan & capaian</div>
+
+    <div class="kpi-grid">
+      <div class="kpi c3"><div class="kpi-top"><div><div class="kpi-num">98.9%</div><div class="kpi-label">Izin Usaha Industri</div></div><div class="kpi-icon">📄</div></div><div class="kpi-delta delta-up">▲ Target 98.9% — terpenuhi</div><div class="kpi-bar"><div class="kpi-bar-fill" style="width:98.9%;color:var(--green)"></div></div></div>
+      <div class="kpi c4"><div class="kpi-top"><div><div class="kpi-num">94.4%</div><div class="kpi-label">Data Industri Lengkap (SIINas)</div></div><div class="kpi-icon">🗃️</div></div><div class="kpi-delta delta-up">▲ Target 94.44% — terpenuhi</div><div class="kpi-bar"><div class="kpi-bar-fill" style="width:94.4%;color:var(--violet)"></div></div></div>
+      <div class="kpi c5"><div class="kpi-top"><div><div class="kpi-num">58</div><div class="kpi-label">Target IKM Level Kota</div></div><div class="kpi-icon">🏭</div></div><div class="kpi-delta delta-warn">⚡ Perlu pemetaan klaster aktual</div></div>
+    </div>
+
+    <div class="card" style="margin-bottom:16px">
+      <div class="card-head"><div class="card-title">Subkegiatan Bidang Industri — Status & Analisis</div></div>
+      <div class="card-body" style="padding:0 18px 14px">
+        <table class="matrix">
+          <thead><tr><th>Kode Subkegiatan</th><th>Nama</th><th>Status KKR</th><th>Kesesuaian Renstra</th><th>Rekomendasi</th></tr></thead>
+          <tbody>
+            <tr>
+              <td><span class="kode-badge">3.31.02.2.01.0008</span></td>
+              <td><b>Pengawasan Jaminan Produk Halal (JPH)</b></td>
+              <td><span class="tl tl-green"><span class="tl-dot tl-dot-green"></span>Selaras</span></td>
+              <td style="font-size:10px;color:var(--t2)">Mendukung daya saing & kualitas produk IKM. 2 dokumen pengawasan JPH.</td>
+              <td style="font-size:10px">Petakan JPH per subsektor & klaster IKM agar nyambung ke RPIK 2027.</td>
+            </tr>
+            <tr>
+              <td><span class="kode-badge">3.31.03.2.01.0003</span></td>
+              <td><b>Koordinasi Pengawasan Perizinan Berusaha Industri IKM</b></td>
+              <td><span class="tl tl-green"><span class="tl-dot tl-dot-green"></span>Selaras</span></td>
+              <td style="font-size:10px;color:var(--t2)">Mendukung indikator izin terbit 98.9%. 2 dokumen koordinasi.</td>
+              <td style="font-size:10px">Output berupa matriks usaha per subsektor/lokasi → masuk peta klaster RPIK.</td>
+            </tr>
+            <tr>
+              <td><span class="kode-badge">3.31.03.2.01.0004</span></td>
+              <td><b>Verifikasi OSS RBA–SIINas (Usaha Menengah Tinggi & Tinggi)</b></td>
+              <td><span class="tl tl-green"><span class="tl-dot tl-dot-green"></span>Selaras</span></td>
+              <td style="font-size:10px;color:var(--t2)">On track — verifikasi teknis berbasis risiko, kontras dengan 3.30.02 yang banyak Tidak Selaras.</td>
+              <td style="font-size:10px">Petakan hasil verifikasi ke baseline data industri per kecamatan & kesesuaian RTRW.</td>
+            </tr>
+            <tr>
+              <td><span class="kode-badge">3.31.04.2.01.0001</span></td>
+              <td><b>Fasilitasi Pengumpulan & Analisis Data Industri via SIINas</b></td>
+              <td><span class="tl tl-green"><span class="tl-dot tl-dot-green"></span>Selaras</span></td>
+              <td style="font-size:10px;color:var(--t2)">Tulang punggung data industri. Jika konten mencakup klaster, rantai pasok & spasial → <b>komponen inti RPIK 2027</b>.</td>
+              <td style="font-size:10px">Jadikan output sebagai "Baseline Data Industri/IKM Kota Tangsel 2026" yang eksplisit.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="row2">
+      <div class="card">
+        <div class="card-head"><div class="card-title">Capaian Program 3.31</div></div>
+        <div class="card-body"><div class="chart-wrap"><canvas id="chart-ind"></canvas></div></div>
+      </div>
+      <div class="card">
+        <div class="card-head"><div class="card-title">Keterkaitan Subkegiatan & RPIK 2027</div></div>
+        <div class="card-body">
+          <div style="font-size:11px;color:var(--t2);line-height:1.8">
+            <p style="margin-bottom:8px"><b style="color:var(--t1)">Semua 4 subkegiatan industri: SELARAS</b> secara struktural dengan KKR.</p>
+            <p style="margin-bottom:8px">Tetapi kekuatannya baru akan maksimal jika:</p>
+            <ul style="padding-left:16px;display:flex;flex-direction:column;gap:6px">
+              <li>Data SIINas diintegrasikan dengan OSS/NIB sebagai sumber tunggal</li>
+              <li>Output dokumen menjadi baseline eksplisit untuk RPIK 2027</li>
+              <li>JPH dipetakan per subsektor (tidak hanya pengawasan generik)</li>
+              <li>Hasil verifikasi OSS RBA dikaitkan ke peta lokasi industri (RTRW/RDTR)</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ PERDAGANGAN ══ -->
+  <div id="page-perdagangan" class="page">
+    <div class="sec-title">Perdagangan</div>
+    <div class="sec-sub">Program urusan Perdagangan (3.30) — Status per program</div>
+
+    <div class="row2">
+      <div class="card">
+        <div class="card-head"><div class="card-title">Status Program 3.30 Perdagangan</div></div>
+        <div class="card-body"><div class="chart-wrap"><canvas id="chart-dag"></canvas></div></div>
+      </div>
+      <div class="card">
+        <div class="card-head"><div class="card-title">Ringkasan Program Perdagangan</div></div>
+        <div class="card-body">
+          <div style="display:flex;flex-direction:column;gap:10px">
+            <div style="display:flex;justify-content:space-between;align-items:center;padding:10px;background:#F0FDF4;border-radius:8px;border:1px solid #BBF7D0">
+              <div><div style="font-size:11px;font-weight:700;color:#065F46">3.30.03 Sarana Distribusi</div><div style="font-size:10px;color:#047857">UPTD Pasar — pagu ±Rp 1.4 M</div></div>
+              <span class="badge badge-green">Selaras</span>
+            </div>
+            <div style="display:flex;justify-content:space-between;align-items:center;padding:10px;background:#F0FDF4;border-radius:8px;border:1px solid #BBF7D0">
+              <div><div style="font-size:11px;font-weight:700;color:#065F46">3.30.04 Stabilisasi Harga</div><div style="font-size:10px;color:#047857">Operasi pasar Rp 250 jt</div></div>
+              <span class="badge badge-green">Selaras</span>
+            </div>
+            <div style="display:flex;justify-content:space-between;align-items:center;padding:10px;background:#F0FDF4;border-radius:8px;border:1px solid #BBF7D0">
+              <div><div style="font-size:11px;font-weight:700;color:#065F46">3.30.05 Pengembangan Ekspor</div><div style="font-size:10px;color:#047857">TEI, misi dagang — Rp 304 jt</div></div>
+              <span class="badge badge-green">Selaras</span>
+            </div>
+            <div style="display:flex;justify-content:space-between;align-items:center;padding:10px;background:#F0FDF4;border-radius:8px;border:1px solid #BBF7D0">
+              <div><div style="font-size:11px;font-weight:700;color:#065F46">3.30.06 Metrologi Legal</div><div style="font-size:10px;color:#047857">UPTD Metrologi — tera/tera ulang</div></div>
+              <span class="badge badge-green">Selaras</span>
+            </div>
+            <div style="display:flex;justify-content:space-between;align-items:center;padding:10px;background:#F0FDF4;border-radius:8px;border:1px solid #BBF7D0">
+              <div><div style="font-size:11px;font-weight:700;color:#065F46">3.30.07 Produk Dalam Negeri</div><div style="font-size:10px;color:#047857">UMKM → retail/marketplace</div></div>
+              <span class="badge badge-green">Selaras</span>
+            </div>
+            <div style="display:flex;justify-content:space-between;align-items:center;padding:10px;background:#FFF5F5;border-radius:8px;border:1px solid #FECACA">
+              <div><div style="font-size:11px;font-weight:700;color:#991B1B">3.30.02 Perizinan Usaha</div><div style="font-size:10px;color:#DC2626">7+ subkegiatan Tidak Selaras — Rp 0</div></div>
+              <span class="badge badge-red">Perlu Penyesuaian</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-head"><div class="card-title">Detail Isu Program 3.30.02 — Perizinan & Pendaftaran Perusahaan</div><div class="card-sub">Program dengan banyak subkegiatan Tidak Selaras</div></div>
+      <div class="card-body" style="padding:0 18px 14px">
+        <table class="matrix">
+          <thead><tr><th>Subkegiatan</th><th>Status</th><th>Penyebab</th><th>Rekomendasi</th></tr></thead>
+          <tbody>
+            <tr><td><b>NIB Pasar/Pusat Belanja/Toko Swalayan</b></td><td><span class="tl tl-red"><span class="tl-dot tl-dot-red"></span>Tidak Selaras</span></td><td style="font-size:10px;color:var(--t2)">Izin bergeser ke NIB via PP 28/2025 & Permen Investasi 5/2025</td><td style="font-size:10px">Redesign ke fungsi pendampingan & pembinaan NIB</td></tr>
+            <tr><td><b>STPW Waralaba Luar Negeri</b></td><td><span class="tl tl-red"><span class="tl-dot tl-dot-red"></span>Tidak Selaras</span></td><td style="font-size:10px;color:var(--t2)">Belum ada pengajuan; peran penerbit di DPMPTSP bukan Disperindag</td><td style="font-size:10px">Hapus/tiadakan subkegiatan duplikatif</td></tr>
+            <tr><td><b>Izin Miras Golongan B-C</b></td><td><span class="tl tl-red"><span class="tl-dot tl-dot-red"></span>Tidak Selaras</span></td><td style="font-size:10px;color:var(--t2)">Belum ada Perwal — Perda No.4/2014 belum mengakomodir</td><td style="font-size:10px">Dorong penyusunan Perwal ke Bagian Hukum/Setda</td></tr>
+            <tr><td><b>Pengendalian B2 (Penyimpanan)</b></td><td><span class="tl tl-red"><span class="tl-dot tl-dot-red"></span>Tidak Selaras</span></td><td style="font-size:10px;color:var(--t2)">Data penjualan B2 terbatas; butuh koordinasi Disperindag Provinsi & BPOM</td><td style="font-size:10px">Bangun MoU/sinkronisasi data dengan Disperindag Provinsi</td></tr>
+            <tr><td><b>SKA (Surat Keterangan Asal)</b></td><td><span class="tl tl-red"><span class="tl-dot tl-dot-red"></span>Tidak Selaras</span></td><td style="font-size:10px;color:var(--t2)">Belum ditunjuk penerbit SKA sesuai Permendag 933/2021</td><td style="font-size:10px">Koordinasi Kemendag untuk penunjukan formal Disperindag Tangsel</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ RPIK ══ -->
+  <div id="page-rpik" class="page">
+    <div class="sec-title">Kesiapan RPIK 2027</div>
+    <div class="sec-sub">Rencana Pembangunan Industri Kota Tangerang Selatan — Status komponen fondasi</div>
+
+    <div class="kpi-grid">
+      <div class="kpi c6"><div class="kpi-top"><div><div class="kpi-num">25%</div><div class="kpi-label">Overall Readiness</div></div><div class="kpi-icon">📋</div></div><div class="kpi-delta delta-warn">⚡ 2 dari 6 komponen sedang proses</div><div class="kpi-bar"><div class="kpi-bar-fill" style="width:25%;color:var(--sky)"></div></div></div>
+      <div class="kpi c2"><div class="kpi-top"><div><div class="kpi-num">4</div><div class="kpi-label">Komponen Belum Mulai</div></div><div class="kpi-icon">🔴</div></div><div class="kpi-delta delta-down">▼ Baseline data, klaster, rantai pasok, RTRW</div></div>
+      <div class="kpi c5"><div class="kpi-top"><div><div class="kpi-num">2</div><div class="kpi-label">Komponen Proses</div></div><div class="kpi-icon">🟡</div></div><div class="kpi-delta delta-warn">⚡ Subsektor & SIINas sedang berjalan</div></div>
+    </div>
+
+    <div class="row2">
+      <div class="card">
+        <div class="card-head"><div class="card-title">Checklist Komponen RPIK 2027</div><div class="card-sub">Status kesiapan per elemen fondasi</div></div>
+        <div class="card-body">
+          <div class="tracker">
+            <div class="tracker-item">
+              <div class="tracker-icon">🗄️</div>
+              <div class="tracker-text"><div class="tracker-title">Baseline Data Industri/IKM</div><div class="tracker-desc">Profil pelaku, lokasi, kapasitas, tenaga kerja, bahan baku, pembiayaan per kecamatan</div></div>
+              <span class="tracker-badge badge-belum">Belum</span>
+            </div>
+            <div class="tracker-item">
+              <div class="tracker-icon">🗺️</div>
+              <div class="tracker-text"><div class="tracker-title">Peta Klaster IKM per Kecamatan</div><div class="tracker-desc">Visual/spasial klaster industri kecil menengah dan potensi pengembangannya</div></div>
+              <span class="tracker-badge badge-belum">Belum</span>
+            </div>
+            <div class="tracker-item">
+              <div class="tracker-icon">⭐</div>
+              <div class="tracker-text"><div class="tracker-title">Penetapan Subsektor Unggulan</div><div class="tracker-desc">Kajian subsektor prospektif (makanan halal, kerajinan, jasa industri kreatif)</div></div>
+              <span class="tracker-badge badge-proses">Proses</span>
+            </div>
+            <div class="tracker-item">
+              <div class="tracker-icon">🔗</div>
+              <div class="tracker-text"><div class="tracker-title">Kajian Rantai Pasok</div><div class="tracker-desc">Mapping bahan baku → produksi → distribusi → pasar per subsektor unggulan</div></div>
+              <span class="tracker-badge badge-belum">Belum</span>
+            </div>
+            <div class="tracker-item">
+              <div class="tracker-icon">🏙️</div>
+              <div class="tracker-text"><div class="tracker-title">Sinkronisasi RTRW/RDTR</div><div class="tracker-desc">Koordinasi dengan Dinas Tata Ruang untuk zonasi IKM, logistik, rumah kemasan</div></div>
+              <span class="tracker-badge badge-proses">Proses</span>
+            </div>
+            <div class="tracker-item">
+              <div class="tracker-icon">🔌</div>
+              <div class="tracker-text"><div class="tracker-title">Integrasi SIINas/OSS</div><div class="tracker-desc">Data industri SIINas terhubung dengan OSS/NIB sebagai sumber data tunggal</div></div>
+              <span class="tracker-badge badge-proses">Proses</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-head"><div class="card-title">Roadmap RPIK 2027</div><div class="card-sub">ABT 2026 → RPIK 2027 → Implementasi</div></div>
+        <div class="card-body"><div class="chart-wrap"><canvas id="chart-rpik"></canvas></div></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-head"><div class="card-title">Hubungan ABT 2026 → RPIK 2027 → KKR</div></div>
+      <div class="card-body">
+        <div style="display:grid;grid-template-columns:1fr auto 1fr auto 1fr;gap:0;align-items:center">
+          <div style="background:#EEF2FF;border-radius:10px;padding:14px;border:1px solid #C7D2FE">
+            <div style="font-size:10px;font-weight:700;color:#4338CA;text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px">ABT 2026</div>
+            <ul style="font-size:10px;color:#4338CA;padding-left:14px;display:flex;flex-direction:column;gap:4px">
+              <li>Pemetaan potensi & klaster IKM</li>
+              <li>Baseline data industri</li>
+              <li>Kajian sarana-prasarana</li>
+              <li>Kajian subsektor & rantai pasok</li>
+              <li>Redesign perizinan OSS/NIB</li>
+            </ul>
+          </div>
+          <div style="font-size:20px;color:var(--t3);padding:0 10px">→</div>
+          <div style="background:#F0FDF4;border-radius:10px;padding:14px;border:1px solid #BBF7D0">
+            <div style="font-size:10px;font-weight:700;color:#065F46;text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px">RPIK 2027</div>
+            <ul style="font-size:10px;color:#065F46;padding-left:14px;display:flex;flex-direction:column;gap:4px">
+              <li>Subsektor unggulan ditetapkan</li>
+              <li>Klaster IKM per kecamatan</li>
+              <li>Strategi rantai pasok</li>
+              <li>Sinkronisasi RTRW/RDTR</li>
+              <li>Target PDRB industri 8.45%</li>
+            </ul>
+          </div>
+          <div style="font-size:20px;color:var(--t3);padding:0 10px">→</div>
+          <div style="background:#FFF7ED;border-radius:10px;padding:14px;border:1px solid #FED7AA">
+            <div style="font-size:10px;font-weight:700;color:#92400E;text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px">KKR 2028–2029</div>
+            <ul style="font-size:10px;color:#92400E;padding-left:14px;display:flex;flex-direction:column;gap:4px">
+              <li>Subkegiatan berbasis data aktual</li>
+              <li>Program 3.31 sepenuhnya selaras</li>
+              <li>3.30.02 sudah redesign OSS</li>
+              <li>Semua program ada pijakan spasial</li>
+              <li>Indikator PDRB on track</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ ABT 2026 ══ -->
+  <div id="page-abt" class="page">
+    <div class="sec-title">ABT 2026 — Usulan Kegiatan</div>
+    <div class="sec-sub">5 usulan kegiatan Anggaran Belanja Tambahan 2026 untuk mendukung fondasi RPIK 2027</div>
+
+    <div class="card" style="margin-bottom:16px">
+      <div class="card-head"><div class="card-title">Matriks Usulan Kegiatan ABT 2026</div><div class="card-sub">Program KKR terkait · Isu Renstra yang disasar · Output & Outcome</div></div>
+      <div class="card-body" style="padding:0 18px 14px;overflow-x:auto">
+        <table class="abt-table">
+          <thead><tr><th>#</th><th>Judul Kegiatan ABT 2026</th><th>Program KKR</th><th>Isu Renstra</th><th>Output 2026</th><th>Outcome → RPIK 2027</th><th>Status</th></tr></thead>
+          <tbody>
+            <tr>
+              <td><b>1</b></td>
+              <td><b>Pemetaan Potensi & Klaster IKM/Industri per Kecamatan</b></td>
+              <td><span class="kode-badge">3.31.02</span></td>
+              <td style="font-size:10px;color:var(--t2)">Kontribusi industri PDRB rendah; subsektor terbatas; data belum terintegrasi</td>
+              <td style="font-size:10px">Database IKM per kecamatan + Peta klaster spasial</td>
+              <td style="font-size:10px">Dasar penetapan subsektor unggulan & target proporsi IKM (8.45% PDRB)</td>
+              <td><span class="tl tl-yellow"><span class="tl-dot tl-dot-yellow"></span>Diusulkan</span></td>
+            </tr>
+            <tr>
+              <td><b>2</b></td>
+              <td><b>Penyusunan Baseline Data Industri/IKM & Integrasi SIINas</b></td>
+              <td><span class="kode-badge">3.31.04</span><span class="kode-badge">3.31.02</span></td>
+              <td style="font-size:10px;color:var(--t2)">Basis data belum terintegrasi; transformasi digital; keterhubungan industri–perdagangan–ekspor lemah</td>
+              <td style="font-size:10px">Baseline lengkap: pelaku, tenaga kerja, bahan baku, produksi, legalitas, pembiayaan, pemasaran</td>
+              <td style="font-size:10px">Spine data RPIK 2027; basis pemodelan daya saing IKM; sinkronisasi dengan OSS/NIB</td>
+              <td><span class="tl tl-yellow"><span class="tl-dot tl-dot-yellow"></span>Diusulkan</span></td>
+            </tr>
+            <tr>
+              <td><b>3</b></td>
+              <td><b>Kajian Sarana & Prasarana Kawasan Industri/IKM & Logistik (Urban-RTRW)</b></td>
+              <td><span class="kode-badge">3.31.02</span><span class="kode-badge">3.30.03</span></td>
+              <td style="font-size:10px;color:var(--t2)">Keterbatasan lahan & kota jasa; rantai pasok; sinkronisasi RPIK–RTRW; SRG agraris tidak relevan</td>
+              <td style="font-size:10px">Kajian kebutuhan kawasan IKM urban + Matriks kesesuaian RTRW/RDTR</td>
+              <td style="font-size:10px">RPIK 2027 punya peta klaster kompatibel RTRW; program 3.30.03 & 3.31.02 tepat sasaran urban</td>
+              <td><span class="tl tl-yellow"><span class="tl-dot tl-dot-yellow"></span>Diusulkan</span></td>
+            </tr>
+            <tr>
+              <td><b>4</b></td>
+              <td><b>Kajian Subsektor Industri Pengolahan Unggulan & Rantai Pasok</b></td>
+              <td><span class="kode-badge">3.31.02</span><span class="kode-badge">3.30.05</span><span class="kode-badge">3.30.07</span></td>
+              <td style="font-size:10px;color:var(--t2)">Proporsi subsektor unggulan rendah (3.75%); keterhubungan industri–perdagangan–ekspor lemah; rantai pasok belum dipetakan</td>
+              <td style="font-size:10px">Daftar subsektor unggulan per kecamatan + Peta rantai pasok (bahan baku→produksi→ekspor)</td>
+              <td style="font-size:10px">RPIK 2027 berbasis bukti; paket intervensi terintegrasi 3.31.02 → 3.30.05 → 3.30.07</td>
+              <td><span class="tl tl-yellow"><span class="tl-dot tl-dot-yellow"></span>Diusulkan</span></td>
+            </tr>
+            <tr>
+              <td><b>5</b></td>
+              <td><b>Penyesuaian Desain Subkegiatan Perizinan terhadap OSS/NIB & Kewenangan DPMPTSP</b></td>
+              <td><span class="kode-badge">3.30.02</span><span class="kode-badge">3.31.03</span></td>
+              <td style="font-size:10px;color:var(--t2)">Transformasi digital & regulasi; peran Disperindag vs DPMPTSP; ancaman perubahan regulasi PP 28/2025</td>
+              <td style="font-size:10px">Kajian peran Disperindag dalam OSS/NIB + Draft SOP & usulan penyesuaian nama/isi subkegiatan</td>
+              <td style="font-size:10px">Subkegiatan 3.30.02 yang Tidak Selaras berubah jadi kegiatan relevan; data OSS/NIB terintegrasi</td>
+              <td><span class="tl tl-yellow"><span class="tl-dot tl-dot-yellow"></span>Diusulkan</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="row2">
+      <div class="card">
+        <div class="card-head"><div class="card-title">Prioritas ABT 2026</div></div>
+        <div class="card-body"><div class="chart-wrap"><canvas id="chart-abt"></canvas></div></div>
+      </div>
+      <div class="card">
+        <div class="card-head"><div class="card-title">Cara Gunakan Matriks Ini</div></div>
+        <div class="card-body">
+          <div style="display:flex;flex-direction:column;gap:10px">
+            <div style="background:#EEF2FF;border-radius:8px;padding:12px;border-left:3px solid var(--indigo)">
+              <div style="font-size:11px;font-weight:700;color:var(--indigo);margin-bottom:4px">📌 Kolom "Judul Kegiatan"</div>
+              <div style="font-size:10px;color:var(--t2)">Langsung pakai sebagai redaksi dasar usulan ABT 2026 ke Bappeda.</div>
+            </div>
+            <div style="background:#F0FDF4;border-radius:8px;padding:12px;border-left:3px solid var(--green)">
+              <div style="font-size:11px;font-weight:700;color:var(--green);margin-bottom:4px">✅ Kolom "Program KKR"</div>
+              <div style="font-size:10px;color:var(--t2)">Membuktikan kegiatan "Selaras dengan RPJMD–RKPD 2027" — kode urusan sudah ada.</div>
+            </div>
+            <div style="background:#FFF7ED;border-radius:8px;padding:12px;border-left:3px solid var(--yellow)">
+              <div style="font-size:11px;font-weight:700;color:var(--yellow);margin-bottom:4px">🎯 Kolom "Output & Outcome"</div>
+              <div style="font-size:10px;color:var(--t2)">Kaitkan langsung ABT 2026 → RPIK 2027 → Target Renstra (PDRB, daya saing IKM, sinkronisasi RTRW).</div>
+            </div>
+            <div style="background:#FFF5F5;border-radius:8px;padding:12px;border-left:3px solid var(--red)">
+              <div style="font-size:11px;font-weight:700;color:var(--red);margin-bottom:4px">⚡ Prioritas Tertinggi</div>
+              <div style="font-size:10px;color:var(--t2)">ABT 1 + 4 (Pemetaan Klaster + Kajian Subsektor & Rantai Pasok) — dasar semua kegiatan lainnya.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ RISIKO ══ -->
+  <div id="page-risiko" class="page">
+    <div class="sec-title">Risiko & Tindak Lanjut</div>
+    <div class="sec-sub">Program Tidak Selaras — penyebab, risiko, dan rekomendasi perbaikan</div>
+
+    <div class="row2">
+      <div class="card">
+        <div class="card-head"><div class="card-title">Distribusi Isu per Kategori</div></div>
+        <div class="card-body"><div class="chart-wrap"><canvas id="chart-risk"></canvas></div></div>
+      </div>
+      <div class="card">
+        <div class="card-head"><div class="card-title">Subkegiatan Tidak Selaras (3.30.02)</div><div class="card-sub">Semua pagu Rp 0 — butuh penyesuaian segera</div></div>
+        <div class="card-body">
+          <div style="display:flex;flex-direction:column;gap:8px">
+            <div style="display:flex;align-items:center;justify-content:space-between;padding:8px 10px;background:#FFF5F5;border-radius:7px;border:1px solid #FECACA">
+              <div><div style="font-size:11px;font-weight:700;color:#991B1B">NIB Pasar/Pusat Belanja</div><div style="font-size:9px;color:#DC2626">PP 28/2025 — izin bergeser ke NIB/OSS</div></div>
+              <span class="badge badge-red">Tidak Selaras</span>
+            </div>
+            <div style="display:flex;align-items:center;justify-content:space-between;padding:8px 10px;background:#FFF5F5;border-radius:7px;border:1px solid #FECACA">
+              <div><div style="font-size:11px;font-weight:700;color:#991B1B">STPW Waralaba Luar Negeri</div><div style="font-size:9px;color:#DC2626">Belum ada pengajuan; peran DPMPTSP</div></div>
+              <span class="badge badge-red">Tidak Selaras</span>
+            </div>
+            <div style="display:flex;align-items:center;justify-content:space-between;padding:8px 10px;background:#FFF5F5;border-radius:7px;border:1px solid #FECACA">
+              <div><div style="font-size:11px;font-weight:700;color:#991B1B">Izin Miras Golongan B-C</div><div style="font-size:9px;color:#DC2626">Kekosongan Perwal — Perda No.4/2014</div></div>
+              <span class="badge badge-red">Tidak Selaras</span>
+            </div>
+            <div style="display:flex;align-items:center;justify-content:space-between;padding:8px 10px;background:#FFF5F5;border-radius:7px;border:1px solid #FECACA">
+              <div><div style="font-size:11px;font-weight:700;color:#991B1B">SKA (Surat Keterangan Asal)</div><div style="font-size:9px;color:#DC2626">Belum ditunjuk Kemendag (Permendag 933/2021)</div></div>
+              <span class="badge badge-red">Tidak Selaras</span>
+            </div>
+            <div style="display:flex;align-items:center;justify-content:space-between;padding:8px 10px;background:#FFF5F5;border-radius:7px;border:1px solid #FECACA">
+              <div><div style="font-size:11px;font-weight:700;color:#991B1B">SRG & Pupuk Bersubsidi</div><div style="font-size:9px;color:#DC2626">Tidak sesuai konteks kota jasa (non-agraris)</div></div>
+              <span class="badge badge-red">Tidak Selaras</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-head"><div class="card-title">Matriks Penyebab & Rekomendasi Tindak Lanjut</div></div>
+      <div class="card-body" style="padding:0 18px 14px">
+        <table class="matrix">
+          <thead><tr><th>Kategori Penyebab</th><th>Isu Spesifik</th><th>Program Terdampak</th><th>Tindak Lanjut</th><th>PIC</th></tr></thead>
+          <tbody>
+            <tr>
+              <td><span class="badge badge-red">Regulasi Pusat</span></td>
+              <td style="font-size:10px"><b>PP 28/2025 & Permen Investasi 5/2025</b> — izin usaha bergeser ke NIB/OSS</td>
+              <td><span class="kode-badge">3.30.02</span></td>
+              <td style="font-size:10px">Redesign subkegiatan → fungsi pendampingan, pembinaan, dan verifikasi teknis (bukan penerbit izin)</td>
+              <td style="font-size:10px;font-weight:600">Bid. Perdagangan + DPMPTSP</td>
+            </tr>
+            <tr>
+              <td><span class="badge badge-yellow">Mandat Formal</span></td>
+              <td style="font-size:10px"><b>Belum ditunjuk Kemendag</b> sebagai penerbit SKA (Permendag 933/2021)</td>
+              <td><span class="kode-badge">3.30.02</span></td>
+              <td style="font-size:10px">Koordinasi aktif ke Kemendag untuk penunjukan formal; sementara siapkan kapasitas teknis SDM & infrastruktur</td>
+              <td style="font-size:10px;font-weight:600">Kadis + Kemendag</td>
+            </tr>
+            <tr>
+              <td><span class="badge badge-yellow">Kekosongan Hukum Lokal</span></td>
+              <td style="font-size:10px"><b>Belum ada Perwal</b> untuk izin miras B-C (Perda No.4/2014 belum mengatur)</td>
+              <td><span class="kode-badge">3.30.02</span></td>
+              <td style="font-size:10px">Dorong penyusunan Perwal ke Setda/Bagian Hukum; konsultasi dengan DPRD Tangsel</td>
+              <td style="font-size:10px;font-weight:600">Sekretariat Disperindag + Setda</td>
+            </tr>
+            <tr>
+              <td><span class="badge badge-blue">Konteks Wilayah</span></td>
+              <td style="font-size:10px"><b>SRG & pupuk subsidi tidak relevan</b> — Tangsel kota jasa/perdagangan, bukan sentra agraris</td>
+              <td><span class="kode-badge">3.30.03</span></td>
+              <td style="font-size:10px">Eliminasi subkegiatan SRG dari program; ganti dengan fokus sarana distribusi urban (pergudangan ringan, rumah kemasan)</td>
+              <td style="font-size:10px;font-weight:600">Bid. Perdagangan</td>
+            </tr>
+            <tr>
+              <td><span class="badge badge-gray">Data & Koordinasi</span></td>
+              <td style="font-size:10px"><b>Data B2 terbatas</b> — butuh koordinasi Disperindag Provinsi & BPOM</td>
+              <td><span class="kode-badge">3.30.02</span></td>
+              <td style="font-size:10px">Bangun MoU dengan Disperindag Provinsi; sinkronisasi data distribusi B2 dengan BPOM melalui platform bersama</td>
+              <td style="font-size:10px;font-weight:600">Bid. Perdagangan + Disperindag Prov.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ PDRB ══ -->
+  <div id="page-pdrb" class="page">
+    <div class="sec-title">Target Kontribusi PDRB</div>
+    <div class="sec-sub">Renstra Disperindag Tangsel 2025–2029 — Industri & Perdagangan</div>
+
+    <div class="pdrb-row">
+      <div class="pdrb-card">
+        <div class="pdrb-label">Kontribusi Sektor Industri ke PDRB</div>
+        <div class="pdrb-current">8.09% <span class="arrow">→</span> <span style="color:var(--green)">8.45%</span></div>
+        <div class="pdrb-target">Target Renstra 2025–2029 · Kenaikan 0.36 pp</div>
+        <div class="pdrb-track"><div class="pdrb-fill" style="width:67%;--c1:#059669;--c2:#34D399"></div></div>
+        <div class="pdrb-nums"><span>Baseline: 8.09%</span><span>Target: 8.45%</span></div>
+        <div style="margin-top:12px;font-size:10px;color:var(--t2);line-height:1.6">
+          <b style="color:var(--t1)">Kunci pencapaian:</b> Pemetaan klaster IKM (ABT 2026), penetapan subsektor unggulan, dan penguatan rantai pasok. Program utama: <span class="kode-badge">3.31.02</span><span class="kode-badge">3.31.04</span>
+        </div>
+      </div>
+      <div class="pdrb-card">
+        <div class="pdrb-label">Kontribusi Sektor Perdagangan ke PDRB</div>
+        <div class="pdrb-current">16.68% <span class="arrow">→</span> <span style="color:var(--green)">16.87%</span></div>
+        <div class="pdrb-target">Target Renstra 2025–2029 · Kenaikan 0.19 pp</div>
+        <div class="pdrb-track"><div class="pdrb-fill" style="width:82%;--c1:#1D4ED8;--c2:#60A5FA"></div></div>
+        <div class="pdrb-nums"><span>Baseline: 16.68%</span><span>Target: 16.87%</span></div>
+        <div style="margin-top:12px;font-size:10px;color:var(--t2);line-height:1.6">
+          <b style="color:var(--t1)">Kunci pencapaian:</b> Penguatan distribusi perdagangan, stabilisasi harga, ekspor produk lokal, dan fasilitasi UMKM ke marketplace. Program utama: <span class="kode-badge">3.30.03</span><span class="kode-badge">3.30.05</span><span class="kode-badge">3.30.07</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-head"><div class="card-title">Proyeksi Capaian PDRB vs Target Renstra</div><div class="card-sub">Simulasi trajectory 2025–2029</div></div>
+      <div class="card-body"><div class="chart-wrap" style="height:260px"><canvas id="chart-pdrb"></canvas></div></div>
+    </div>
+
+    <div class="row2">
+      <div class="card">
+        <div class="card-head"><div class="card-title">Faktor Pendorong Industri</div></div>
+        <div class="card-body">
+          <div style="display:flex;flex-direction:column;gap:8px;font-size:11px">
+            <div style="display:flex;align-items:center;gap:8px"><span style="color:var(--green);font-weight:700">▲</span><span><b>Izin usaha industri</b> — 98.9% terbit, ekosistem investasi kondusif</span></div>
+            <div style="display:flex;align-items:center;gap:8px"><span style="color:var(--green);font-weight:700">▲</span><span><b>JPH & sertifikasi</b> — daya saing produk IKM meningkat di pasar nasional</span></div>
+            <div style="display:flex;align-items:center;gap:8px"><span style="color:var(--green);font-weight:700">▲</span><span><b>Data SIINas 94.44%</b> — basis kebijakan industri lebih akurat</span></div>
+            <div style="display:flex;align-items:center;gap:8px"><span style="color:var(--yellow);font-weight:700">⚡</span><span><b>Klaster IKM</b> — belum dipetakan, target 8.45% bergantung ini</span></div>
+            <div style="display:flex;align-items:center;gap:8px"><span style="color:var(--yellow);font-weight:700">⚡</span><span><b>Subsektor unggulan</b> — belum ditetapkan, menghambat fokus program</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-head"><div class="card-title">Faktor Pendorong Perdagangan</div></div>
+        <div class="card-body">
+          <div style="display:flex;flex-direction:column;gap:8px;font-size:11px">
+            <div style="display:flex;align-items:center;gap:8px"><span style="color:var(--green);font-weight:700">▲</span><span><b>Pasar rakyat</b> — 14 pasar aktif, sarana distribusi utama warga</span></div>
+            <div style="display:flex;align-items:center;gap:8px"><span style="color:var(--green);font-weight:700">▲</span><span><b>Operasi pasar</b> — stabilisasi harga pokok berjalan efektif</span></div>
+            <div style="display:flex;align-items:center;gap:8px"><span style="color:var(--green);font-weight:700">▲</span><span><b>Pameran dagang & ekspor</b> — UMKM terfasilitasi ke pasar yang lebih luas</span></div>
+            <div style="display:flex;align-items:center;gap:8px"><span style="color:var(--red);font-weight:700">▼</span><span><b>Perizinan 3.30.02</b> — 7+ subkegiatan Rp 0, menghambat tata kelola</span></div>
+            <div style="display:flex;align-items:center;gap:8px"><span style="color:var(--yellow);font-weight:700">⚡</span><span><b>Ritel modern 223 unit</b> — dominasi minimarket perlu diantisipasi dampaknya ke UMKM</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  </div><!-- /content -->
+</div><!-- /main -->
+
+<script>
+// ══════ NAV ══════
+function nav(id, btn, title) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav').forEach(n => n.classList.remove('active'));
+  document.getElementById('page-' + id).classList.add('active');
+  if (btn) btn.classList.add('active');
+  document.getElementById('page-title').textContent = title || id;
+}
+
+// ══════ CLOCK ══════
+function tick() {
+  const now = new Date();
+  document.getElementById('clock').textContent =
+    now.toLocaleDateString('id-ID',{weekday:'short',day:'2-digit',month:'short',year:'numeric'}) +
+    ' · ' + now.toLocaleTimeString('id-ID');
+}
+tick(); setInterval(tick, 1000);
+
+// ══════ CHARTS ══════
+Chart.defaults.font.family = 'Inter';
+Chart.defaults.color = '#64748B';
+
+// Donut KKR Overview
+new Chart(document.getElementById('donut-main'), {
+  type: 'doughnut',
+  data: {
+    labels: ['Selaras', 'Perlu Penyesuaian'],
+    datasets: [{
+      data: [6, 3],
+      backgroundColor: ['#059669', '#DC2626'],
+      borderWidth: 0, hoverOffset: 6
+    }]
+  },
+  options: {
+    responsive: true, maintainAspectRatio: false, cutout: '72%',
+    plugins: {
+      legend: { position: 'bottom', labels: { padding: 16, font: { size: 11 } } },
+      tooltip: { callbacks: { label: c => ` ${c.label}: ${c.raw} program` } }
+    }
+  }
+});
+
+// Bar Program (overview)
+new Chart(document.getElementById('bar-prog'), {
+  type: 'bar',
+  data: {
+    labels: ['3.30.02 Perizinan', '3.30.03 Distribusi', '3.30.04 Stabilisasi', '3.30.05 Ekspor', '3.30.06 Metrologi', '3.30.07 P3DN', '3.31.02 Industri', '3.31.03 IUI', '3.31.04 SIINas'],
+    datasets: [{
+      label: 'Status (1=Selaras, 0=Perlu Penyesuaian)',
+      data: [0, 1, 1, 1, 1, 1, 1, 1, 1],
+      backgroundColor: ctx => ctx.raw === 1 ? '#059669' : '#DC2626',
+      borderRadius: 6
+    }]
+  },
+  options: {
+    responsive: true, maintainAspectRatio: false, indexAxis: 'y',
+    plugins: { legend: { display: false } },
+    scales: {
+      x: { max: 1, ticks: { callback: v => v === 1 ? 'Selaras' : v === 0 ? 'Perlu Penyesuaian' : '' }, grid: { color: '#F1F5F9' } },
+      y: { grid: { display: false }, ticks: { font: { size: 10 } } }
+    }
+  }
+});
+
+// Industri chart
+new Chart(document.getElementById('chart-ind'), {
+  type: 'bar',
+  data: {
+    labels: ['Izin Usaha Industri\n(3.31.03)', 'Data SIINas\n(3.31.04)', 'Target IKM\n(3.31.02)'],
+    datasets: [
+      { label: 'Capaian (%)', data: [98.9, 94.4, 75], backgroundColor: '#4F46E5', borderRadius: 6 },
+      { label: 'Target (%)', data: [98.9, 94.44, 100], backgroundColor: '#E0E7FF', borderRadius: 6 }
+    ]
+  },
+  options: {
+    responsive: true, maintainAspectRatio: false,
+    plugins: { legend: { labels: { font: { size: 10 } } } },
+    scales: { x: { grid: { display: false } }, y: { grid: { color: '#F1F5F9' }, max: 110, ticks: { callback: v => v + '%' } } }
+  }
+});
+
+// Perdagangan chart
+new Chart(document.getElementById('chart-dag'), {
+  type: 'doughnut',
+  data: {
+    labels: ['Selaras (5 program)', 'Perlu Penyesuaian (1 program)'],
+    datasets: [{ data: [5, 1], backgroundColor: ['#059669', '#DC2626'], borderWidth: 0 }]
+  },
+  options: {
+    responsive: true, maintainAspectRatio: false, cutout: '65%',
+    plugins: { legend: { position: 'bottom', labels: { font: { size: 10 }, padding: 12 } } }
+  }
+});
+
+// RPIK Roadmap (bar timeline)
+new Chart(document.getElementById('chart-rpik'), {
+  type: 'bar',
+  data: {
+    labels: ['Baseline Data IKM', 'Peta Klaster', 'Subsektor Unggulan', 'Rantai Pasok', 'Sinkronisasi RTRW', 'Integrasi SIINas/OSS'],
+    datasets: [{
+      label: 'Progres (%)',
+      data: [0, 0, 33, 0, 25, 40],
+      backgroundColor: ['#DC2626','#DC2626','#D97706','#DC2626','#D97706','#D97706'],
+      borderRadius: 4
+    }]
+  },
+  options: {
+    responsive: true, maintainAspectRatio: false, indexAxis: 'y',
+    plugins: { legend: { display: false }, tooltip: { callbacks: { label: c => ` Progres: ${c.raw}%` } } },
+    scales: {
+      x: { max: 100, ticks: { callback: v => v + '%' }, grid: { color: '#F1F5F9' } },
+      y: { grid: { display: false }, ticks: { font: { size: 10 } } }
+    }
+  }
+});
+
+// ABT priority chart
+new Chart(document.getElementById('chart-abt'), {
+  type: 'bar',
+  data: {
+    labels: ['ABT 1: Klaster IKM', 'ABT 2: Baseline Data', 'ABT 3: Sarana Logistik', 'ABT 4: Subsektor & Rantai Pasok', 'ABT 5: Redesign Perizinan'],
+    datasets: [{
+      label: 'Tingkat Prioritas (1–5)',
+      data: [5, 4, 3, 5, 3],
+      backgroundColor: ['#DC2626','#D97706','#059669','#DC2626','#059669'],
+      borderRadius: 5
+    }]
+  },
+  options: {
+    responsive: true, maintainAspectRatio: false, indexAxis: 'y',
+    plugins: { legend: { display: false } },
+    scales: {
+      x: { max: 5, ticks: { stepSize: 1 }, grid: { color: '#F1F5F9' } },
+      y: { grid: { display: false }, ticks: { font: { size: 10 } } }
+    }
+  }
+});
+
+// Risk chart
+new Chart(document.getElementById('chart-risk'), {
+  type: 'doughnut',
+  data: {
+    labels: ['Regulasi Pusat', 'Mandat Formal', 'Hukum Lokal', 'Konteks Wilayah', 'Data & Koordinasi'],
+    datasets: [{
+      data: [3, 1, 1, 2, 1],
+      backgroundColor: ['#DC2626','#D97706','#F59E0B','#94A3B8','#64748B'],
+      borderWidth: 0
+    }]
+  },
+  options: {
+    responsive: true, maintainAspectRatio: false, cutout: '60%',
+    plugins: { legend: { position: 'bottom', labels: { font: { size: 10 }, padding: 10 } } }
+  }
+});
+
+// PDRB Chart
+new Chart(document.getElementById('chart-pdrb'), {
+  type: 'line',
+  data: {
+    labels: ['2025', '2026', '2027', '2028', '2029'],
+    datasets: [
+      { label: 'Industri — Capaian', data: [8.09, 8.15, 8.22, 8.35, 8.45], borderColor: '#059669', backgroundColor: 'rgba(5,150,105,.08)', fill: true, tension: .3, pointRadius: 5, pointBackgroundColor: '#059669' },
+      { label: 'Industri — Target', data: [8.09, 8.20, 8.30, 8.40, 8.45], borderColor: '#059669', borderDash: [5,4], pointRadius: 0, fill: false, tension: .3 },
+      { label: 'Perdagangan — Capaian', data: [16.68, 16.72, 16.76, 16.82, 16.87], borderColor: '#1D4ED8', backgroundColor: 'rgba(29,78,216,.06)', fill: true, tension: .3, pointRadius: 5, pointBackgroundColor: '#1D4ED8' },
+      { label: 'Perdagangan — Target', data: [16.68, 16.73, 16.78, 16.83, 16.87], borderColor: '#1D4ED8', borderDash: [5,4], pointRadius: 0, fill: false, tension: .3 }
+    ]
+  },
+  options: {
+    responsive: true, maintainAspectRatio: false,
+    plugins: { legend: { labels: { font: { size: 10 }, padding: 12 } } },
+    scales: {
+      y: { grid: { color: '#F1F5F9' }, ticks: { callback: v => v + '%', font: { size: 10 } } },
+      x: { grid: { display: false } }
+    }
+  }
+});
+</script>
+</body>
+</html>
