@@ -1836,7 +1836,6 @@ a, .link, .accent {
     ['copilot', 'page-copilot', /copilot|ai/i]
   ];
   const keyToId = Object.fromEntries(pageMap.map(([key, id]) => [key, id]));
-  let recentDragAt = 0;
 
   function inferKey(tab) {
     if (!tab) return '';
@@ -1882,19 +1881,9 @@ a, .link, .accent {
     }
   });
 
-  const tabsWrap = document.querySelector('.nav-tabs');
-  if (tabsWrap) {
-    let startX = 0;
-    tabsWrap.addEventListener('pointerdown', event => { startX = event.clientX; }, { passive: true });
-    tabsWrap.addEventListener('pointermove', event => {
-      if (Math.abs(event.clientX - startX) > 8) recentDragAt = Date.now();
-    }, { passive: true });
-  }
-
   document.addEventListener('click', function (event) {
     const tab = event.target.closest && event.target.closest('.ntab');
     if (!tab) return;
-    if (Date.now() - recentDragAt < 420) return;
     const key = inferKey(tab);
     if (!key) return;
     event.preventDefault();
