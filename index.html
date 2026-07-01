@@ -166,8 +166,141 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--t1);min-hei
 
 .sec-title{font-size:15px;font-weight:700;color:var(--t1);margin-bottom:3px}
 .sec-sub{font-size:12px;color:var(--t2);margin-bottom:16px}
+/* ── COPILOT ── */
+.cop-layout{display:grid;grid-template-columns:270px 1fr 270px;gap:14px;height:calc(100vh - 130px);min-height:580px}
+.cop-panel{background:var(--card);border-radius:16px;border:1px solid var(--border);box-shadow:var(--sh);display:flex;flex-direction:column;overflow:hidden}
+.cop-head{padding:13px 16px;border-bottom:1px solid var(--border);flex-shrink:0}
+.cop-head-title{font-size:12px;font-weight:700;color:var(--t1)}.cop-head-sub{font-size:10px;color:var(--t3);margin-top:2px}
+.cop-history{flex:1;overflow-y:auto;padding:12px;display:flex;flex-direction:column;gap:8px;scroll-behavior:smooth}
+.chat-msg{padding:9px 12px;border-radius:10px;font-size:11px;line-height:1.6;word-break:break-word}
+.chat-user{background:var(--prim);color:#fff;align-self:flex-end;max-width:90%;border-bottom-right-radius:3px}
+.chat-ai{background:#F9F8FF;border:1px solid var(--border);align-self:flex-start;max-width:95%;border-bottom-left-radius:3px}
+.chat-ai b{color:var(--prim-dk)}
+.cop-input-area{padding:10px 12px;border-top:1px solid var(--border);flex-shrink:0}
+.cop-input{display:flex;gap:7px;align-items:flex-end}
+.cop-textarea{flex:1;border:1px solid var(--border);border-radius:9px;padding:8px 11px;font-size:11px;font-family:'Inter',sans-serif;resize:none;outline:none;background:#FAFAFF;color:var(--t1);min-height:56px;max-height:100px;transition:border-color .15s}
+.cop-textarea:focus{border-color:var(--prim)}
+.cop-send{background:var(--prim);color:#fff;border:none;border-radius:8px;padding:0 14px;font-size:11px;font-weight:600;cursor:pointer;height:36px;transition:all .15s;flex-shrink:0}
+.cop-send:hover{background:var(--prim-dk)}
+.cop-sug{padding:8px 12px;border-top:1px solid #F3F0FF;flex-shrink:0}
+.cop-sug-lbl{font-size:9px;font-weight:700;color:var(--t3);text-transform:uppercase;letter-spacing:.5px;margin-bottom:5px}
+.cop-sug-btn{display:block;width:100%;text-align:left;padding:5px 9px;border-radius:7px;font-size:10px;color:var(--prim-dk);background:var(--prim-lt);border:none;cursor:pointer;margin-bottom:4px;transition:all .15s;font-family:'Inter',sans-serif;line-height:1.4}
+.cop-sug-btn:hover{background:#DDD6FE}
+.cop-modes{display:flex;gap:5px;padding:10px 12px;border-bottom:1px solid var(--border);flex-shrink:0}
+.cop-mode{padding:4px 10px;border-radius:6px;font-size:10px;font-weight:600;cursor:pointer;border:1px solid var(--border);background:none;color:var(--t2);transition:all .15s;font-family:'Inter',sans-serif}
+.cop-mode.active{background:var(--prim);color:#fff;border-color:var(--prim)}
+.cop-answer-body{flex:1;overflow-y:auto;padding:16px}
+.ans-empty{display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;gap:10px;color:var(--t3)}
+.ans-empty-icon{font-size:44px;opacity:.35}.ans-empty-txt{font-size:12px;font-weight:500;text-align:center;max-width:220px;line-height:1.5}
+.ans-status-row{display:flex;align-items:center;gap:10px;margin-bottom:14px;flex-wrap:wrap}
+.ans-status{display:inline-flex;align-items:center;gap:6px;padding:6px 13px;border-radius:9px;font-size:12px;font-weight:700}
+.ans-status.selaras{background:var(--green-lt);color:var(--green-dk)}.ans-status.perlu{background:var(--yellow-lt);color:var(--yellow-dk)}.ans-status.tidak{background:var(--red-lt);color:var(--red-dk)}
+.ans-prog{font-size:10px;font-weight:600;color:var(--t3)}
+.ans-sec{margin-bottom:13px}
+.ans-lbl{font-size:9px;font-weight:700;color:var(--t3);text-transform:uppercase;letter-spacing:.5px;margin-bottom:5px;display:flex;align-items:center;gap:5px}
+.ans-lbl::after{content:'';flex:1;height:1px;background:var(--border)}
+.ans-txt{font-size:11px;color:var(--t2);line-height:1.7}.ans-txt b,.ans-txt strong{color:var(--t1)}
+.ans-pts{display:flex;flex-direction:column;gap:5px}
+.ans-pt{display:flex;gap:7px;font-size:11px;color:var(--t2);line-height:1.5;align-items:flex-start}
+.ans-dot{width:5px;height:5px;border-radius:50%;background:var(--prim);flex-shrink:0;margin-top:5px}
+.ans-drills{display:flex;gap:5px;flex-wrap:wrap;margin-top:8px}
+.drill-btn{padding:4px 10px;border-radius:6px;font-size:10px;font-weight:600;color:var(--prim);background:var(--prim-lt);border:1px solid #DDD6FE;cursor:pointer;transition:all .15s;font-family:'Inter',sans-serif}
+.drill-btn:hover{background:#DDD6FE}
+.ans-thinking{display:flex;align-items:center;gap:8px;padding:10px 12px;background:#F9F8FF;border:1px solid var(--border);border-radius:10px;font-size:11px;color:var(--t2)}
+.t-dots{display:flex;gap:4px}.t-dot{width:6px;height:6px;border-radius:50%;background:var(--prim);animation:tdot 1.4s infinite}
+.t-dot:nth-child(2){animation-delay:.2s}.t-dot:nth-child(3){animation-delay:.4s}
+@keyframes tdot{0%,80%,100%{transform:scale(.5);opacity:.3}40%{transform:scale(1);opacity:1}}
+.ev-list{flex:1;overflow-y:auto;padding:12px;display:flex;flex-direction:column;gap:8px}
+.ev-card{padding:10px 12px;border-radius:10px;border:1px solid var(--border);background:#FAFAFF;transition:all .15s;cursor:default}
+.ev-card:hover{border-color:#C4B5FD;background:var(--prim-lt)}
+.ev-src{font-size:9px;font-weight:700;color:var(--prim);text-transform:uppercase;letter-spacing:.5px;margin-bottom:3px}
+.ev-txt{font-size:10px;color:var(--t2);line-height:1.6}.ev-txt b{color:var(--t1)}
+.ev-stat{margin-top:5px}
+.ev-empty{display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;color:var(--t3);gap:6px;text-align:center;font-size:11px}
+
 @media print{.topnav{display:none!important}.content{padding:0!important}.page{display:block!important}}
 </style>
+
+<style id="mobile-overflow-guard">
+@media (max-width: 760px) {
+  .topnav {
+    flex-wrap: wrap;
+    align-items: flex-start;
+    overflow-x: hidden;
+    gap: 10px;
+  }
+  .topnav .nav-brand {
+    flex: 1 1 100%;
+    min-width: 0;
+  }
+  .topnav .nav-div {
+    display: none;
+  }
+  .topnav .nav-tabs {
+    order: 3;
+    flex: 0 0 100%;
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    padding-bottom: 4px;
+    -webkit-overflow-scrolling: touch;
+  }
+  .topnav .ntab {
+    flex: 0 0 auto;
+  }
+  .topnav .nav-r {
+    order: 2;
+    flex: 1 1 100%;
+    width: 100%;
+    justify-content: space-between;
+    min-width: 0;
+  }
+  .cop-layout {
+    grid-template-columns: 1fr !important;
+  }
+  .cop-panel,
+  .cop-answer-body,
+  .ev-list {
+    min-width: 0;
+    max-width: 100%;
+  }
+  .cop-input {
+    grid-template-columns: 1fr !important;
+  }
+  .cop-send {
+    width: 100%;
+  }
+  .ans-card {
+    line-height: 1.45;
+    overflow-wrap: anywhere;
+  }
+  .ev-item {
+    display: grid;
+    gap: 4px;
+    padding: 12px 0;
+    border-bottom: 1px solid rgba(124, 58, 237, .14);
+  }
+  .ev-item:last-child {
+    border-bottom: 0;
+  }
+  .ev-item b,
+  .ev-item span {
+    display: block;
+  }
+  .ev-item span {
+    color: #4B5563;
+    line-height: 1.4;
+  }
+  html,
+  body {
+    max-width: 100%;
+    overflow-x: hidden;
+  }
+}
+</style>
+
 </head>
 <body>
 
@@ -219,6 +352,11 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--t1);min-hei
     <button class="ntab" onclick="nav('pdrb',this)">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
       Target PDRB
+    </button>
+    <div class="nav-div" style="margin:0 4px"></div>
+    <button class="ntab" onclick="nav('copilot',this)" style="background:linear-gradient(135deg,var(--prim-lt),#E0E7FF);color:var(--prim);font-weight:700">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a10 10 0 110 20A10 10 0 0112 2"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg>
+      AI Copilot
     </button>
   </div>
   <div class="nav-r">
@@ -596,6 +734,67 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--t1);min-hei
   </div>
 </div>
 
+<!-- ══ AI COPILOT ══ -->
+<div id="page-copilot" class="page">
+  <div class="phdr"><h1>AI Planning Copilot</h1><p>Tanyakan apa saja tentang KKR, program, keselarasan, dan prioritas — jawaban berbasis dokumen resmi Disperindag</p></div>
+  <div class="cop-layout">
+
+    <!-- LEFT: Chat -->
+    <div class="cop-panel">
+      <div class="cop-head">
+        <div class="cop-head-title">Chat dengan AI Perencanaan</div>
+        <div class="cop-head-sub">Setiap jawaban dilengkapi bukti dokumen</div>
+      </div>
+      <div class="cop-history" id="chat-history">
+        <div class="chat-msg chat-ai"><b>AI Copilot siap.</b> Tanyakan tentang program, status keselarasan KKR, prioritas ABT 2026, atau RPIK 2027. Setiap jawaban mengacu pada dokumen Renstra, KKR, RKPD, dan Renja Disperindag Tangsel.</div>
+      </div>
+      <div class="cop-sug">
+        <div class="cop-sug-lbl">Pertanyaan contoh</div>
+        <button class="cop-sug-btn" onclick="askSuggestion(this)">Apakah kegiatan 3.30.02 masih relevan dengan RPJMD 2027?</button>
+        <button class="cop-sug-btn" onclick="askSuggestion(this)">Kenapa subkegiatan perizinan dinilai tidak selaras?</button>
+        <button class="cop-sug-btn" onclick="askSuggestion(this)">Apa kegiatan paling prioritas untuk mendukung RPIK 2027?</button>
+        <button class="cop-sug-btn" onclick="askSuggestion(this)">Kalau anggaran dipotong 20%, mana yang tetap harus dipertahankan?</button>
+        <button class="cop-sug-btn" onclick="askSuggestion(this)">Berapa kesiapan RPIK 2027 saat ini dan apa gap-nya?</button>
+      </div>
+      <div class="cop-input-area">
+        <div class="cop-input">
+          <textarea class="cop-textarea" id="cop-input" placeholder="Ketik pertanyaan..." rows="2" onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();sendQuery()}"></textarea>
+          <button class="cop-send" onclick="sendQuery()">Kirim</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- CENTER: Answer -->
+    <div class="cop-panel">
+      <div class="cop-head" style="display:flex;align-items:center;justify-content:space-between">
+        <div><div class="cop-head-title">Jawaban AI</div><div class="cop-head-sub">Output terstruktur berbasis dokumen</div></div>
+        <div class="cop-modes">
+          <button class="cop-mode active" id="mode-exec" onclick="setMode('eksekutif',this)">Eksekutif</button>
+          <button class="cop-mode" id="mode-analis" onclick="setMode('analis',this)">Analis</button>
+          <button class="cop-mode" id="mode-sim" onclick="setMode('simulasi',this)">Simulasi</button>
+        </div>
+      </div>
+      <div class="cop-answer-body" id="cop-answer">
+        <div class="ans-empty">
+          <div class="ans-empty-icon">🤖</div>
+          <div class="ans-empty-txt">Jawaban akan muncul di sini setelah pertanyaan dikirim. AI akan memberi Status, Dasar Rujukan, Alasan, Risiko, dan Rekomendasi.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- RIGHT: Evidence -->
+    <div class="cop-panel">
+      <div class="cop-head"><div class="cop-head-title">Bukti Dokumen</div><div class="cop-head-sub">Kutipan Renstra · KKR · RKPD · Renja</div></div>
+      <div class="ev-list" id="ev-list">
+        <div class="ev-empty">
+          <div style="font-size:32px;opacity:.3">📄</div>
+          <div>Dokumen relevan akan tampil setelah AI menjawab</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
 </div><!-- /content -->
 
 <script>
@@ -675,6 +874,91 @@ new Chart(document.getElementById('chart-pdrb'), {
   },
   options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{labels:{font:{size:10},padding:12}}},scales:{y:{grid:{color:'#F3F0FF'},ticks:{callback:v=>v+'%',font:{size:10}}},x:{grid:{display:false}}}}
 });
+
+// Local AI Planning Copilot actions. Static and deterministic: no network call, all answers based on dashboard evidence.
+const copilotState = { mode: 'eksekutif' };
+const copilotEvidence = {
+  abt: [
+    ['ABT 2026', 'Prioritas tertinggi: pemetaan klaster IKM dan kajian subsektor/rantai pasok untuk fondasi RPIK 2027.'],
+    ['RPIK 2027', 'Kesiapan baru 25%; gap utama ada pada baseline data IKM, peta klaster, dan integrasi SIINas–OSS.']
+  ],
+  perizinan: [
+    ['Program 3.30.02', 'Subkegiatan perizinan perlu redesign dari penerbit izin menjadi verifikator teknis dan pendamping OSS/NIB.'],
+    ['Regulasi', 'Penyesuaian mengikuti PP 28/2025 dan Permen Investasi 5/2025; beberapa pagu masih Rp 0.']
+  ],
+  rpik: [
+    ['RPIK 2027', 'Komponen yang belum kuat: baseline data industri/IKM per kecamatan, klaster, rantai pasok, dan sinkronisasi RTRW.'],
+    ['SIINas/OSS', 'Data SIINas 94,44% perlu diintegrasikan dengan OSS/NIB agar baseline RPIK berbasis bukti.']
+  ],
+  umum: [
+    ['KKR RPJMD–RKPD 2027', '6 dari 9 program selaras; 3 program perlu penyesuaian.'],
+    ['Isu prioritas', 'Terdapat 5 isu kritis: 1 tinggi, 3 sedang, 1 rendah.']
+  ]
+};
+function escHtml(value) {
+  return String(value).replace(/[&<>'"]/g, ch => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' }[ch]));
+}
+function pickCopilotEvidence(question) {
+  const q = (question || '').toLowerCase();
+  if (/abt|anggaran|prioritas|potong/.test(q)) return copilotEvidence.abt;
+  if (/izin|perizinan|oss|nib|3.30.02|miras|ska/.test(q)) return copilotEvidence.perizinan;
+  if (/rpik|klaster|ikm|siinas|baseline|subsektor|rtrw/.test(q)) return copilotEvidence.rpik;
+  return copilotEvidence.umum;
+}
+function buildCopilotAnswer(question) {
+  const evidence = pickCopilotEvidence(question);
+  const isAnalyst = copilotState.mode === 'analis';
+  const isSimulation = copilotState.mode === 'simulasi';
+  if (isSimulation) {
+    return '<b>Simulasi keputusan:</b><ol><li>Pertahankan kegiatan yang langsung membangun baseline RPIK 2027: klaster IKM, data SIINas–OSS, dan kajian subsektor.</li><li>Tunda kegiatan berisiko rendah yang tidak mengunci target 2027.</li><li>Redesign 3.30.02 tetap berjalan minimal sebagai SOP/verifikasi teknis agar isu pagu Rp 0 tidak berulang.</li></ol>';
+  }
+  if (isAnalyst) {
+    return '<b>Analisis berbasis dokumen:</b><ol><li>' + evidence[0][1] + '</li><li>' + evidence[1][1] + '</li><li>Implikasi: keputusan pimpinan perlu difokuskan pada data, klaster, dan redesign mandat agar program 2027 terukur.</li></ol>';
+  }
+  return '<b>Rekomendasi eksekutif:</b> ' + evidence[0][1] + ' Langkah aman berikutnya adalah mengunci baseline data, menetapkan prioritas subsektor, lalu menyelaraskan desain program/pagu sebelum RKPD 2027 final.';
+}
+function renderEvidence(question) {
+  const evidence = pickCopilotEvidence(question);
+  return evidence.map(item => '<div class="ev-item"><b>' + escHtml(item[0]) + '</b><span>' + escHtml(item[1]) + '</span></div>').join('');
+}
+function appendChatMessage(kind, html) {
+  const history = document.getElementById('chat-history');
+  if (!history) return;
+  const msg = document.createElement('div');
+  msg.className = 'chat-msg ' + (kind === 'user' ? 'chat-user' : 'chat-ai');
+  msg.innerHTML = html;
+  history.appendChild(msg);
+  history.scrollTop = history.scrollHeight;
+}
+function sendQuery() {
+  const input = document.getElementById('cop-input');
+  const answer = document.getElementById('cop-answer');
+  const evidence = document.getElementById('ev-list');
+  if (!input) return;
+  const question = input.value.trim();
+  if (!question) return;
+  appendChatMessage('user', escHtml(question));
+  const response = buildCopilotAnswer(question);
+  appendChatMessage('ai', response);
+  if (answer) answer.innerHTML = '<div class="ans-card">' + response + '</div>';
+  if (evidence) evidence.innerHTML = renderEvidence(question);
+  input.value = '';
+}
+function askSuggestion(button) {
+  const input = document.getElementById('cop-input');
+  if (!input || !button) return;
+  input.value = button.textContent.trim();
+  sendQuery();
+}
+function setMode(mode, button) {
+  copilotState.mode = mode;
+  document.querySelectorAll('.cop-mode').forEach(btn => btn.classList.remove('active'));
+  if (button) button.classList.add('active');
+}
+window.sendQuery = sendQuery;
+window.askSuggestion = askSuggestion;
+window.setMode = setMode;
+
 </script>
 </body>
 </html>
