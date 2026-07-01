@@ -1318,7 +1318,7 @@ initLogoutButton();
     if (!question) return;
     appendChatMessage('user', escHtml(question));
     input.value = '';
-    if (answer) answer.innerHTML = '<div class="ans-card">Memanggil AI server-side...</div>';
+    if (answer) answer.innerHTML = '<div class="ans-card">Sedang diproses, mohon tunggu sebentar...</div>';
     try {
       const res = await fetch('/api/copilot', {
         method: 'POST',
@@ -1964,7 +1964,7 @@ a, .link, .accent {
     if (!question) return;
     input.value = '';
     addMessage('user', escapeHtml(question));
-    const loading = addMessage('bot', '<b>Menganalisis...</b><br>Menghubungi AI backend aman.');
+    const loading = addMessage('bot', '<b>Sedang diproses...</b><br>Mohon tunggu sebentar, ya.');
     try {
       const response = await fetch('/api/copilot', {
         method: 'POST',

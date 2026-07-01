@@ -57,7 +57,7 @@ module.exports = async function handler(req, res) {
   try {
     const upstream = await fetch('https://openrouter.ai/api/v1/chat/completions', {
       method: 'POST',
-      signal: AbortSignal.timeout(8000),
+      signal: AbortSignal.timeout(20000),
       headers: {
         'Authorization': `Bearer ${apiKey}`,
         'Content-Type': 'application/json',
@@ -67,18 +67,26 @@ module.exports = async function handler(req, res) {
       body: JSON.stringify({
         model,
         temperature: 0.2,
-        max_tokens: 700,
+        max_tokens: 900,
+        plugins: [{ id: 'web', max_results: 3 }],
         messages: [
-          { role: 'system', content: `Anda adalah AI planning copilot eksekutif untuk Disperindag Tangsel. Jawab ringkas, berbasis bukti dashboard, mode ${mode}. Gunakan bahasa Indonesia. Jangan mengarang data di luar konteks. Format jawaban sebagai rekomendasi pimpinan yang praktis.` },
+          { role: 'system', content: `Anda adalah AI planning copilot eksekutif untuk Disperindag Tangsel. Jawab ringkas, berbasis bukti dashboard, mode ${mode}. Gunakan bahasa Indonesia. Jangan mengarang data di luar konteks. Format jawaban sebagai rekomendasi pimpinan yang praktis. Anda punya akses hasil pencarian internet terbaru untuk pertanyaan yang butuh info di luar data dashboard (regulasi terbaru, berita, data eksternal) — pakai itu kalau relevan dan sebutkan sumbernya.` },
           { role: 'user', content: `${knowledge}\n\nPertanyaan: ${question}` }
         ]
       })
     });
     const data = await upstream.json().catch(() => ({}));
     if (!upstream.ok) throw new Error(data.error?.message || `OpenRouter ${upstream.status}`);
-    const text = data.choices?.[0]?.message?.content || '';
+    const message = data.choices?.[0]?.message || {};
+    const text = message.content || '';
     const answer = text ? markdownToSafeHtml(text) : localFallback(question);
-    return json(res, 200, { ok: true, source: 'openrouter', model, answer, evidence: fallbackEvidence });
+    const citations = Array.isArray(message.annotations)
+      ? message.annotations
+          .filter(a => a.type === 'url_citation' && a.url_citation)
+          .map(a => ({ title: a.url_citation.title || a.url_citation.url, detail: a.url_citation.url }))
+      : [];
+    const evidence = citations.length ? citations : fallbackEvidence;
+    return json(res, 200, { ok: true, source: 'openrouter', model, answer, evidence });
   } catch (error) {
     return json(res, 200, { ok: true, source: 'local-fallback', warning: error.message, answer: localFallback(question), evidence: fallbackEvidence });
   }
