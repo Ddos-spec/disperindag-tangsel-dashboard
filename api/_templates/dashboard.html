@@ -222,107 +222,15 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--t1);min-hei
 </style>
 
 <style id="mobile-overflow-guard">
-body.auth-locked {
-  min-height: 100vh;
-  overflow: hidden;
-}
-body.auth-locked .topnav,
-body.auth-locked .content {
-  display: none !important;
-}
-.login-screen {
-  display: none;
-  min-height: 100vh;
-  padding: 28px;
-  place-items: center;
-  background:
-    radial-gradient(circle at 18% 18%, rgba(124, 58, 237, .20), transparent 30%),
-    radial-gradient(circle at 82% 8%, rgba(16, 185, 129, .16), transparent 28%),
-    linear-gradient(135deg, #F7F3FF 0%, #FFFFFF 48%, #EEF2FF 100%);
-}
-body.auth-locked .login-screen {
-  display: grid;
-}
-.login-card {
-  width: min(460px, 100%);
-  padding: 30px;
-  border: 1px solid rgba(124, 58, 237, .18);
-  border-radius: 28px;
-  background: rgba(255, 255, 255, .88);
-  box-shadow: 0 24px 70px rgba(49, 46, 129, .18);
-  backdrop-filter: blur(18px);
-}
-.login-badge {
-  display: inline-flex;
-  margin-bottom: 16px;
-  padding: 7px 12px;
-  border-radius: 999px;
-  background: #EDE9FE;
-  color: #6D28D9;
-  font-size: 12px;
-  font-weight: 800;
-  letter-spacing: .04em;
-  text-transform: uppercase;
-}
-.login-card h1 {
-  margin: 0 0 10px;
-  color: #111827;
-  font-size: clamp(28px, 6vw, 40px);
-  line-height: 1.05;
-}
-.login-card p {
-  margin: 0 0 22px;
-  color: #4B5563;
-  line-height: 1.55;
-}
-.login-form {
-  display: grid;
-  gap: 10px;
-}
-.login-form label {
-  color: #374151;
-  font-size: 12px;
-  font-weight: 800;
-  letter-spacing: .05em;
-  text-transform: uppercase;
-}
-.login-form input {
-  width: 100%;
-  min-height: 48px;
-  padding: 0 14px;
-  border: 1px solid #DDD6FE;
-  border-radius: 14px;
-  color: #111827;
-  background: #FFFFFF;
-  font: inherit;
-  outline: none;
-}
-.login-form input:focus {
-  border-color: #7C3AED;
-  box-shadow: 0 0 0 4px rgba(124, 58, 237, .12);
-}
-.login-form button,
 .logout-btn {
   border: 0;
   border-radius: 14px;
-  background: linear-gradient(135deg, #7C3AED, #4F46E5);
+  background: #4F46E5;
   color: #FFFFFF;
   font-weight: 800;
   cursor: pointer;
-}
-.login-form button {
-  min-height: 48px;
-  margin-top: 6px;
-}
-.logout-btn {
   padding: 9px 12px;
   white-space: nowrap;
-}
-.login-error {
-  min-height: 20px;
-  color: #DC2626;
-  font-size: 13px;
-  font-weight: 700;
 }
 .nav-tabs {
   cursor: grab;
@@ -428,7 +336,6 @@ body.auth-locked .login-screen {
 }
 </style>
 
-<script src="/auth-config.js"></script>
 <style id="mobile-polish-v2">
 @media (max-width: 760px) {
   :root {
@@ -690,19 +597,6 @@ body.auth-locked .login-screen {
     line-height: 1.5 !important;
   }
 
-  .login-screen {
-    padding: 22px;
-    align-items: center;
-  }
-
-  .login-card {
-    padding: 26px;
-    border-radius: 26px;
-  }
-
-  .login-card h1 {
-    font-size: clamp(30px, 9vw, 38px);
-  }
 }
 
 @media (max-width: 360px) {
@@ -723,26 +617,12 @@ body.auth-locked .login-screen {
 <link rel="apple-touch-icon" href="/assets/tangsel-logo.png">
 <meta name="theme-color" content="#0898b8">
 </head>
-<body class="auth-locked">
-<section class="login-screen" id="login-screen" aria-label="Login dashboard">
-  <div class="login-card">
-    <div class="login-badge">Disperindag Tangsel</div>
-    <h1>Login Dashboard Strategis</h1>
-    <p>Masukkan access code operator untuk membuka dashboard. Secret API tetap disimpan di server/GitHub Secrets, bukan di browser.</p>
-    <form id="login-form" class="login-form">
-      <label for="login-code">Access Code</label>
-      <input id="login-code" name="accessCode" type="password" autocomplete="current-password" placeholder="Masukkan access code" required />
-      <button type="submit">Masuk Dashboard</button>
-      <div class="login-error" id="login-error" role="alert"></div>
-    </form>
-  </div>
-</section>
-
+<body>
 <!-- ════════════ TOP NAV ════════════ -->
 <nav class="topnav">
   <div class="nav-brand">
     <div class="nav-emblem">
-      <img src="https://tangerangselatankota.go.id/images/logo/logo-spesial.png" alt="Logo Tangsel" onerror="this.parentElement.innerHTML='⚖️'">
+      <img src="/assets/tangsel-logo.png" alt="Logo Tangsel">
     </div>
     <div>
       <div class="nav-name">Disperindag Tangsel</div>
@@ -788,7 +668,7 @@ body.auth-locked .login-screen {
       Target PDRB
     </button>
     <div class="nav-div" style="margin:0 4px"></div>
-    <button class="ntab" onclick="nav('copilot',this)" style="background:linear-gradient(135deg,var(--prim-lt),#E0E7FF);color:var(--prim);font-weight:700">
+    <button class="ntab" onclick="nav('copilot',this)" style="background:var(--prim-lt);color:var(--prim);font-weight:700">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a10 10 0 110 20A10 10 0 0112 2"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg>
       AI Copilot
     </button>
@@ -1393,40 +1273,6 @@ window.sendQuery = sendQuery;
 window.askSuggestion = askSuggestion;
 window.setMode = setMode;
 
-const dashboardAuth = {
-  storageKey: 'disperindag-dashboard-auth:v1'
-};
-
-function setLoginError(message) {
-  const errorBox = document.getElementById('login-error');
-  if (errorBox) errorBox.textContent = message || '';
-}
-
-async function sha256Hex(value) {
-  if (!window.crypto?.subtle) {
-    throw new Error('Browser tidak mendukung Web Crypto.');
-  }
-  const bytes = new TextEncoder().encode(value);
-  const digest = await crypto.subtle.digest('SHA-256', bytes);
-  return Array.from(new Uint8Array(digest)).map(byte => byte.toString(16).padStart(2, '0')).join('');
-}
-
-function getAuthConfig() {
-  return window.DASHBOARD_AUTH_CONFIG || {};
-}
-
-function unlockDashboard() {
-  document.body.classList.remove('auth-locked');
-  document.getElementById('login-screen')?.setAttribute('aria-hidden', 'true');
-}
-
-function lockDashboard() {
-  sessionStorage.removeItem(dashboardAuth.storageKey);
-  document.body.classList.add('auth-locked');
-  document.getElementById('login-screen')?.removeAttribute('aria-hidden');
-  window.setTimeout(() => document.getElementById('login-code')?.focus(), 50);
-}
-
 function initLogoutButton() {
   const navRight = document.querySelector('.nav-r');
   if (!navRight || document.getElementById('logout-dashboard')) return;
@@ -1435,148 +1281,10 @@ function initLogoutButton() {
   button.className = 'logout-btn';
   button.type = 'button';
   button.textContent = 'Logout';
-  button.addEventListener('click', lockDashboard);
   navRight.appendChild(button);
 }
 
-function initLoginGate() {
-  const form = document.getElementById('login-form');
-  const input = document.getElementById('login-code');
-  initLogoutButton();
-  if (sessionStorage.getItem(dashboardAuth.storageKey) === 'ok') {
-    unlockDashboard();
-    return;
-  }
-  lockDashboard();
-  form?.addEventListener('submit', async event => {
-    event.preventDefault();
-    setLoginError('');
-    const config = getAuthConfig();
-    const code = input?.value.trim() || '';
-    if (!config.hash || !config.salt) {
-      setLoginError('Konfigurasi login belum tersedia. Pastikan GitHub Secrets sudah terpasang dan deploy selesai.');
-      return;
-    }
-    try {
-      const digest = await sha256Hex(`${config.salt}:${code}`);
-      if (digest !== config.hash) {
-        setLoginError('Access code salah.');
-        input?.select();
-        return;
-      }
-      sessionStorage.setItem(dashboardAuth.storageKey, 'ok');
-      input.value = '';
-      unlockDashboard();
-    } catch (error) {
-      setLoginError(error.message || 'Login gagal.');
-    }
-  });
-}
-
-initLoginGate();
-
-function initDraggableNav() {
-  const navTabs = document.querySelector('.nav-tabs');
-  if (!navTabs) return;
-  let isDown = false;
-  let startX = 0;
-  let scrollLeft = 0;
-  let moved = false;
-  let suppressClick = false;
-  let suppressUntil = 0;
-  let dragSource = '';
-
-  navTabs.addEventListener('pointerdown', event => {
-    if (event.pointerType === 'mouse') return;
-    isDown = true;
-    moved = false;
-    dragSource = 'pointer';
-    startX = event.clientX;
-    scrollLeft = navTabs.scrollLeft;
-  });
-
-  navTabs.addEventListener('pointermove', event => {
-    if (!isDown || dragSource !== 'pointer') return;
-    const deltaX = event.clientX - startX;
-    if (Math.abs(deltaX) > 4) {
-      moved = true;
-      navTabs.classList.add('dragging');
-    }
-    navTabs.scrollLeft = scrollLeft - deltaX;
-    if (moved) event.preventDefault();
-  });
-
-  const stopDrag = event => {
-    if (!isDown || dragSource !== 'pointer') return;
-    isDown = false;
-    suppressClick = moved;
-    suppressUntil = moved ? performance.now() + 180 : 0;
-    dragSource = '';
-    navTabs.classList.remove('dragging');
-    window.setTimeout(() => {
-      suppressClick = false;
-      moved = false;
-    }, 120);
-  };
-
-  navTabs.addEventListener('pointerup', stopDrag);
-  navTabs.addEventListener('pointercancel', stopDrag);
-  navTabs.addEventListener('pointerleave', stopDrag);
-
-  navTabs.addEventListener('mousedown', event => {
-    if (event.button !== 0 || isDown) return;
-    isDown = true;
-    moved = false;
-    dragSource = 'mouse';
-    startX = event.clientX;
-    scrollLeft = navTabs.scrollLeft;
-  });
-
-  window.addEventListener('mousemove', event => {
-    if (!isDown || dragSource !== 'mouse') return;
-    const deltaX = event.clientX - startX;
-    if (Math.abs(deltaX) > 4) {
-      moved = true;
-      navTabs.classList.add('dragging');
-    }
-    navTabs.scrollLeft = scrollLeft - deltaX;
-    if (moved) event.preventDefault();
-  });
-
-  window.addEventListener('mouseup', () => {
-    if (!isDown || dragSource !== 'mouse') return;
-    isDown = false;
-    suppressClick = moved;
-    suppressUntil = moved ? performance.now() + 180 : 0;
-    dragSource = '';
-    navTabs.classList.remove('dragging');
-    window.setTimeout(() => {
-      suppressClick = false;
-      moved = false;
-    }, 120);
-  });
-
-  navTabs.addEventListener('click', event => {
-    const shouldSuppress = suppressClick && performance.now() < suppressUntil;
-    if (shouldSuppress) {
-      event.preventDefault();
-      event.stopPropagation();
-      event.stopImmediatePropagation?.();
-      suppressClick = false;
-      suppressUntil = 0;
-      return;
-    }
-    suppressClick = false;
-    suppressUntil = 0;
-    const tab = event.target.closest?.('.ntab');
-    const match = tab?.getAttribute('onclick')?.match(/nav\('([^']+)'/);
-    if (tab && match?.[1]) {
-      nav(match[1], tab);
-    }
-  }, true);
-}
-
-initDraggableNav();
+initLogoutButton();
 
 </script>
 <script id="production-backend-bridge">
@@ -1588,25 +1296,9 @@ initDraggableNav();
     try {
       const res = await fetch('/api/session', { credentials: 'same-origin', cache: 'no-store' });
       const data = await res.json().catch(() => ({}));
-      if (res.ok && data.authenticated) {
-        document.body.classList.remove('auth-locked');
-        document.getElementById('login-screen')?.setAttribute('aria-hidden', 'true');
-        return true;
-      }
+      return res.ok && !!data.authenticated;
     } catch {}
     return false;
-  }
-
-  async function backendLogin(code) {
-    const res = await fetch('/api/login', {
-      method: 'POST',
-      credentials: 'same-origin',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ accessCode: code })
-    });
-    const data = await res.json().catch(() => ({}));
-    if (!res.ok || !data.ok) throw new Error(data.error || 'Login gagal.');
-    return data;
   }
 
   async function backendLogout() {
@@ -1672,21 +1364,6 @@ initDraggableNav();
       }
     }
 
-    document.getElementById('login-form')?.addEventListener('submit', async event => {
-      event.preventDefault();
-      event.stopImmediatePropagation();
-      const input = document.getElementById('login-code');
-      const code = input?.value.trim() || '';
-      try {
-        await backendLogin(code);
-        document.body.classList.remove('auth-locked');
-        document.getElementById('login-screen')?.setAttribute('aria-hidden', 'true');
-      } catch (error) {
-        setLoginError(error.message || 'Login gagal.');
-        input?.select();
-      }
-    }, true);
-
     document.getElementById('logout-dashboard')?.addEventListener('click', event => {
       event.preventDefault();
       event.stopImmediatePropagation();
@@ -1733,7 +1410,6 @@ initDraggableNav();
   tabs.classList.add('drag-scroll-ready');
 
   let dragging = false;
-  let moved = false;
   let startX = 0;
   let startLeft = 0;
 
@@ -1745,9 +1421,8 @@ initDraggableNav();
   }
 
   tabs.addEventListener('pointerdown', function (event) {
-    if (event.pointerType === 'mouse' && event.button !== 0) return;
+    if (event.pointerType !== 'touch') return;
     dragging = true;
-    moved = false;
     startX = event.clientX;
     startLeft = tabs.scrollLeft;
     tabs.classList.add('dragging');
@@ -1757,21 +1432,12 @@ initDraggableNav();
   tabs.addEventListener('pointermove', function (event) {
     if (!dragging) return;
     const delta = event.clientX - startX;
-    if (Math.abs(delta) > 4) moved = true;
     tabs.scrollLeft = startLeft - delta;
-    if (moved) event.preventDefault();
-  }, { passive: false });
+  }, { passive: true });
 
   tabs.addEventListener('pointerup', endDrag);
   tabs.addEventListener('pointercancel', endDrag);
   tabs.addEventListener('pointerleave', endDrag);
-
-  tabs.addEventListener('click', function (event) {
-    if (!moved) return;
-    event.preventDefault();
-    event.stopPropagation();
-    moved = false;
-  }, true);
 })();
 </script>
 <style id="tangsel-palette-and-floating-ai">
@@ -1823,7 +1489,7 @@ body {
   box-shadow: 0 12px 32px rgba(8, 152, 184, .22) !important;
 }
 .logout-btn, button.primary, .send-btn, .fab-send {
-  background: linear-gradient(135deg, var(--tangsel-cyan), var(--tangsel-green)) !important;
+  background: var(--tangsel-cyan) !important;
   color: #fff !important;
   border: 1px solid rgba(255, 255, 255, .38) !important;
   box-shadow: 0 14px 34px rgba(8, 152, 184, .22) !important;
@@ -1841,7 +1507,7 @@ body {
   color: var(--tangsel-cyan) !important;
 }
 .ntab.active {
-  background: linear-gradient(135deg, rgba(8, 152, 184, .14), rgba(245, 189, 38, .18)) !important;
+  background: rgba(8, 152, 184, .12) !important;
   color: #08344d !important;
   border-color: rgba(245, 189, 38, .54) !important;
   box-shadow: inset 0 -2px 0 var(--tangsel-gold), 0 12px 28px rgba(8, 152, 184, .1) !important;
@@ -1966,7 +1632,7 @@ a, .link, .accent {
     font-size: 15px !important;
   }
   .ntab.active {
-    background: linear-gradient(135deg, rgba(8, 152, 184, .15), rgba(8, 152, 184, .08)) !important;
+    background: rgba(8, 152, 184, .1) !important;
     border-color: rgba(8, 152, 184, .22) !important;
     box-shadow: inset 4px 0 0 var(--tangsel-cyan), 0 10px 26px rgba(8, 152, 184, .08) !important;
   }
@@ -2000,7 +1666,7 @@ a, .link, .accent {
   padding: 10px 16px 10px 10px;
   border: 1px solid rgba(245, 189, 38, .58);
   border-radius: 999px;
-  background: linear-gradient(135deg, var(--tangsel-cyan), var(--tangsel-green));
+  background: var(--tangsel-cyan);
   color: #fff;
   font-weight: 900;
   letter-spacing: -.01em;

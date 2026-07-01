@@ -1,7 +1,8 @@
-const { verifyAccessCode, createSessionToken, sessionCookie, readJson, json } = require('../lib/auth');
+const { verifyAccessCode, createSessionToken, sessionCookie, readJson, json, isLoginRateLimited } = require('../lib/auth');
 
 module.exports = async function handler(req, res) {
   if (req.method !== 'POST') return json(res, 405, { ok: false, error: 'Method not allowed' });
+  if (isLoginRateLimited(req)) return json(res, 429, { ok: false, error: 'Terlalu banyak percobaan. Coba lagi beberapa menit lagi.' });
   try {
     const body = await readJson(req);
     const accessCode = String(body.accessCode || '');
