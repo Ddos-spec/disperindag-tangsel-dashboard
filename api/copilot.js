@@ -76,6 +76,7 @@ module.exports = async function handler(req, res) {
       })
     });
     const data = await upstream.json().catch(() => ({}));
+    if (body.__debug) return json(res, 200, { ok: true, raw: data });
     if (!upstream.ok) throw new Error(data.error?.message || `OpenRouter ${upstream.status}`);
     const message = data.choices?.[0]?.message || {};
     const text = message.content || '';
