@@ -1064,6 +1064,7 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--t1);min-hei
       </div>
       <div class="cop-sug">
         <div class="cop-sug-lbl">Pertanyaan contoh</div>
+        <button class="cop-sug-btn" onclick="askSuggestion(this)">Berapa pagu anggaran Renja Murni 2026 dan apa saja prioritasnya?</button>
         <button class="cop-sug-btn" onclick="askSuggestion(this)">Apakah kegiatan 3.30.02 masih relevan dengan RPJMD 2027?</button>
         <button class="cop-sug-btn" onclick="askSuggestion(this)">Kenapa subkegiatan perizinan dinilai tidak selaras?</button>
         <button class="cop-sug-btn" onclick="askSuggestion(this)">Apa kegiatan paling prioritas untuk mendukung RPIK 2027?</button>
@@ -1192,6 +1193,11 @@ new Chart(document.getElementById('chart-pdrb'), {
 // Local AI Planning Copilot actions. Static and deterministic: no network call, all answers based on dashboard evidence.
 const copilotState = { mode: 'eksekutif' };
 const copilotEvidence = {
+  renja: [
+    ['Pagu Renja 2026', 'Total pagu indikatif Renja Murni 2026 sebesar Rp 22.530.794.319,- (semuanya Belanja Operasi, Belanja Modal Rp 0). Perkiraan pagu 2027 sebesar Rp 26.115.080.473,-.'],
+    ['Target Indikator', 'Target 2026: Kontribusi Industri ke PDRB 8.23%, Kontribusi Perdagangan 16.76%, Proporsi Industri Pengolahan Unggulan 3.75%, Proporsi Perdagangan Barang Unggulan 15.85%.'],
+    ['Prioritas & Hambatan', 'Prioritas: Pendampingan HKI/Haki bagi IKM (2 dokumen HKI, 1 SNI) & Optimalisasi Pemasaran IKM kemitraan ritel modern. Hambatan: RPIK belum ada, RDTR membatasi zona industri besar, daya beli lemah, & SDM pengawas kurang.']
+  ],
   abt: [
     ['ABT 2026', 'Prioritas tertinggi: pemetaan klaster IKM dan kajian subsektor/rantai pasok untuk fondasi RPIK 2027.'],
     ['RPIK 2027', 'Kesiapan baru 25%; gap utama ada pada baseline data IKM, peta klaster, dan integrasi SIINas–OSS.']
@@ -1214,6 +1220,7 @@ function escHtml(value) {
 }
 function pickCopilotEvidence(question) {
   const q = (question || '').toLowerCase();
+  if (/renja|2026|anggaran|pagu/.test(q)) return copilotEvidence.renja;
   if (/abt|anggaran|prioritas|potong/.test(q)) return copilotEvidence.abt;
   if (/izin|perizinan|oss|nib|3.30.02|miras|ska/.test(q)) return copilotEvidence.perizinan;
   if (/rpik|klaster|ikm|siinas|baseline|subsektor|rtrw/.test(q)) return copilotEvidence.rpik;

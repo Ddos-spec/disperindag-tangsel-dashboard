@@ -12,10 +12,21 @@ RPIK 2027 readiness 25%; gap utama baseline data IKM, peta klaster, rantai pasok
 ABT 2026 prioritas: pemetaan klaster IKM, baseline data industri/IKM dan integrasi SIINas, kajian sarana/logistik urban-RTRW, kajian subsektor unggulan dan rantai pasok, redesign perizinan OSS/NIB.
 Perizinan 3.30.02 perlu redesign dari penerbit izin menjadi verifikator teknis dan pendamping OSS/NIB karena PP 28/2025 dan Permen Investasi 5/2025.
 Industri: izin usaha industri 98.9%, data SIINas 94.44%, target IKM kota 58.
+
+Dokumen Renja Murni 2026:
+- Total Pagu Anggaran 2026: Rp 22.530.794.319,- (semuanya Belanja Operasi, Belanja Modal Rp 0)
+- Perkiraan Pagu Anggaran 2027: Rp 26.115.080.473,-
+- Struktur program: 10 Program, 22 Kegiatan, dan 59 Sub-kegiatan.
+- Target Indikator 2026: Kontribusi Industri ke PDRB 8.23% (target Renstra 8.52%), Kontribusi Perdagangan ke PDRB 16.76% (target Renstra 16.91%), Proporsi Industri Pengolahan Unggulan 3.75% (target Renstra 3.78%), Proporsi Perdagangan Barang Unggulan 15.85% (target Renstra 17.58%).
+- Prioritas Pembangunan 2026: Peningkatan Pendampingan HKI/Haki bagi IKM (target 2 dokumen HKI, 1 SNI, GMP) dan Optimalisasi Pemasaran IKM/UMKM lewat kemitraan ritel modern.
+- Hambatan Utama 2026: Belum ada Rencana Induk Pembangunan Industri Kota (RPIK); RDTR membatasi zona industri besar (hanya skala kecil); daya beli produk lokal lemah; persaingan produk impor; bahan pokok mayoritas dari luar daerah (eksternal hulu); kuantitas/kualitas SDM pengawas kurang.
 `;
 
 function localFallback(question) {
   const q = String(question || '').toLowerCase();
+  if (/renja|2026|anggaran|pagu/.test(q)) {
+    return '<b>Rekomendasi eksekutif:</b> Pagu indikatif Renja Murni 2026 adalah Rp 22.530.794.319,- (Belanja Operasi, Belanja Modal Rp 0). Prioritas utama adalah Peningkatan Pendampingan Legalitas HKI bagi IKM dan Pemasaran IKM lewat kemitraan ritel modern. Pagu perkiraan 2027 adalah Rp 26.115.080.473,-.';
+  }
   if (/perizinan|oss|nib|3\.30\.02/.test(q)) {
     return '<b>Rekomendasi eksekutif:</b> Redesign program 3.30.02 menjadi fungsi verifikasi teknis dan pendampingan OSS/NIB. Pastikan SOP baru, matriks kewenangan dengan DPMPTSP, dan integrasi data OSS–SIINas masuk agenda ABT/RKPD.';
   }
