@@ -9,5 +9,8 @@
   "functions": {
     "api/dashboard.js": { "includeFiles": "api/_templates/dashboard.html" },
     "api/copilot.js": { "maxDuration": 30 }
-  }
+  },
+  "crons": [
+    { "path": "/api/health", "schedule": "17 3 * * *" }
+  ]
 }
