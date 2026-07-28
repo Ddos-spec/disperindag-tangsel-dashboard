@@ -154,17 +154,25 @@ label {
   font-weight: 800 !important;
 }
 @media (max-width: 760px) {
+  body {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+  }
   body::before {
     background:
       linear-gradient(180deg, rgba(47,159,211,.92) 0 220px, #f4fdff 220px 100%),
       radial-gradient(circle at 72% 8%, rgba(245, 189, 38, .22), transparent 30%);
   }
   body::after {
+    order: -1;
     position: static;
     display: block;
     margin: 28px 20px 18px;
     font-size: 24px;
     text-align: center;
+    color: #fff;
+    text-shadow: 0 4px 14px rgba(9, 47, 70, .35);
   }
   main.card {
     margin: 0 auto 24px !important;

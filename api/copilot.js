@@ -99,6 +99,7 @@ module.exports = async function handler(req, res) {
     const evidence = citations.length ? citations : fallbackEvidence;
     return json(res, 200, { ok: true, source: 'openrouter', model, answer, evidence });
   } catch (error) {
+    console.error('[copilot] OpenRouter call failed:', error.message);
     return json(res, 200, { ok: true, source: 'local-fallback', warning: error.message, answer: localFallback(question), evidence: fallbackEvidence });
   }
 };
