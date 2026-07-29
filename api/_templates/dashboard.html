@@ -1044,7 +1044,7 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--t1);min-hei
       <div class="cop-history" id="chat-history">
         <div class="chat-msg chat-ai"><b>AI Copilot siap.</b> Tanyakan tentang program, status keselarasan KKR, prioritas ABT 2026, atau RPIK 2027. Setiap jawaban mengacu pada dokumen Renstra, KKR, RKPD, dan Renja Disperindag Tangsel.</div>
       </div>
-      <div class="cop-sug">
+      <div class="cop-sug" id="cop-sug">
         <div class="cop-sug-lbl">Pertanyaan contoh</div>
         <button class="cop-sug-btn" onclick="askSuggestion(this)">Berapa pagu anggaran Renja Murni 2026 dan apa saja prioritasnya?</button>
         <button class="cop-sug-btn" onclick="askSuggestion(this)">Apakah kegiatan 3.30.02 masih relevan dengan RPJMD 2027?</button>
@@ -1182,6 +1182,10 @@ function buildCopilotAnswer(question) {
   const evidence = pickCopilotEvidence(question);
   return '<b>Rekomendasi eksekutif:</b> ' + evidence[0][1] + ' Langkah aman berikutnya adalah mengunci baseline data, menetapkan prioritas subsektor, lalu menyelaraskan desain program/pagu sebelum RKPD 2027 final.';
 }
+function hideCopSuggestions() {
+  const sug = document.getElementById('cop-sug');
+  if (sug) sug.style.display = 'none';
+}
 function appendChatMessage(kind, html) {
   const history = document.getElementById('chat-history');
   if (!history) return null;
@@ -1197,6 +1201,7 @@ function sendQuery() {
   if (!input) return;
   const question = input.value.trim();
   if (!question) return;
+  hideCopSuggestions();
   appendChatMessage('user', escHtml(question));
   const response = buildCopilotAnswer(question);
   appendChatMessage('ai', response);
@@ -1251,6 +1256,7 @@ initLogoutButton();
     if (!input) return;
     const question = input.value.trim();
     if (!question) return;
+    hideCopSuggestions();
     appendChatMessage('user', escHtml(question));
     input.value = '';
     const pending = appendChatMessage('ai', '<div class="t-dots"><span class="t-dot"></span><span class="t-dot"></span><span class="t-dot"></span></div>');
