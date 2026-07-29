@@ -167,7 +167,7 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--t1);min-hei
 .sec-title{font-size:15px;font-weight:700;color:var(--t1);margin-bottom:3px}
 .sec-sub{font-size:12px;color:var(--t2);margin-bottom:16px}
 /* ── COPILOT ── */
-.cop-layout{display:grid;grid-template-columns:270px 1fr 270px;gap:14px;height:calc(100vh - 130px);min-height:580px}
+.cop-layout{display:grid;grid-template-columns:270px 1fr;gap:14px;height:calc(100vh - 130px);min-height:580px}
 .cop-panel{background:var(--card);border-radius:16px;border:1px solid var(--border);box-shadow:var(--sh);display:flex;flex-direction:column;overflow:hidden}
 .cop-head{padding:13px 16px;border-bottom:1px solid var(--border);flex-shrink:0}
 .cop-head-title{font-size:12px;font-weight:700;color:var(--t1)}.cop-head-sub{font-size:10px;color:var(--t3);margin-top:2px}
@@ -1062,26 +1062,12 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--t1);min-hei
       </div>
     </div>
 
-    <!-- CENTER: Answer -->
+    <!-- CENTER: Answer + Evidence -->
     <div class="cop-panel">
-      <div class="cop-head" style="display:flex;align-items:center;justify-content:space-between">
-        <div><div class="cop-head-title">Jawaban AI</div><div class="cop-head-sub">Output terstruktur berbasis dokumen</div></div>
-      </div>
       <div class="cop-answer-body" id="cop-answer">
         <div class="ans-empty">
           <div class="ans-empty-icon">🤖</div>
           <div class="ans-empty-txt">Jawaban akan muncul di sini setelah pertanyaan dikirim. AI akan memberi Status, Dasar Rujukan, Alasan, Risiko, dan Rekomendasi.</div>
-        </div>
-      </div>
-    </div>
-
-    <!-- RIGHT: Evidence -->
-    <div class="cop-panel">
-      <div class="cop-head"><div class="cop-head-title">Bukti Dokumen</div><div class="cop-head-sub">Kutipan Renstra · KKR · RKPD · Renja</div></div>
-      <div class="ev-list" id="ev-list">
-        <div class="ev-empty">
-          <div style="font-size:32px;opacity:.3">📄</div>
-          <div>Dokumen relevan akan tampil setelah AI menjawab</div>
         </div>
       </div>
     </div>
@@ -1207,9 +1193,15 @@ function buildCopilotAnswer(question) {
   const evidence = pickCopilotEvidence(question);
   return '<b>Rekomendasi eksekutif:</b> ' + evidence[0][1] + ' Langkah aman berikutnya adalah mengunci baseline data, menetapkan prioritas subsektor, lalu menyelaraskan desain program/pagu sebelum RKPD 2027 final.';
 }
+function renderEvidenceSection(items) {
+  if (!items || !items.length) return '';
+  const cards = items.map(item =>
+    '<div class="ev-card"><div class="ev-src">' + escHtml(item.title || item[0] || 'Bukti') + '</div><div class="ev-txt">' + escHtml(item.detail || item[1] || '') + '</div></div>'
+  ).join('');
+  return '<div class="ans-sec"><div class="ans-lbl">Sumber</div><div style="display:flex;flex-direction:column;gap:8px">' + cards + '</div></div>';
+}
 function renderEvidence(question) {
-  const evidence = pickCopilotEvidence(question);
-  return evidence.map(item => '<div class="ev-item"><b>' + escHtml(item[0]) + '</b><span>' + escHtml(item[1]) + '</span></div>').join('');
+  return renderEvidenceSection(pickCopilotEvidence(question));
 }
 function appendChatMessage(kind, html) {
   const history = document.getElementById('chat-history');
@@ -1223,15 +1215,13 @@ function appendChatMessage(kind, html) {
 function sendQuery() {
   const input = document.getElementById('cop-input');
   const answer = document.getElementById('cop-answer');
-  const evidence = document.getElementById('ev-list');
   if (!input) return;
   const question = input.value.trim();
   if (!question) return;
   appendChatMessage('user', escHtml(question));
   const response = buildCopilotAnswer(question);
   appendChatMessage('ai', response);
-  if (answer) answer.innerHTML = '<div class="ans-card">' + response + '</div>';
-  if (evidence) evidence.innerHTML = renderEvidence(question);
+  if (answer) answer.innerHTML = '<div class="ans-card">' + response + '</div>' + renderEvidence(question);
   input.value = '';
 }
 function askSuggestion(button) {
@@ -1282,7 +1272,6 @@ initLogoutButton();
   window.sendQuery = async function sendQueryProduction() {
     const input = document.getElementById('cop-input');
     const answer = document.getElementById('cop-answer');
-    const evidence = document.getElementById('ev-list');
     if (!input) return;
     const question = input.value.trim();
     if (!question) return;
@@ -1304,17 +1293,13 @@ initLogoutButton();
       if (!res.ok) throw new Error(data.error || 'AI backend gagal menjawab.');
       const response = data.answer || (localAnswer ? localAnswer(question) : 'AI belum mengembalikan jawaban.');
       appendChatMessage('ai', response);
-      if (answer) answer.innerHTML = '<div class="ans-card">' + response + '</div>';
-      if (evidence && Array.isArray(data.evidence)) {
-        evidence.innerHTML = data.evidence.map(item => '<div class="ev-item"><b>' + escHtml(item.title || item[0] || 'Bukti') + '</b><span>' + escHtml(item.detail || item[1] || '') + '</span></div>').join('');
-      } else if (evidence && localEvidence) {
-        evidence.innerHTML = localEvidence(question);
-      }
+      const evidenceHtml = Array.isArray(data.evidence) ? renderEvidenceSection(data.evidence) : (localEvidence ? localEvidence(question) : '');
+      if (answer) answer.innerHTML = '<div class="ans-card">' + response + '</div>' + evidenceHtml;
     } catch (error) {
       const fallback = localAnswer ? localAnswer(question) : '<b>Fallback:</b> AI server belum tersedia.';
       appendChatMessage('ai', fallback);
-      if (answer) answer.innerHTML = '<div class="ans-card">' + fallback + '<p style="margin-top:10px;color:#92400E;font-size:12px">Catatan: ' + escHtml(error.message || 'backend error') + '</p></div>';
-      if (evidence && localEvidence) evidence.innerHTML = localEvidence(question);
+      const evidenceHtml = localEvidence ? localEvidence(question) : '';
+      if (answer) answer.innerHTML = '<div class="ans-card">' + fallback + '<p style="margin-top:10px;color:#92400E;font-size:12px">Catatan: ' + escHtml(error.message || 'backend error') + '</p></div>' + evidenceHtml;
     }
   };
 
