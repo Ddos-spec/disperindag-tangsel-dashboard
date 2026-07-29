@@ -39,7 +39,7 @@ test('AI Copilot answers from OpenRouter, not the local fallback template', asyn
 
   const res = await request.post('/api/copilot', {
     headers: { 'Content-Type': 'application/json', Cookie: cookieHeader },
-    data: { question: 'Apa prioritas tertinggi ABT 2026?', mode: 'eksekutif' },
+    data: { question: 'Apa prioritas tertinggi ABT 2026?' },
   })
   expect(res.ok()).toBeTruthy()
   const body = await res.json()

@@ -186,9 +186,6 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--t1);min-hei
 .cop-sug-lbl{font-size:9px;font-weight:700;color:var(--t3);text-transform:uppercase;letter-spacing:.5px;margin-bottom:5px}
 .cop-sug-btn{display:block;width:100%;text-align:left;padding:5px 9px;border-radius:7px;font-size:10px;color:var(--prim-dk);background:var(--prim-lt);border:none;cursor:pointer;margin-bottom:4px;transition:all .15s;font-family:'Inter',sans-serif;line-height:1.4}
 .cop-sug-btn:hover{background:#DDD6FE}
-.cop-modes{display:flex;gap:5px;padding:10px 12px;border-bottom:1px solid var(--border);flex-shrink:0}
-.cop-mode{padding:4px 10px;border-radius:6px;font-size:10px;font-weight:600;cursor:pointer;border:1px solid var(--border);background:none;color:var(--t2);transition:all .15s;font-family:'Inter',sans-serif}
-.cop-mode.active{background:var(--prim);color:#fff;border-color:var(--prim)}
 .cop-answer-body{flex:1;overflow-y:auto;padding:16px}
 .ans-empty{display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;gap:10px;color:var(--t3)}
 .ans-empty-icon{font-size:44px;opacity:.35}.ans-empty-txt{font-size:12px;font-weight:500;text-align:center;max-width:220px;line-height:1.5}
@@ -576,20 +573,6 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--t1);min-hei
     max-width: 92% !important;
     font-size: 12px !important;
     line-height: 1.45 !important;
-  }
-
-  .cop-modes {
-    display: flex;
-    gap: 8px;
-    overflow-x: auto;
-    padding-bottom: 2px;
-  }
-
-  .cop-mode {
-    flex: 0 0 auto;
-    min-height: 34px;
-    padding: 7px 12px !important;
-    border-radius: 10px !important;
   }
 
   .ans-card {
@@ -1083,11 +1066,6 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--t1);min-hei
     <div class="cop-panel">
       <div class="cop-head" style="display:flex;align-items:center;justify-content:space-between">
         <div><div class="cop-head-title">Jawaban AI</div><div class="cop-head-sub">Output terstruktur berbasis dokumen</div></div>
-        <div class="cop-modes">
-          <button class="cop-mode active" id="mode-exec" onclick="setMode('eksekutif',this)">Eksekutif</button>
-          <button class="cop-mode" id="mode-analis" onclick="setMode('analis',this)">Analis</button>
-          <button class="cop-mode" id="mode-sim" onclick="setMode('simulasi',this)">Simulasi</button>
-        </div>
       </div>
       <div class="cop-answer-body" id="cop-answer">
         <div class="ans-empty">
@@ -1191,7 +1169,6 @@ new Chart(document.getElementById('chart-pdrb'), {
 });
 
 // Local AI Planning Copilot actions. Static and deterministic: no network call, all answers based on dashboard evidence.
-const copilotState = { mode: 'eksekutif' };
 const copilotEvidence = {
   renja: [
     ['Pagu Renja 2026', 'Total pagu indikatif Renja Murni 2026 sebesar Rp 22.530.794.319,- (semuanya Belanja Operasi, Belanja Modal Rp 0). Perkiraan pagu 2027 sebesar Rp 26.115.080.473,-.'],
@@ -1228,14 +1205,6 @@ function pickCopilotEvidence(question) {
 }
 function buildCopilotAnswer(question) {
   const evidence = pickCopilotEvidence(question);
-  const isAnalyst = copilotState.mode === 'analis';
-  const isSimulation = copilotState.mode === 'simulasi';
-  if (isSimulation) {
-    return '<b>Simulasi keputusan:</b><ol><li>Pertahankan kegiatan yang langsung membangun baseline RPIK 2027: klaster IKM, data SIINas–OSS, dan kajian subsektor.</li><li>Tunda kegiatan berisiko rendah yang tidak mengunci target 2027.</li><li>Redesign 3.30.02 tetap berjalan minimal sebagai SOP/verifikasi teknis agar isu pagu Rp 0 tidak berulang.</li></ol>';
-  }
-  if (isAnalyst) {
-    return '<b>Analisis berbasis dokumen:</b><ol><li>' + evidence[0][1] + '</li><li>' + evidence[1][1] + '</li><li>Implikasi: keputusan pimpinan perlu difokuskan pada data, klaster, dan redesign mandat agar program 2027 terukur.</li></ol>';
-  }
   return '<b>Rekomendasi eksekutif:</b> ' + evidence[0][1] + ' Langkah aman berikutnya adalah mengunci baseline data, menetapkan prioritas subsektor, lalu menyelaraskan desain program/pagu sebelum RKPD 2027 final.';
 }
 function renderEvidence(question) {
@@ -1271,14 +1240,8 @@ function askSuggestion(button) {
   input.value = button.textContent.trim();
   sendQuery();
 }
-function setMode(mode, button) {
-  copilotState.mode = mode;
-  document.querySelectorAll('.cop-mode').forEach(btn => btn.classList.remove('active'));
-  if (button) button.classList.add('active');
-}
 window.sendQuery = sendQuery;
 window.askSuggestion = askSuggestion;
-window.setMode = setMode;
 
 function initLogoutButton() {
   const navRight = document.querySelector('.nav-r');
@@ -1331,7 +1294,7 @@ initLogoutButton();
         method: 'POST',
         credentials: 'same-origin',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ question, mode: window.copilotState?.mode || 'eksekutif' })
+        body: JSON.stringify({ question })
       });
       const data = await res.json().catch(() => ({}));
       if (res.status === 401) {

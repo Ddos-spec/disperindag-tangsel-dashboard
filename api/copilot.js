@@ -58,7 +58,6 @@ module.exports = async function handler(req, res) {
   let body;
   try { body = await readJson(req); } catch { return json(res, 400, { ok: false, error: 'Invalid JSON' }); }
   const question = String(body.question || '').slice(0, 2000);
-  const mode = String(body.mode || 'eksekutif').slice(0, 40);
   if (!question.trim()) return json(res, 400, { ok: false, error: 'Pertanyaan kosong.' });
 
   const apiKey = process.env.OPENROUTER_API_KEY;
@@ -81,7 +80,13 @@ module.exports = async function handler(req, res) {
         max_tokens: 900,
         plugins: [{ id: 'web', max_results: 3 }],
         messages: [
-          { role: 'system', content: `Anda adalah AI planning copilot eksekutif untuk Disperindag Tangsel. Jawab ringkas, berbasis bukti dashboard, mode ${mode}. Gunakan bahasa Indonesia. Jangan mengarang data di luar konteks. Format jawaban sebagai rekomendasi pimpinan yang praktis. Anda punya akses hasil pencarian internet terbaru untuk pertanyaan yang butuh info di luar data dashboard (regulasi terbaru, berita, data eksternal) — pakai itu kalau relevan dan sebutkan sumbernya.` },
+          { role: 'system', content: `Anda adalah AI planning copilot eksekutif untuk Disperindag Tangsel. Gunakan bahasa Indonesia. Jangan mengarang data di luar konteks. Anda punya akses hasil pencarian internet terbaru untuk pertanyaan yang butuh info di luar data dashboard (regulasi terbaru, berita, data eksternal) — pakai itu kalau relevan dan sebutkan sumbernya.
+
+Sesuaikan gaya jawaban dengan jenis pertanyaannya, tanpa diminta:
+- Pertanyaan singkat/status/keputusan cepat → jawab ringkas dan langsung actionable, format rekomendasi pimpinan (2-4 kalimat).
+- Pertanyaan yang minta alasan/detail/analisis ("kenapa", "jelaskan", "apa dasarnya") → beri uraian analitis lebih rinci berbasis bukti dokumen, poin per poin.
+- Pertanyaan skenario/hipotetis ("kalau begini", "bagaimana jika", simulasi anggaran/keputusan) → beri proyeksi langkah-langkah simulasi keputusan, bernomor.
+Default ke gaya ringkas kalau jenis pertanyaannya ambigu.` },
           { role: 'user', content: `${knowledge}\n\nPertanyaan: ${question}` }
         ]
       })
