@@ -167,14 +167,15 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--t1);min-hei
 .sec-title{font-size:15px;font-weight:700;color:var(--t1);margin-bottom:3px}
 .sec-sub{font-size:12px;color:var(--t2);margin-bottom:16px}
 /* ── COPILOT ── */
-.cop-layout{display:grid;grid-template-columns:270px 1fr;gap:14px;height:calc(100vh - 130px);min-height:580px}
+.cop-layout{display:flex;justify-content:center;height:calc(100vh - 130px);min-height:580px}
+.cop-panel-solo{width:100%;max-width:760px}
 .cop-panel{background:var(--card);border-radius:16px;border:1px solid var(--border);box-shadow:var(--sh);display:flex;flex-direction:column;overflow:hidden}
 .cop-head{padding:13px 16px;border-bottom:1px solid var(--border);flex-shrink:0}
 .cop-head-title{font-size:12px;font-weight:700;color:var(--t1)}.cop-head-sub{font-size:10px;color:var(--t3);margin-top:2px}
 .cop-history{flex:1;overflow-y:auto;padding:12px;display:flex;flex-direction:column;gap:8px;scroll-behavior:smooth}
-.chat-msg{padding:9px 12px;border-radius:10px;font-size:11px;line-height:1.6;word-break:break-word}
-.chat-user{background:var(--prim);color:#fff;align-self:flex-end;max-width:90%;border-bottom-right-radius:3px}
-.chat-ai{background:#F9F8FF;border:1px solid var(--border);align-self:flex-start;max-width:95%;border-bottom-left-radius:3px}
+.chat-msg{padding:11px 15px;border-radius:12px;font-size:12.5px;line-height:1.65;word-break:break-word}
+.chat-user{background:var(--prim);color:#fff;align-self:flex-end;max-width:85%;border-bottom-right-radius:3px}
+.chat-ai{background:#F9F8FF;border:1px solid var(--border);align-self:flex-start;max-width:92%;border-bottom-left-radius:3px}
 .chat-ai b{color:var(--prim-dk)}
 .cop-input-area{padding:10px 12px;border-top:1px solid var(--border);flex-shrink:0}
 .cop-input{display:flex;gap:7px;align-items:flex-end}
@@ -1035,12 +1036,10 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--t1);min-hei
 <div id="page-copilot" class="page">
   <div class="phdr"><h1>AI Planning Copilot</h1><p>Tanyakan apa saja tentang KKR, program, keselarasan, dan prioritas — jawaban berbasis dokumen resmi Disperindag</p></div>
   <div class="cop-layout">
-
-    <!-- LEFT: Chat -->
-    <div class="cop-panel">
+    <div class="cop-panel cop-panel-solo">
       <div class="cop-head">
         <div class="cop-head-title">Chat dengan AI Perencanaan</div>
-        <div class="cop-head-sub">Setiap jawaban dilengkapi bukti dokumen</div>
+        <div class="cop-head-sub">Jawaban berbasis dokumen resmi Disperindag</div>
       </div>
       <div class="cop-history" id="chat-history">
         <div class="chat-msg chat-ai"><b>AI Copilot siap.</b> Tanyakan tentang program, status keselarasan KKR, prioritas ABT 2026, atau RPIK 2027. Setiap jawaban mengacu pada dokumen Renstra, KKR, RKPD, dan Renja Disperindag Tangsel.</div>
@@ -1058,16 +1057,6 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--t1);min-hei
         <div class="cop-input">
           <textarea class="cop-textarea" id="cop-input" placeholder="Ketik pertanyaan..." rows="2" onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();sendQuery()}"></textarea>
           <button class="cop-send" onclick="sendQuery()">Kirim</button>
-        </div>
-      </div>
-    </div>
-
-    <!-- CENTER: Answer + Evidence -->
-    <div class="cop-panel">
-      <div class="cop-answer-body" id="cop-answer">
-        <div class="ans-empty">
-          <div class="ans-empty-icon">🤖</div>
-          <div class="ans-empty-txt">Jawaban akan muncul di sini setelah pertanyaan dikirim. AI akan memberi Status, Dasar Rujukan, Alasan, Risiko, dan Rekomendasi.</div>
         </div>
       </div>
     </div>
@@ -1195,23 +1184,22 @@ function buildCopilotAnswer(question) {
 }
 function appendChatMessage(kind, html) {
   const history = document.getElementById('chat-history');
-  if (!history) return;
+  if (!history) return null;
   const msg = document.createElement('div');
   msg.className = 'chat-msg ' + (kind === 'user' ? 'chat-user' : 'chat-ai');
   msg.innerHTML = html;
   history.appendChild(msg);
   history.scrollTop = history.scrollHeight;
+  return msg;
 }
 function sendQuery() {
   const input = document.getElementById('cop-input');
-  const answer = document.getElementById('cop-answer');
   if (!input) return;
   const question = input.value.trim();
   if (!question) return;
   appendChatMessage('user', escHtml(question));
   const response = buildCopilotAnswer(question);
   appendChatMessage('ai', response);
-  if (answer) answer.innerHTML = '<div class="ans-card">' + response + '</div>';
   input.value = '';
 }
 function askSuggestion(button) {
@@ -1260,13 +1248,12 @@ initLogoutButton();
 
   window.sendQuery = async function sendQueryProduction() {
     const input = document.getElementById('cop-input');
-    const answer = document.getElementById('cop-answer');
     if (!input) return;
     const question = input.value.trim();
     if (!question) return;
     appendChatMessage('user', escHtml(question));
     input.value = '';
-    if (answer) answer.innerHTML = '<div class="ans-card">Sedang diproses, mohon tunggu sebentar...</div>';
+    const pending = appendChatMessage('ai', '<div class="t-dots"><span class="t-dot"></span><span class="t-dot"></span><span class="t-dot"></span></div>');
     try {
       const res = await fetch('/api/copilot', {
         method: 'POST',
@@ -1281,13 +1268,16 @@ initLogoutButton();
       }
       if (!res.ok) throw new Error(data.error || 'AI backend gagal menjawab.');
       const response = data.answer || (localAnswer ? localAnswer(question) : 'AI belum mengembalikan jawaban.');
-      appendChatMessage('ai', response);
-      if (answer) answer.innerHTML = '<div class="ans-card">' + response + '</div>';
+      if (pending) pending.innerHTML = response;
+      else appendChatMessage('ai', response);
     } catch (error) {
       const fallback = localAnswer ? localAnswer(question) : '<b>Fallback:</b> AI server belum tersedia.';
-      appendChatMessage('ai', fallback);
-      if (answer) answer.innerHTML = '<div class="ans-card">' + fallback + '<p style="margin-top:10px;color:#92400E;font-size:12px">Catatan: ' + escHtml(error.message || 'backend error') + '</p></div>';
+      const errHtml = fallback + '<p style="margin-top:8px;color:#92400E;font-size:11px">Catatan: ' + escHtml(error.message || 'backend error') + '</p>';
+      if (pending) pending.innerHTML = errHtml;
+      else appendChatMessage('ai', errHtml);
     }
+    const history = document.getElementById('chat-history');
+    if (history) history.scrollTop = history.scrollHeight;
   };
 
   window.askSuggestion = function askSuggestionProduction(button) {
