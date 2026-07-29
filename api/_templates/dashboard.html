@@ -1193,16 +1193,6 @@ function buildCopilotAnswer(question) {
   const evidence = pickCopilotEvidence(question);
   return '<b>Rekomendasi eksekutif:</b> ' + evidence[0][1] + ' Langkah aman berikutnya adalah mengunci baseline data, menetapkan prioritas subsektor, lalu menyelaraskan desain program/pagu sebelum RKPD 2027 final.';
 }
-function renderEvidenceSection(items) {
-  if (!items || !items.length) return '';
-  const cards = items.map(item =>
-    '<div class="ev-card"><div class="ev-src">' + escHtml(item.title || item[0] || 'Bukti') + '</div><div class="ev-txt">' + escHtml(item.detail || item[1] || '') + '</div></div>'
-  ).join('');
-  return '<div class="ans-sec"><div class="ans-lbl">Sumber</div><div style="display:flex;flex-direction:column;gap:8px">' + cards + '</div></div>';
-}
-function renderEvidence(question) {
-  return renderEvidenceSection(pickCopilotEvidence(question));
-}
 function appendChatMessage(kind, html) {
   const history = document.getElementById('chat-history');
   if (!history) return;
@@ -1221,7 +1211,7 @@ function sendQuery() {
   appendChatMessage('user', escHtml(question));
   const response = buildCopilotAnswer(question);
   appendChatMessage('ai', response);
-  if (answer) answer.innerHTML = '<div class="ans-card">' + response + '</div>' + renderEvidence(question);
+  if (answer) answer.innerHTML = '<div class="ans-card">' + response + '</div>';
   input.value = '';
 }
 function askSuggestion(button) {
@@ -1250,7 +1240,6 @@ initLogoutButton();
 <script id="production-backend-bridge">
 (() => {
   const localAnswer = window.buildCopilotAnswer;
-  const localEvidence = window.renderEvidence;
 
   async function checkBackendSession() {
     try {
@@ -1293,13 +1282,11 @@ initLogoutButton();
       if (!res.ok) throw new Error(data.error || 'AI backend gagal menjawab.');
       const response = data.answer || (localAnswer ? localAnswer(question) : 'AI belum mengembalikan jawaban.');
       appendChatMessage('ai', response);
-      const evidenceHtml = Array.isArray(data.evidence) ? renderEvidenceSection(data.evidence) : (localEvidence ? localEvidence(question) : '');
-      if (answer) answer.innerHTML = '<div class="ans-card">' + response + '</div>' + evidenceHtml;
+      if (answer) answer.innerHTML = '<div class="ans-card">' + response + '</div>';
     } catch (error) {
       const fallback = localAnswer ? localAnswer(question) : '<b>Fallback:</b> AI server belum tersedia.';
       appendChatMessage('ai', fallback);
-      const evidenceHtml = localEvidence ? localEvidence(question) : '';
-      if (answer) answer.innerHTML = '<div class="ans-card">' + fallback + '<p style="margin-top:10px;color:#92400E;font-size:12px">Catatan: ' + escHtml(error.message || 'backend error') + '</p></div>' + evidenceHtml;
+      if (answer) answer.innerHTML = '<div class="ans-card">' + fallback + '<p style="margin-top:10px;color:#92400E;font-size:12px">Catatan: ' + escHtml(error.message || 'backend error') + '</p></div>';
     }
   };
 
